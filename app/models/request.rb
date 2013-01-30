@@ -14,6 +14,7 @@ class Request < ActiveRecord::Base
 
   validates_presence_of :title
   validates :description, :length => { :in => 5..200 }
+  validate :check_request_dates
 
   def get_responses
     Response.where(:request_id => id)
@@ -38,5 +39,14 @@ class Request < ActiveRecord::Base
       "Assigned"
     end
   end 
+
+  def check_request_dates
+    if end_date < Date.today
+       errors.add(:end_date, "can only be later than today")
+    elsif start_date > end_date
+       errors.add(:start_date, "needs to be before end date")
+    end
+  end
+
 
 end
