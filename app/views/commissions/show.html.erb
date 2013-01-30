@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Response:</b>
+  <%= @commission.response_id %>
+</p>
+
+<p>
+  <b>Employee:</b>
+  <%= @commission.employee_id %>
+</p>
+
+<p>
+  <b>Request:</b>
+  <%= @commission.request_id %>
+</p>
+
+<p>
+  <b>Comment:</b>
+  <%= @commission.comment %>
+</p>
+
+<%= link_to 'Edit', edit_response_commission_path(@commission) %> |
+<%= link_to 'Back to Requests', requests_path %>

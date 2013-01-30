@@ -1,0 +1,38 @@
+<p id="notice"><%= notice %></p>
+
+<div id="tabs"> 
+  <ul>
+    <li><%= link_to 'All Requests', requests_path%></li>
+    <li><%= link_to "Requests I've Posted",  _my_requests_path %></li>
+    <li id="selected"><%= link_to 'Employees List', edit_employee_path(current_employee) %></li>
+  </ul>
+</div>
+
+<div id="innercontainer">
+<h1>Employees List</h1>
+
+<%= paginate @employees %>
+<table>
+  <tr>
+    <th>Avatar</th>
+    <th>Employee ID</th>
+    <th>Employee Name</th>
+    <th>Email</th>
+  </tr>
+
+<% @employees.each do |employee| %>
+  <tr>
+    <td><%= image_tag employee.image_url, :height => 25 %></td>
+    <td><%= employee.id %></td>
+    <td><%= employee.first_name %> <%= employee.last_name %></td>
+    <td><%= employee.email %></td>
+    <td><%= link_to 'Show', employee %></td>
+    <% if owner? (employee) %>
+      <td><%= link_to 'Update Profile', edit_employee_path(employee) %></td>
+      <td><%= link_to 'Destroy', employee, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <% end %>
+  </tr>
+<% end %>
+</table>
+<p></p>
+</div>

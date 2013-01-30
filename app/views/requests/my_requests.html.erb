@@ -1,0 +1,65 @@
+<p id="notice"><%= notice %></p>
+
+<div id="tabs"> 
+  <ul>
+    <li><%= link_to 'All Requests', requests_path%></li>
+    <li id="selected"><%= link_to "Requests I've Posted" %></li>
+    <li><%= link_to 'My Profile', employee_path(current_employee) %></li>     
+  </ul>
+</div>
+
+<div id="innercontainer">
+
+<p><%= link_to 'Create New Request', new_request_path %></p>
+
+<h1>Requests I've Posted:</h1><%= link_to "View Calendar", 'my_requests_calendar' %>
+
+<div id="requests">
+  <%= paginate @my_requests %>
+
+<% @requests.each do |request| %>
+
+  <%= image_tag "divider-line.jpg" %>
+  <p><h3><%= request.title %></h3> <%= request.start_date %> to <%= request.end_date %> 
+    (Status: <% if request.status.nil? %>
+               <%= request.project_status%>)</br>
+             <% else %>
+               <%= request.status %>)</p>
+             <% end %>
+   Posted by: <%= Employee.find(request[:employee_id]).first_name %> <%= Employee.find(request[:employee_id]).last_name %> in <%= Employee.find(request[:employee_id]).location %> Office (Group: <%= Employee.find(request[:employee_id]).group %>)</br>
+    Description: <%= request.description %></br>
+    Required Skills: <%= request.relevant_skills %></br>
+
+  <% if request.status == 'cancelled' %>
+    <div id = "note"><%= "Cancelled" %></div></br>
+  <% else %>
+    <% commissions = request.get_commissions %>
+    <% if commissions.blank? %>
+      <%= link_to 'Edit', edit_request_path(request, @response) %>  |
+      <%= "Active" %>  |      
+      <%= link_to 'Cancel', :action => :cancel_request  %>
+    <% end %>
+  <% end %>
+          
+</p>
+    <b>Applicants:</b></br>
+    <% responses = request.get_responses %>
+    <% responses.each do |response| %>
+    <%= response.employee_name %>   |  
+    <%= link_to 'View Profile', employee_path(response.employee_id) %>  |    
+      <% commissions = request.get_commissions %>
+      <% if commissions.blank? == false %>
+        <% commissions.each do |commission| %>  
+          <% if response.employee_id == commission.employee_id %>
+            <%= "Selected" %> 
+          <% end %>
+        <% end %>  
+      <% elsif response.blank? == false  %>
+        <%= link_to "Select Developer", new_response_commission_path(response) %>
+      <% end %>    
+</p>
+    <% end %>
+  <% end %>
+</div>
+
+</div>

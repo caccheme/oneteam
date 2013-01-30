@@ -1,0 +1,98 @@
+<p id="notice"><%= notice %></p>
+
+<div id="tabs"> 
+  <ul>
+  	<li id="selected"><%= link_to 'New Request' %></li>
+    <li><%= link_to 'All Requests', requests_path%></li>
+    <li><%= link_to "Requests I've Posted", _my_requests_path %></li>
+    <li><%= link_to 'My Profile', employee_path(current_employee) %></li> 
+  </ul>
+</div>
+
+<div id="innercontainer">
+
+  <h1>Create New Request</h1>
+
+<%= hidden_field_tag "request[relevant_skills][]", "" %>
+
+<%= form_for(@request) do |f| %>
+  <% if @request.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@request.errors.count, "error") %> prohibited this request from being saved:</h2>
+
+      <ul>
+      <% @request.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :title %>
+    <%= f.text_field :title %>
+  </div>
+  <div class="field">
+    <div class = "req-description">
+    <%= f.label :description %>
+    <%= f.text_area :description %>
+    </div>
+  </div>
+  <div class="field">
+    <%= f.hidden_field :employee_id, :value => current_employee.id %>
+  </div>
+
+  <div class = "req-dates"> 
+    <div class="field">
+      <%= f.label :start_date %>
+      <%= f.text_field :start_date %>
+    </div>
+  </div>
+  <div class = "req-dates">  
+    <div class="field">
+      <%= f.label :end_date %>
+      <%= f.text_field :end_date %>
+    </div>
+  </div>
+
+  <div class = "req-select-checkboxes">
+    
+    <div class="field" id="left-column">
+      <ul>
+        <li><%= f.label :group %></li>
+        <li><%= f.select :group, ['Development', 'Strategy'] %></li>
+      </ul>
+    </div>
+    
+  
+  <div class="field" id="right-column" >
+    <ul> 
+      <li><%= f.label :location, "Office" %></li>
+      <li><%= f.select :location, ['NY', 'AR', 'IL', 'UK', 'CA'] %></li>
+    </ul>
+  </div>
+
+<div id="req-skills">
+  <div class = "field" >
+    <%= f.label :relevant_skills %>
+    <% @skills.each do |skill| %>
+      <div class = "inbox">
+        <%= check_box_tag "relevant_skills[]", skill.language, @request.relevant_skills %>
+          <div class = "language"> 
+            <%= skill.language %>
+          </div>
+      </div>   
+    <% end %>
+  </div>
+</div>  
+  <div class="field">
+    <div class="req-actions">
+      <%= f.submit %>
+        <div class="req-cancel-new">
+          <%= f.submit 'Cancel', :action => 'create', :name => 'cancel_button' %>
+        </div>
+    </div>
+  </div>
+<% end %>
+</div>
+</div>  

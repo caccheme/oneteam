@@ -1,0 +1,209 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the top of the
+ * compiled file, but it's generally better to create a new file per style scope.
+ *= require jquery.ui.datepicker
+ *= require_self
+ *= require_tree .
+ */
+/*
+@charset "utf-8";
+/* CSS Document */
+
+body {
+	font-family: Arial, Helvetica, sans-serif;
+	background: #eeeeee; 
+	margin: 0; /* it's good practice to zero the margin and padding of the body element to account for differing browser defaults */
+	padding: 0;
+	text-align: center; /* this centers the container in IE 5* browsers. The text is then set to the left aligned default in the #container selector */
+/*	color: #000000; */
+}
+.oneColFixCtrHdr #container {
+	width: 780px;  /* using 20px less than a full 800px width allows for browser chrome and avoids a horizontal scroll bar */
+	background: #ffffff; 
+	margin: 10px auto; /* the auto margins (in conjunction with a width) center the page */
+	border: 1px solid #fff;
+	text-align: left; /* this overrides the text-align: center on the body element. */
+}
+.oneColFixCtrHdr #header {
+	background: #2790b0; 
+	padding: 10px 10px 10px 20px;
+	color: #fff;
+	border-radius: 10px;  
+}
+.oneColFixCtrHdr #header h1 {
+	margin: 0; /* zeroing the margin of the last element in the #header div will avoid margin collapse - an unexplainable space between divs. If the div has a border around it, this is not necessary as that also avoids the margin collapse */
+	padding: 10px 0; /* using padding instead of margin will allow you to keep the element away from the edges of the div */
+}
+.oneColFixCtrHdr #innercontainer {
+	padding: 0 20px; /* remember that padding is the space inside the div box and margin is the space outside the div box */
+	background: #FfffFF;
+	border:1px solid;
+	clear: both;
+	border-radius: 10px;
+	box-shadow: gray 3px 3px 2px;
+	margin: 0px 0 10px 0;
+}
+
+.oneColFixCtrHdr #mainContent a{
+	color:#2790b0;
+}
+
+.oneColFixCtrHdr #footer {
+	padding: 10px 10px; 
+	background:#2790b0;
+	border-radius: 10px; 
+}
+.oneColFixCtrHdr #footer p {
+    text-align:right;
+	margin: 0; 
+	padding: 10px 0;
+}
+
+.oneColFixCtrHdr #footer a {
+	color: #4eed31; 
+}
+
+#header a{
+	color:#ccddff;
+}
+
+table {
+	box-shadow: gray 5px 5px 3px;
+	border: 1px solid gray;
+	text-align: left;
+	border-collapse: separate;
+	border-radius: 15px; 
+}
+
+th {
+	
+	text-align: center;
+	padding: 5px 5px;
+}
+
+table, td {
+	padding: 5px 5px;
+	background-color: #ccddff;
+
+}
+
+.button {
+    display: block;
+    float: right;
+    height: 18px;
+    margin-top:-50px; 
+    margin-right: 6px;
+    text-decoration: none;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size:12px;
+    font-weight:bold;
+    border: 1px solid gray;
+    box-shadow: gray 3px 3px 2px;
+    margin-bottom:5px;
+    padding:8px;
+}
+
+#banner {
+	margin-top:-10px;
+	margin-left:-20px;
+}
+
+#logo {
+	margin-left:250px;
+	margin-top:-53px;
+}
+
+#tabs ul {
+	list-style: none;
+	padding:0;
+	margin:5px 0 0 15px;
+}
+
+#tabs li {
+	display: inline;
+	border: solid;
+	border-width: 1px 1px 0 1px;
+	margin: 0 0.5em 0 0;
+	border-top-left-radius:10px;
+	border-top-right-radius:45px;
+
+}
+
+#tabs li a {
+	padding: 0 1em;
+}
+
+#tabs #selected {
+	padding-bottom: 1px; 
+	font-weight: bold;
+}
+
+#tabs #selected a {
+	padding-bottom: 1px; 
+	font-weight: bold;
+	text-decoration: none;
+	border-bottom: 15px solid white;
+}
+
+#note {
+	font-style: italic;
+	float: left;
+	color: #7A7A52;
+}
+
+#button {
+	background-color: #E0E0D1;
+	border:1px solid 	#2E2E1F;
+	border-radius: 5px;
+	box-shadow: 2px 2px gray;
+	float:left;
+	padding: 3px;
+}
+
+#button a {
+	font-weight:bold;
+	text-decoration: none;
+	font-color:black;
+}
+
+.textarea {
+	height: 100px;
+}
+
+.inline {
+  display: inline;
+  float: left;
+}
+
+#label {
+	margin-left: -40px;
+}
+
+.label {
+    float: left;
+    width: 100px;
+    text-align: right;
+    margin: 2px 10px;
+}
+
+.checkbox {
+      float: none;
+      margin: 0;
+      width: auto;
+      text-align: left;
+      display: block;
+      margin-left: 120px;
+      padding-top: 5px;
+      padding-left: 5px;
+}
+
+#question {
+	font-style: italic;
+	color:red;
+}

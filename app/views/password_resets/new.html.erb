@@ -1,0 +1,24 @@
+<p></p>
+<div id="innercontainer">
+
+<h1>Reset Your Password</h1>
+<div id="reset-note">
+  <p>Enter your email. </br>
+  	We'll send you a new password right away.
+  </p>
+</div>
+</br>
+<%= form_tag password_resets_path, :method => :post do %>
+  <div class="field">
+    <%= label_tag :email %>
+    <%= text_field_tag :email, params[:email] %>
+  </div>
+  <div class="actions">
+  	<%= submit_tag "Submit", :name => 'submit_button' %>
+    <div class="reset-cancel">
+      <%= submit_tag 'Cancel', :action => 'create', :name => 'cancel_button' %>
+    </div>
+  </div>
+<% end %>
+
+</div>

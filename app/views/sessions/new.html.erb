@@ -1,0 +1,35 @@
+<h3><%= flash[:notice] %></h3>
+
+<p></p>
+<div id="innercontainer">
+
+<div id="sign-up">
+  <h3>New to OneTeam?</h3>
+  <div class="sign-up-button">
+    <%= link_to image_tag("sign_up_button.jpg"), {:controller => 'employees', :action => "new" } %>
+  </div>
+</div>
+
+<div class="sign-in">
+  <div id="sign-in-box"> 
+    <h2>Log in to OneTeam</h2>
+    <%= form_tag sessions_path do %>
+      <div class="email-div">
+        <%= label_tag :email %>
+        <%= text_field_tag :email, params[:email] %>
+      </div>
+      <div class="passwd-div">
+        <%= label_tag :password %>
+        <%= password_field_tag :password %>
+      </div>
+      <div class = "login"> 
+        <%= submit_tag 'Sign in' %>
+    <% end %>
+      </div>
+    <div id="forgot">  
+      <ul>
+        <li><%= link_to "Forgot your password?", new_password_reset_path %></li>
+      </ul>
+    </div>  
+  </div>
+</div> 

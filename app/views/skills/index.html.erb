@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<div id="tabs"> 
+  <ul>
+    <li id="selected"><%= link_to 'Skills', skills_path %></li>
+    <li><%= link_to 'Requests', requests_path %></li>
+    <li><%= link_to "Requests I've Posted", requests_path%></li>   
+    <li><%= link_to 'My Profile', employee_path(current_employee) %></li> 
+  </ul>
+</div>
+
+<div id="innercontainer">
+
+<h1>Programming Languages</h1>
+
+<p>
+<%= link_to 'Add A Language', new_skill_path %>
+</p>
+<table>
+  <tr>
+    <th>Language</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @skills.each do |skill| %>
+  <tr>
+    <td><%= skill.language %></td>
+    <td><%= link_to 'Show', skill %></td>
+    <td><%= link_to 'Edit', edit_skill_path(skill) %></td>
+    <td><%= link_to 'Destroy', skill, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+</div> 

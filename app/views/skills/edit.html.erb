@@ -1,0 +1,21 @@
+<p id="notice"><%= notice %></p>
+
+<div id="tabs"> 
+  <ul>
+    <li id="selected"><%= link_to 'Edit Skill', skills_path %></li>
+    <li><%= link_to 'Requests', requests_path %></li>
+    <li><%= link_to "Requests I've Posted", requests_path%></li>   
+    <li><%= link_to 'My Profile', employee_path(current_employee) %></li> 
+  </ul>
+</div>
+
+<div id="innercontainer">
+
+<h1>Editing skill</h1>
+
+<%= render 'form' %>
+
+<%= link_to 'Show', @skill %> |
+<%= link_to 'Back', skills_path %>
+
+</div>

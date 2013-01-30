@@ -1,0 +1,129 @@
+<div id="emp-form">
+
+<%= hidden_field_tag "employee[current_skills][]", "" %>
+<%= hidden_field_tag "employee[skills_interested_in][]", "" %>
+
+<%= form_for(@employee) do |f| %>
+  <% if @employee.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@employee.errors.count, "error") %> prohibited this employee from being saved:</h2>
+      <ul>
+      <% @employee.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+<div id="emp-first">
+  <div class="field">
+    <%= f.label :first_name %>
+    <%= f.text_field :first_name %>
+  </div>
+</div>
+<div id="emp-second">  
+  <div class="field">
+    <%= f.label :last_name %>
+    <%= f.text_field :last_name %>
+  </div>
+</div>
+
+<div id="emp-third">
+  <div class="field">
+    <%= f.label :email %>
+    <%= f.text_field :email %>
+  </div>
+</div>
+<div id="emp-fourth">  
+  <div class="field">
+    <%= f.label :office %>
+    <%= f.select :location, ['New York', 'Chicago', 'Los Angeles', 'Atlanta', 'Detroit', 'Boston', 'Mumbai', 'Houston'] %>
+  </div>
+</div>
+
+<div id="emp-fifth">  
+  <div class="field">
+    <%= f.label :department %>
+    <%= f.select :department, ['IT', 'HR', 'R&D'] %>
+  </div>
+</div>
+
+<div id="emp-sixth">
+  <div class="field">
+    <%= f.label :group %>
+    <%= f.select :group, ['Development', 'Design', 'QA'] %>
+  </div>
+</div>
+
+<div id="emp-seventh">
+ <div class="field">
+    <%= f.label :job_title %>
+    <%= f.select :position, ['Engineer', 'Analyst', 'Supervisor'] %>
+  </div>
+</div>
+<div id="emp-eighth">  
+  <div class="field">
+    <%= f.label :immediate_supervisor %>
+    <%= f.text_field :manager %>
+  </div>
+</div>
+<div id="emp-ninth">  
+  <div class="field">
+    <%= f.label :years_with_company %>
+    <%= f.select :years_with_company, ['1','2','3','4','5','6','7','8','9','10-15','16-20', '21-25', '25-30'] %>
+  </div>
+</div>
+<div id="emp-tenth">     
+  <div id="emp-description">
+    <div class="field">
+      <%= f.label :description %><br/>
+      <%= f.text_area :description, :size => "55x6" %>
+    </div>
+  </div>
+</div>
+<div id="emp-eleventh">
+  <%= image_tag @employee.image_url, :height => 80 %></br>
+  <%= "Upload Your Photo" %>
+   <%= f.file_field :image %></br>
+</div>
+
+<div id="emp-twelfth">
+  <div class="field">
+    <%= f.label :current_skills %>
+    <% @skills.each do |skill| %>
+      <div class="inbox">       
+       <%= check_box_tag "current_skills[]", skill.language, @employee.current_skills.include?(skill.language) %>
+        <div class = "language">
+         <%= skill.language %>
+        </div>
+     </div>
+    <% end %>
+  </div>
+</div>
+
+<div id="emp-thirteenth">
+   <div class="field">
+     <%= f.label :skills_interested_in, "Desired skills" %>
+      <% @skills.each do |skill| %>
+      <div class="inbox">
+         <%= check_box_tag "skills_interested_in[]", skill.language, @employee.skills_interested_in.include?(skill.language) %>
+       <div class = "language">
+         <%= skill.language %>
+        </div>
+     </div>
+    <% end %>
+  </div>
+</div>    
+   
+<div id="emp-fourteenth">
+  <div class="actions">
+    <%= f.submit "Update Profile", class: "btn btn-large btn-primary" %>
+  </div>
+  <div class="emp-cancel-update">
+    <%= f.submit 'Cancel', :action => 'update', :name => 'cancel_button' %>
+  </div>
+    <% end %>
+</div>
+</div>
+
+</div> 

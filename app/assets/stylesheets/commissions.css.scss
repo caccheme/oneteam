@@ -1,0 +1,24 @@
+// Place all the styles related to the Commissions controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+#com-description {
+    & label {
+	  width:350px;
+	}
+	& textarea {
+	  position: relative;
+	  left:-355px;
+	  height: 150px;
+	}
+}
+
+.actions {
+	position:relative; 
+	top: 10px;
+}
+
+.com-cancel-new {
+  margin-top:-44px;
+  margin-left: 150px;
+}

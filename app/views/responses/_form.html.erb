@@ -1,0 +1,34 @@
+<%= form_for [@request, @response] do |f| %>
+  <% if @request.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@request.response.errors.count, "error") %> prohibited this response from being saved:</h2>
+
+      <ul>
+      <% @request.response.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+ 
+  <div class="field">
+    <%= f.hidden_field :employee_id, :value => @session.id %>
+  </div>
+
+  <div class="field">
+    <%= f.hidden_field :employee_name, :value => current_employee.first_name + " " + current_employee.last_name %>
+  </div>
+   
+  <div class="res-comment">
+    <%= f.label :comment, "Comment on your application" %><br />
+    <%= f.text_area :comment %>
+  </div>
+  <div  class="actions">
+    <div id="res-submit">
+      <%= f.submit "Submit" %>
+    </div>
+    <div class="res-cancel-new">
+      <%= f.submit 'Cancel', :action => 'create', :name => 'cancel_button' %>
+    </div>
+  </div>
+<% end %>

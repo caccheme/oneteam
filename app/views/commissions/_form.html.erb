@@ -1,0 +1,49 @@
+<%= form_for([@response, @commission]) do |f| %>
+  <% if @commission.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@commission.errors.count, "error") %> prohibited this commission from being saved:</h2>
+
+      <ul>
+      <% @commission.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.hidden_field :request_id, :value => @response.request_id %>  
+  </div>
+
+  <div class="field">
+    <%= f.hidden_field :employee_id, :value => @response.employee_id %>
+  </div>
+
+  <div class="field">
+    <%= f.hidden_field :name, :value => @response.employee_name %>  
+  </div>
+
+  <div class="field">
+    <%= f.hidden_field :response_id, :value => @response.id %>  
+  </div>
+  
+  <div class="field">
+    <%= f.label :developer, "Developer:" %>
+    <%= link_to @response.employee.first_name + " " + @response.employee.last_name, employee_path(@response.employee_id) %>
+    <%= f.hidden_field :employee_id, :value => @response.employee_id %>
+  </div>
+
+<div id="com-description">  
+  <div class="field">
+    <%= f.label "If desired, comment on this request to the selected developer:" %><br />
+    <%= f.text_area :comment %>
+  </div>  
+</div>  
+  
+  <div class="actions">
+    <%= f.submit "Select Developer" %>
+      <div class="com-cancel-new">
+        <%= f.submit 'Cancel', :action => 'create', :name => 'cancel_button' %>
+      </div>
+  </div>
+<% end %>

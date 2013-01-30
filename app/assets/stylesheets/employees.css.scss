@@ -1,0 +1,245 @@
+// Place all the styles related to the Employees controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+.emp-cancel-update {
+  position:relative;
+  top:-73px;
+  left:170px;
+  & input {
+    width:100px;
+    height: 35px;
+  }
+}
+
+.emp-cancel-new {
+  position:relative;
+  top:-73px;
+  left:270px;
+  & input {
+    width:100px;
+    height: 35px;
+  }
+}
+
+#new-emp {
+  height: 50px;
+  & .actions input {
+    margin-left:120px;
+    width:140px;
+    height:35px;
+  }
+}
+
+#emp-left-column {
+  float:left;
+  width: 10px;
+  margin-top: 10px;
+  text-align:center;
+}
+
+#emp-right-column {
+  position:relative;
+  left: 150px;
+  width: 570px;
+}
+
+#profile ul li {
+  list-style: none;
+}
+
+
+
+#profile_pic {
+  width: 150px;
+}
+
+#emp-first {
+  position:relative;
+  left: -10px;
+  width: 350px;
+    & input {
+      width: 175px;
+      margin-left: -25px;
+    }
+}
+
+#emp-second {
+  position:relative;
+  top:-35px;
+  left: 275px;
+  width: 350px;
+    & input {
+      width: 175x;
+      margin-left: -25px;
+    }
+}
+
+#emp-third {
+  position: relative;
+  left: -10px;
+  top: -24px;
+  width: 350px;
+    & input {
+      width: 175px;
+      margin-left: -25px;
+    }
+}
+
+#emp-fourth {
+  position: relative;
+  top: -61px;
+  left: 205px;
+  width: 250px;
+    & label {
+      text-align: right;
+      padding-right: 2px;
+    }
+}
+
+#emp-fifth {
+  position: relative;
+  top: -91px;
+  left: 405px;
+  width: 200px;
+    & label {
+      text-align: right;
+    }
+}
+
+#emp-sixth {
+  position: relative;
+  top: -121px;
+  left: 515px;
+  width: 350px;
+    & label {
+      text-align: right;
+      padding-right: 2px;
+    & select {
+      width: 100px;
+    }
+    }
+}
+
+#emp-seventh {
+  position: relative;
+  left: -10px;
+  top: -110px;
+  width: 350px;
+    & select {
+      width: 100px;
+      margin-left: -30px;
+    }
+
+}
+
+#emp-eighth {
+  position: relative;
+  top: -138px;
+  left: 200px;
+  width: 350px;
+    & label {
+      width: 150px;
+    }
+    & input {
+      width:175px;
+    }
+}
+
+#emp-ninth {
+  position: relative;
+  top: -175px;
+  left: 530px;
+  width: 350px;
+    & label {
+      width: 150px;
+      text-align: right;
+    }
+}
+
+#emp-tenth {
+  position: relative;
+  top: -175px;
+  left: -10px;
+    & label {
+      width: 150px;
+    }
+    & textarea {
+      position:relative;
+      left: -155px;
+      top: 5px;
+    }
+}
+
+#emp-eleventh {
+  float:right;
+  width: 250px;
+  margin-top:-300px;
+    & label {
+      width: 150px;
+    }
+    & textarea {
+      position:relative;
+      left: -155px;
+      top: 5px;
+    }
+}
+
+#emp-twelfth {
+  position: relative;
+  top: -170px;
+  left: -10px;
+  width: 350px;
+}
+
+#emp-thirteenth {
+  position: relative;
+  top: -325px;
+  left: 270px;
+  width: 250px;
+}
+
+#emp-fourteenth {
+  position: relative;
+  top: -335px;
+  left: 10px;
+  & .actions input {
+    width:100px;
+    height:35px;
+  }
+}
+
+#emp-form {
+  height: 490px;
+}
+
+.frstnm input {
+  width: 250px;
+}
+
+.lnfield {
+  & input {
+  margin-top: 10px;
+  width: 250px;
+  }
+  & label {
+    margin-top: 8px;
+  }
+}
+
+.newfirst input {
+  width: 250px;
+}
+
+.newsecond label {
+  margin-top: -5px;
+}
+
+.passfld input {
+  width: 250px;
+}
+
+.newsecond input {
+  width: 250px;
+}

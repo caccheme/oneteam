@@ -1,0 +1,70 @@
+// Place all the styles related to the sessions controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.login {
+  & input {
+    width:100px; 
+    height:35px;
+    backbrount-color:red;
+    position:relative;
+    top:10px;
+    left:-5px;
+  }      
+}
+
+#forgot {
+  position:relative;
+  left:-35px;
+  top:5px;
+	& a {
+	  font-size: 11px;
+	}
+	& ul li {
+	  list-style:none
+	}
+}
+
+.sign-in {
+	background-color: #CBE5FF;
+	width: 350px;
+  position:relative;
+  top:-15px;
+  left:375px;
+  border-radius:5px;
+  box-shadow:3px 2px 2px gray;
+}
+
+#sign-in-box {
+  padding:5px;
+  margin-left:15px;
+}
+
+#sign-up {
+	position:relative;
+	top:-5px;
+}
+
+.sign-up-button {
+	position:relative;
+	top:-5px;
+	& img {
+      border:1px solid gray;
+      border-radius: 5px;
+	}
+}
+
+.email-div {
+	& input {
+	  width: 175px;
+	}
+}
+
+
+.passwd-div {
+  position:relative;
+  top:15px;
+	& input {
+	  width: 175px;
+	}
+}

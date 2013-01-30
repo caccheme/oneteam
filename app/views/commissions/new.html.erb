@@ -1,0 +1,16 @@
+<p id="notice"><%= notice %></p>
+
+<div id="tabs">
+  <ul>
+    <li id="selected"><%= link_to 'Select Developer' %></li>
+    <li><%= link_to 'Requests', requests_path %></li>    
+    <li><%= link_to "Requests I've Posted", _my_requests_path %></li>
+    <li><%= link_to 'My Profile', employee_path(current_employee) %></li>
+  </ul>
+</div>
+
+<div id="innercontainer"><h1>Assign Developer</h1>
+
+<%= render 'form' %>
+
+</div>

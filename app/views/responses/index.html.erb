@@ -1,0 +1,40 @@
+<p id="notice"><%= notice %></p>
+
+<div id="tabs"> 
+  <ul>
+    <li id="selected"><%= link_to 'Responses', request_responses_path(@request) %></li>
+    <li><%= link_to 'All Requests', requests_path%></li>
+    <li><%= link_to "Requests I've posted", _my_requests_path %></li>
+    <li><%= link_to 'My Profile', employee_path(current_employee) %></li> 
+  </ul>
+</div>
+
+<div id="innercontainer">
+
+<h1>Response: </h1>
+<p>Request Title: <%= @request.title %></br>
+  Request Description: <%= @request.description %>"</p>
+
+<table>
+  <tr>
+    <th>Request</th>
+    <th>Employee </th>
+    <th>Comment</th>
+  </tr>
+
+<%= paginate @responses %>
+    <% @responses.each do |response| %>
+      <tr >
+       <td><%= response.request_id %></td>
+       <td><%= link_to response.employee_name, employee_path(response.employee_id) %></td>
+       <td><%= response.comment %></td> 
+       <% if author? (response.request)%>
+       <td><%= link_to 'Select This Developer', new_response_commission_path(response) %></td>
+       <% end %>  
+      </tr>
+      <% end %>
+      </table>    
+<div>    
+</br>
+</div>
+</div>

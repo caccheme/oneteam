@@ -1,0 +1,11 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Comment:</b>
+  <%= @feedback.comment %>
+</p>
+
+
+<%= link_to 'Edit', edit_feedback_path(@feedback) %>
+ |
+<%= link_to 'Back to Requests', requests_path %>

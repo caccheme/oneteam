@@ -1,0 +1,53 @@
+<p id="notice"><%= notice %></p>
+
+<div id="tabs"> 
+  <ul>
+    <li><%= link_to 'All Requests', requests_path%></li>
+    <li><%= link_to "Requests I've Posted",  _my_requests_path %></li>
+    <li id="selected"><%= link_to 'Profile', employee_path(current_employee) %></li>
+  </ul>
+</div>
+
+<div id="innercontainer">
+  <div id="emp-left-column">
+    <div id="profile_pic">
+      <%= link_to 'Update Profile', edit_employee_path(current_employee) %> </br>
+      <%= image_tag @employee.image_url, :height => 100 %>
+    </div>
+  </div>
+  <div id = "emp-right-column">
+    <div id = "profile">
+      <ul>
+        <li>First Name: <%= @employee.first_name %></li>
+        <li>Last Name: <%= @employee.last_name %></li>
+        <li>Email: <%= @employee.email %></li>
+        <li>Office: <%= @employee.location %></li>
+        <li>Department: <%= @employee.department %></li>
+        <li>Group: <%= @employee.group %></li>
+        <li>Job Title: <%= @employee.position %></li>
+        <li>Immediate Supervisor: <%= @employee.manager %></li>
+        <li>Years with Company: <%= @employee.years_with_company %></li>
+      </ul>
+      <ul>
+        <li>Current Skills: <%= @employee.current_skills %></li>
+        <li>Desired Skills: <%= @employee.skills_interested_in %></li>
+      </ul>
+      <ul>
+        <li>Short Description about <%= @employee.first_name %>: <%= @employee.description %></li>
+      </ul> 
+      <ul>
+        <li>Projects I've Worked on:</li>  
+      </ul>
+      <ul>
+        <%= paginate @my_commissions %>
+        <% @commissions.each do |commission| %>
+          <% if commission.employee_id == current_employee.id %>
+            <li><b><%= Request.find(commission.request_id).title %></b>: <%= Request.find(commission.request_id).start_date %> to <%= Request.find(commission.request_id).end_date %> (<%= Request.find(commission.request_id).project_status %>)</br></li>
+            <li><%= Request.find(commission.request_id).description %></li>
+            <%= image_tag "divider-line-2.jpg" %>            
+          <% end %>
+        <% end %>
+      </ul>
+    </div>  
+  </div>
+</div>

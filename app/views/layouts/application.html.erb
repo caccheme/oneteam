@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>  
+    <title>OneteamApp</title>  
+    <%= stylesheet_link_tag    "application", :media => "all" %>  
+    <%= javascript_include_tag "application" %>  
+    <%= csrf_meta_tags %>
+  </head>
+<body class="oneColFixCtrHdr">
+
+<div id="container">
+  
+  <div id="header">
+    <div id="banner">
+      <%= image_tag "OneTeamBanner3.png" %>
+    </div>   
+
+    <div id="navigation">
+      <% if current_employee %>
+         Logged in as <%= current_employee.first_name %> <%= current_employee.last_name %>. Not <%= current_employee.first_name %>? 
+         <%= link_to "Log out", log_out_path %>
+       <% else %>
+         
+      <% end %>
+    </div>
+    
+  </div>
+  
+  <div id="mainContent">
+    <%= yield %>
+  </div>
+  
+  <div id="footer">
+    <p>Find a typo or just want to tell us how cool this app is? <%= link_to "Contact Us", new_feedback_path %></p>
+  </div>
+
+</div>
+
+</body>
+</html>

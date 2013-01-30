@@ -1,0 +1,76 @@
+<%= hidden_field_tag "request[relevant_skills][]", "" %>
+
+<%= form_for(@request) do |f| %>
+  <% if @request.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@request.errors.count, "error") %> prohibited this request from being saved:</h2>
+
+      <ul>
+      <% @request.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :title %>
+    <%= f.text_field :title %>
+  </div>
+  <div class="field">
+    <div class = "req-description">
+      <%= f.label :description %>
+      <%= f.text_area :description, :size => "40x6" %>
+    </div>
+  <div>
+
+  <div class="field">
+    <%= f.hidden_field :employee_id, :value => current_employee.id %>
+  </div>
+   
+  <div class="req-dates">
+    <div id="field">
+      <%= f.label :start_date %>
+      <%= f.text_field :start_date %>
+    </div>
+  </div>
+  <div class="req-dates">
+    <div id="field">
+      <%= f.label :end_date %>
+      <%= f.text_field :end_date %>
+    </div>
+  </div>
+
+ <div class = "req-select-checkboxes"> 
+ <div class="field" id="left-column">
+    <ul>
+      <li><%= f.label :group %></li>
+      <li><%= f.select :group, ['Development', 'Strategy'] %></li>
+    </ul>
+  </div>
+  <div class="field" id="right-column" >
+    <ul> 
+      <li><%= f.label :location, "Office" %></li>
+      <li><%= f.select :location, ['NY', 'AR', 'IL', 'UK', 'CA'] %></li>
+    </ul>
+  </div>
+  
+ <%= f.label :relevant_skills  %>
+     <% @skills.each do |skill| %>
+    <div class = "inbox">
+       <%= check_box_tag "relevant_skills[]", skill.language, @request.relevant_skills.include?(skill.language) %>
+       <div class = "language">
+         <%= skill.language %>
+        </div>
+    </div> 
+     <% end %>
+  </div>
+
+  <div id="req-edit">
+    <div class="actions">
+      <%= f.submit %>
+    </div>
+    <% end %>
+  </div>
+
+</div>

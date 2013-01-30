@@ -1,0 +1,18 @@
+<p id="notice"><%= notice %></p>
+
+<div id="tabs"> 
+  <ul>
+    <li id="selected"><%= link_to 'Update Response' %></li>
+    <li><%= link_to 'All Requests', requests_path%></li>   
+    <li><%= link_to 'My Profile', employee_path(current_employee) %></li> 
+  </ul>
+</div>
+
+<div id="innercontainer">
+
+<h1>Edit response</h1>
+
+<%= render 'form' %>
+
+<%= link_to 'Show', request_response_path(request) %> |
+<%= link_to 'Back', request_responses_path %>
