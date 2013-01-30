@@ -5,7 +5,7 @@
 
 .emp-cancel-update {
   position:relative;
-  top:-73px;
+  top:-65px;
   left:170px;
   & input {
     width:100px;
@@ -80,7 +80,7 @@
   position: relative;
   left: -10px;
   top: -24px;
-  width: 350px;
+  width: 300px;
     & input {
       width: 175px;
       margin-left: -25px;
@@ -101,9 +101,10 @@
 #emp-fifth {
   position: relative;
   top: -91px;
-  left: 405px;
+  left: 430px;
   width: 200px;
     & label {
+      width: 80px;
       text-align: right;
     }
 }
@@ -111,9 +112,10 @@
 #emp-sixth {
   position: relative;
   top: -121px;
-  left: 515px;
+  left: 565px;
   width: 350px;
     & label {
+      width: 50px;
       text-align: right;
       padding-right: 2px;
     & select {
