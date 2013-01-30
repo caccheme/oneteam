@@ -15,7 +15,6 @@
 <h1>Requests I've Posted:</h1>
 
 <div id="requests">
-  <%= paginate @my_requests %>
 
 <% @requests.each do |request| %>
 
@@ -30,14 +29,14 @@
     Description: <%= request.description %></br>
     Required Skills: <%= request.relevant_skills %></br>
 
-  <% if request.status == 'cancelled' %>
+  <% if request.status == 'Cancelled' %>
     <div id = "note"><%= "Cancelled" %></div></br>
   <% else %>
     <% commissions = request.get_commissions %>
     <% if commissions.blank? %>
-      <%= link_to 'Edit', edit_request_path(request, @response) %>  |
+      
       <%= "Active" %>  |      
-      <%= link_to 'Cancel', :action => :cancel_request  %>
+      <%= link_to 'Cancel', edit_request_path(request.id) %>
     <% end %>
   <% end %>
           

@@ -3,14 +3,6 @@ class RequestsController < ApplicationController
  before_filter :signed_in_employee
  before_filter :check_for_cancel, :only => [:create, :update]
 
-  def cancel_request
-    @request = Request.find_by_employee_id(current_employee)
-   
-    project_status = "CANCELLED"
-    @request.save
-
-    respond_with(@my_requests)
-  end
 
   def my_requests
     @requests = Request.find_all_by_employee_id(current_employee)

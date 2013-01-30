@@ -1,3 +1,4 @@
+
 <p id="notice"><%= notice %></p>
 
 <div id="tabs"> 
@@ -15,30 +16,9 @@
 	<p>Are you sure you want to cancel this request?</p>
 </div>
 
-<p>
-  <b>Request:</b> <%= @request.title %> (<%= @request.start_date %> to <%= @request.end_date %>)
-</p>
-<p>
-  <%= @request.description %>
-</p>
-<p>
-  <b>Relevant Skills:</b> <%= @request.relevant_skills %>
-</p>
-
 <%= form_for(@request) do |f| %>
-  <% if @request.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@request.errors.count, "error") %> prohibitied this request from being saved:</h2>
-      <ul>
-      <% @request.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>  
-
-  <%= f.hidden_field :status, :value => 'cancelled' %>
-
+<%= f.hidden_field :status, :value => 'Cancelled' %>
+<%= f.hidden_field :employee_id, :value => current_employee.id %>
   <div class="actions">
     <div id="cancel-req">
       <%= f.submit 'Cancel Request' %>

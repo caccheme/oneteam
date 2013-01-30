@@ -14,11 +14,11 @@
 <h1>All Requests</h1>
 
 <div id="requests">
-  <%= paginate @requests %>
   <% @requests.each do |request| %>
-    <% if request.status == 'cancelled' %>
+    <% if request.status == 'Cancelled' %>
       <% nil %>
-    <% elsif request.status != 'cancelled' %>
+    <% elsif request.status != 'Cancelled' %>
+
       <%= image_tag "divider-line.jpg" %>
 
       <p><b><%= request.title %>:</b> <%= request.start_date %> to <%= request.end_date %> (Status: <%= request.project_status %>)
