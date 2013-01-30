@@ -12,7 +12,7 @@
   <div id="emp-left-column">
     <div id="profile_pic">
       <%= link_to 'Update Profile', edit_employee_path(current_employee) %> </br>
-      <%= image_tag @employee.image_url, :height => 100 %>
+      <%= link_to image_tag(@employee.image_url), edit_employee_path(current_employee) %>
     </div>
   </div>
   <div id = "emp-right-column">

@@ -29,7 +29,7 @@ class ImageUploader < CarrierWave::Uploader::Base
   # end
 
   def default_url
-    "/images/fallback/" + [version_name, "default.png"].compact.join('_')
+    [version_name, "profile-avatar.png"].compact.join('_')
   end
 
   # Process files as they are uploaded:
