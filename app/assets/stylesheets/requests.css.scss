@@ -161,8 +161,11 @@ input[type='submit'] {
 
 .req-cancel-new {
     & input {
-      width:160px;
-      height: 35px;
+      width:56px;
+      height: 23px;
+      float:right;
+      top:-48px;
+      left: -500px;
     }
 }
 
@@ -188,7 +191,7 @@ input[type='submit'] {
   }
 }
 
-.actions {
+.req-actions {
   position: relative;
   top:-8px;
 }

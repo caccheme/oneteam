@@ -3,20 +3,22 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 #com-description {
+
     & label {
 	  width:350px;
 	}
 	& textarea {
 	  position: relative;
 	  left:-355px;
-	  height: 150px;
+	  height: 140px;
 	}
 }
 
-.actions {
-	position:relative; 
-	top: 10px;
+.com-actions {
+	margin-top:5px;
+
 }
+
 
 .com-cancel-new {
   margin-top:-44px;
