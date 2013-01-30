@@ -144,7 +144,7 @@ input[type='submit'] {
 }
 
 #right-column {
-    width: 80%;
+    width: 73%;
     float: right;
     margin-top: -35px;
     & label {
@@ -152,6 +152,7 @@ input[type='submit'] {
       padding-right: 2px;
       position:relative;
       top: -10px;
+      width: 50px;
     }
     & select {
       position:relative;
