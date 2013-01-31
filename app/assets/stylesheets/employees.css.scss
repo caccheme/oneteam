@@ -2,14 +2,17 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-
-.emp-cancel-update {
-  position:relative;
-  top:-65px;
-  left:170px;
+#emp-update {
   & input {
-    width:100px;
-    height: 35px;
+    height: 23px;
+    width: 100px;
+  }
+  & #emp-cancel-update {
+    float:right;
+    & input {
+      width: 100px;
+      height: 23px;
+    }
   }
 }
 
@@ -204,7 +207,7 @@
 
 #emp-fourteenth {
   position: relative;
-  top: -315px;
+  top: -300px;
   left: 10px;
   & .actions input {
     width:100px;

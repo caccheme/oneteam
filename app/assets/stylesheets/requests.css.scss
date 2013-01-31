@@ -160,24 +160,19 @@ input[type='submit'] {
     }
 }
 
-.req-cancel-new {
-    & input {
-      width:56px;
-      height: 23px;
-      float:right;
-      top:-48px;
-      left: -500px;
-    }
-}
-
 #cancel-req {
+  width: 700px;
   & input {
     width:115px;
-    height: 35px;
-    float:left;
-    margin-left:-5px;
-    margin-right:25px;
-  }
+    height: 23px;
+    }
+  & #req-cancel-cancel {
+    float:right;
+    & input {
+      width: 160px;
+      height: 23px;
+    }
+  }  
 }
 
 .req-cancel-update {
@@ -192,9 +187,14 @@ input[type='submit'] {
   }
 }
 
-.req-actions {
-  position: relative;
-  top:-8px;
+#req-actions {
+  & #req-cancel-new {
+    float:right;
+    & input {
+      width: 100px;
+      height: 23px;
+    }
+  }
 }
 
 #req-edit {

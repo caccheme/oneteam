@@ -40,10 +40,10 @@ class CommissionsController < ApplicationController
     @commission = @response.commissions.build(params[:commission])
 
     if params[:cancel_button]
-      redirect_to _my_requests_path
+      redirect_to _employee_requests_path
     elsif @commission.save
       respond_to do |format|
-        format.html { redirect_to _my_requests_path, :notice => 'Successfully assigned developer.' }
+        format.html { redirect_to _employee_requests_path, :notice => 'Successfully assigned developer.' }
       end
     elsif !@commission.save
       respond_to do |format|

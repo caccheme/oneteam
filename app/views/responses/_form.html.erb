@@ -26,9 +26,9 @@
   <div  class="actions">
     <div id="res-submit">
       <%= f.submit "Submit" %>
+      <div class="res-cancel-new">
+        <%= f.submit 'Cancel', :action => 'create', :name => 'cancel_button' %>
+      </div>
     </div>
-    <div class="res-cancel-new">
-      <%= f.submit 'Cancel', :action => 'create', :name => 'cancel_button' %>
-    </div>
+    <% end %>
   </div>
-<% end %>

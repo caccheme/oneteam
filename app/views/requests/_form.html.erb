@@ -7,19 +7,17 @@
   <div class="field">
     <%= f.hidden_field :employee_id, :value => current_employee.id %>
   </div>
-
-<%= f.hidden_field :status, :value => 'Cancelled' %>
-<%= f.hidden_field :employee_id, :value => current_employee.id %>
+  <div class = "field">
+    <%= f.hidden_field :status, :value => 'Cancelled' %>
+    <%= f.hidden_field :employee_id, :value => current_employee.id %>
+  </div>
   <div class="actions">
     <div id="cancel-req">
-      <%= f.submit 'Cancel Request' %>
+      <%= f.submit 'Cancel Request' %> 
+    
+      <div id="req-cancel-cancel">
+        <%= f.submit "Don't Cancel Request", :action => 'update', :name => 'cancel_button' %>
+      </div>
     </div>
-    <div class="req-cancel-new">
-      <%= f.submit "Don't Cancel Request", :action => 'update', :name => 'cancel_button' %>
-    </div>
-<% end %>
   </div>
-
-</div>
-
-</div>
+<% end %>
