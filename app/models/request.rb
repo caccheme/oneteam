@@ -56,16 +56,36 @@ class Request < ActiveRecord::Base
     end 
   end
 
-  def cancel_status? 
-    if status_text == 'Cancelled'  
-      "Cancelled" 
-    else 
-      commissions = get_commissions
-        if commissions.blank? 
-          "Active | "  
-          link_to 'Cancel', edit_request_path(request.id) 
-        end 
+  def already_assigned?
+    if !commissions.blank?
+      "Developer already selected"
     end
-  end 
+  end
+
+#   def employee_already_applied?
+#     responses = get_responses
+#     responses.each do |response|
+#       if response.employee_id == helpers.current_employee.id 
+#         true
+#       end
+#     end  
+#   end  
+
+# def helpers
+#   ApplicationController.helpers
+# end
+
+
+  # def cancel_status? 
+  #   if status_text == 'Cancelled'  
+  #     "Cancelled" 
+  #   else 
+  #     commissions =get_commissions
+  #       if commission.blank? 
+  #         "Active"  
+  #         link_to 'Cancel', edit_request_path(request.id) 
+  #       end 
+  #   end
+  # end 
 
 end

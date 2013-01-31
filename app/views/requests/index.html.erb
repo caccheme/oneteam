@@ -15,46 +15,34 @@
 
 <div id="requests">
   <% @requests.each do |request| %>
-    <% if request.status == 'Cancelled' %>
-      <% nil %>
-    <% elsif request.status != 'Cancelled' %>
-
-      <%= image_tag "divider-line.jpg" %>
-
-      <p><b><%= request.title %>:</b> <%= request.start_date %> to <%= request.end_date %> (Status: <%= request.project_status %>)
-      </p>
-      <p>Posted by: <%= request.employee.first_name %> <%= request.employee.last_name %> in <%= request.employee.location %> Office (Group: <%= request.employee.group %>) </br>
-        Description: <%= request.description %></br>
-        Required Skills: <%= request.relevant_skills %>
-      </p> 
+    <% if request.status_text != 'Cancelled' %>  
       <% applied = 0 %>
-
-        <% commissions = request.get_commissions %>
-        <% if !commissions.blank? %>
-          <div id = "note">
-            <%= "Developer already selected" %>
-          </div> 
-        <% else %>
+      <%= image_tag "divider-line.jpg" %>
+      <p><b><%= request.title %>:</b> <%= request.start_date %> to <%= request.end_date %> (Status: <%= request.status_text %>)</br>
+      Posted by: <%= request.employee.first_name %> <%= request.employee.last_name %> in <%= request.employee.location %> Office (Group: <%= request.employee.group %>) </br>
+      Description: <%= request.description %></br>
+      Required Skills: <%= request.relevant_skills %></p>
+      
+      <% commissions = request.get_commissions %>
+      <div id="note"><%= request.already_assigned? %></div>
+        <% if !request.already_assigned? %>
           <% if author? (request) %>
-            <div id = "note">
-              <%= "You posted this request." %>
-            </div>
+            <div id="note"><%= "You posted this request." %></div>
           <% else %>
             <% responses = request.get_responses %>
             <% responses.each do |response| %>     
             <% if response.employee_id == current_employee.id %>
-              <div  >
-                <%= image_tag "applied_button.jpg" %>
-              </div>
+              <%= image_tag "applied_button.jpg" %>
               <% applied = 1 %>
             <% end %>
           <% end %>
+          
           <% if applied == 0 %>
             <div id="apply-button">
               <%= link_to image_tag("apply_button.jpg"), new_request_response_path(request) %>
             </div>
           <% end %>
-        <% end %>
+        <% end %>  
       <% end %>
     <% end %>
   <% end %>
