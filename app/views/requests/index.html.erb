@@ -14,8 +14,7 @@
 <h1>All Requests</h1>
 
 <div id="requests">
-  <% @requests.each do |request| %>
-    <% if request.status_text != 'Cancelled' %>  
+  <% @open_requests.each do |request| %>
       <% applied = 0 %>
       <%= image_tag "divider-line.jpg" %>
       <p><b><%= request.title %>:</b> <%= request.start_date %> to <%= request.end_date %> (Status: <%= request.status_text %>)</br>
@@ -45,7 +44,6 @@
         <% end %>  
       <% end %>
     <% end %>
-  <% end %>
 </br>
 </br>
 </div>
