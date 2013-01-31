@@ -48,5 +48,24 @@ class Request < ActiveRecord::Base
     end
   end
 
+  def status_text 
+    if status.nil?
+      project_status
+    else 
+      status 
+    end 
+  end
+
+  def cancel_status? 
+    if status_text == 'Cancelled'  
+      "Cancelled" 
+    else 
+      commissions = get_commissions
+        if commissions.blank? 
+          "Active | "  
+          link_to 'Cancel', edit_request_path(request.id) 
+        end 
+    end
+  end 
 
 end

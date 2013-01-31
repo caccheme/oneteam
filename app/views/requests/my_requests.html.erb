@@ -19,27 +19,20 @@
 <% @requests.each do |request| %>
 
   <%= image_tag "divider-line.jpg" %>
-  <p><h3><%= request.title %></h3> <%= request.start_date %> to <%= request.end_date %> 
-    (Status: <% if request.status.nil? %>
-               <%= request.project_status%>)</br>
-             <% else %>
-               <%= request.status %>)</p>
-             <% end %>
-   Posted by: <%= Employee.find(request[:employee_id]).first_name %> <%= Employee.find(request[:employee_id]).last_name %> in <%= Employee.find(request[:employee_id]).location %> Office (Group: <%= Employee.find(request[:employee_id]).group %>)</br>
+  <p><h3><%= request.title %></h3> <%= request.start_date %> to <%= request.end_date %> (Status: <%= request.status_text %>)</br>    
+   Posted by: <%= request.employee.first_name %> <%= request.employee.last_name %> in <%= request.employee.location %> (Group: <%= request.employee.group %>)</br>
     Description: <%= request.description %></br>
     Required Skills: <%= request.relevant_skills %></br>
-
-  <% if request.status == 'Cancelled' %>
-    <div id = "note"><%= "Cancelled" %></div></br>
-  <% else %>
-    <% commissions = request.get_commissions %>
-    <% if commissions.blank? %>
-      
-      <%= "Active" %>  |      
-      <%= link_to 'Cancel', edit_request_path(request.id) %>
+ 
+  <% if request.status == 'Cancelled' %> 
+    <%= "Cancelled" %>
+    <% else %>
+      <% commissions = request.get_commissions %>
+        <% if commissions.blank? %>
+          <%= "Active | " %>  
+          <%= link_to 'Cancel', edit_request_path(request.id) %>
+        <% end %>
     <% end %>
-  <% end %>
-          
 </p>
     <b>Applicants:</b></br>
     <% responses = request.get_responses %>
