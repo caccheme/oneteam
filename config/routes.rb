@@ -1,11 +1,5 @@
 OneteamApp::Application.routes.draw do
 
-  resources :requests do
-    get :cancel_request
-  end
-
-  get "cancel_request" => "requests#cancel_request", :as => "cancel_request"
- 
   resources :skills
 
   get "calendars/index"
