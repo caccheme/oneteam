@@ -4,21 +4,9 @@ class RequestsController < ApplicationController
  before_filter :check_for_cancel, :only => [:create, :update]
 
 
-  def my_requests
-    @requests = Request.find_all_by_employee_id(current_employee)
-    @my_requests = Request.order(:id).page(params[:page]).per(5) 
-  end
-
-  def requests_calendar
-    @requests = Request.order(:id).page(params[:page]).per(5)
-    @requests_by_date = @requests.group_by(&:start_date)
-    @date = params[:date] ? Date.parse(params[:date]) : Date.today
-  end
-
-  def my_requests_calendar
-    @requests = Request.order(:id).page(params[:page]).per(5)
-    @requests_by_date = @requests.group_by(&:start_date)
-    @date = params[:date] ? Date.parse(params[:date]) : Date.today
+  def employee_requests
+    @all_requests = Request.find_all_by_employee_id(current_employee)
+    @employee_requests = Request.order(:id).page(params[:page]).per(5) 
   end
 
   def index
@@ -70,7 +58,7 @@ class RequestsController < ApplicationController
 
 
     if params[:cancel_button]
-      redirect_to _my_requests_path
+      redirect_to _employee_requests_path
     elsif @request.save     
       respond_to do |format|
           format.html { redirect_to requests_path, notice: 'Request was successfully created.' }
@@ -92,13 +80,13 @@ class RequestsController < ApplicationController
     @request.relevant_skills = @request.relevant_skills.join(", ")
 
     if params[:cancel_button]
-      redirect_to _my_requests_path
+      redirect_to _employee_requests_path
     elsif @request.update_attributes(params[:request])
       flash[:success] = "Request cancelled."
-      redirect_to _my_requests_path
+      redirect_to _employee_requests_path
     elsif @request.update_attributes(params[:request])
       flash[:success] = "Request updated"
-      redirect_to _my_requests_path
+      redirect_to _employee_requests_path
     else
       render 'edit'
     end
