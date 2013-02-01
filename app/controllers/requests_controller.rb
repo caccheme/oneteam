@@ -12,7 +12,8 @@ class RequestsController < ApplicationController
   def index
     @requests = Request.all
     #Only cancelled requests have a status attribute given by requestor. The other requests pull from model method.
-    @open_requests = @requests - Request.where("status = ?", 'Cancelled').order(:id)
+    # @open_requests = @requests - Request.where("status = ?", 'Cancelled').order(:id)
+    @open_requests = Request.where('status IS NOT "Cancelled"').order(:id).page(params[:page]).per(4)
 
     @commissions = Commission.all
 
