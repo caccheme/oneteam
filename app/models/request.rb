@@ -66,6 +66,37 @@ class Request < ActiveRecord::Base
     end
   end
 
+  def compare_current_to_relevant_skills(current_skills, relevant_skills)
+    @shared_skills = Array.new
+
+    if !current_skills.nil?
+      current_skills = current_skills.split(", ")
+    end
+    
+    if !relevant_skills.nil?
+      relevant_skills = relevant_skills.split(", ")
+    end
+
+    @shared_skills = (current_skills & relevant_skills).join(", ")
+    @ability_matches = @shared_skills.length
+  end
+
+  def compare_desired_to_relevant_skills
+    @shared_skills2 = Array.new
+
+    if !skills_interested_in.nil?
+      skills_interested_in = skills_interested_in.split(", ")
+    end
+    
+    if !relevant_skills.nil?
+      relevant_skills = relevant_skills.split(", ")  
+    end
+
+    @shared_skills2 = skills_interested_in & relevant_skills
+    @training_matches = @shared_skills2.length
+    @shared_skills2 = @shared_skills2.join(", ")
+  end  
+
 #   def employee_already_applied?
 #     responses = get_responses
 #     responses.each do |response|

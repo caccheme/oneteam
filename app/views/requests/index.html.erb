@@ -21,8 +21,12 @@
       <%= image_tag "divider-line.jpg" %>
       <p><b><%= request.title %>:</b> <%= request.start_date %> to <%= request.end_date %> (Status: <%= request.status_text %>)</br>
       Posted by: <%= request.employee.first_name %> <%= request.employee.last_name %> in <%= request.employee.location %> Office (Group: <%= request.employee.group %>) </br>
-      Description: <%= request.description %></br>
-      Required Skills: <%= request.relevant_skills %></p>
+      Description: <%= request.description %></br></br>
+      Required Skills: <%= request.relevant_skills %></br>
+
+      Employee skills: <%= request.employee.current_skills %></br>
+      Employee Desired skills: <%= request.employee.skills_interested_in %></br>
+      Ability score: <%= (request.employee.current_skills && request.relevant_skills).length %></br>
       
       <% commissions = request.get_commissions %>
       <div id="note"><%= request.already_assigned? %></div>
@@ -40,7 +44,8 @@
           
           <% if applied == 0 %>
             <div id="apply-button">
-              <%= link_to image_tag("apply_button.jpg"), new_request_response_path(request) %>
+              <%= link_to image_tag("apply_button.jpg"), new_request_response_path(request) %></br>
+              Training score:<%= (request.employee.skills_interested_in && request.relevant_skills).length %>
             </div>
           <% end %>
         <% end %>  
