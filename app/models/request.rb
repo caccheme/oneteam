@@ -16,6 +16,8 @@ class Request < ActiveRecord::Base
   validates :description, :length => { :in => 5..200 }
   validate :check_request_dates
 
+
+
   def get_responses
     Response.where(:request_id => id)
   end

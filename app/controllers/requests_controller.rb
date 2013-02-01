@@ -9,8 +9,6 @@ class RequestsController < ApplicationController
     @employee_requests = Request.order(:id).page(params[:page]).per(5) 
   end
 
-
-
   def index
     @requests = Request.all
     #Only cancelled requests have a status attribute given by requestor. The other requests pull from model method.
