@@ -81,10 +81,6 @@ class Request < ActiveRecord::Base
       common_skills1 = (current_skills & relevant_skills).join(", ")
       your_qualified_for = common_skills1.split(", ")
       qualified_count = your_qualified_for.size
-    # elsif current_skills.nil?
-    #   "You have not yet filled in your current skills on your profile."
-    # elsif relevant_skills.nil?
-    #   "This request does not have any required skills listed"
     end
 
   end
@@ -104,10 +100,6 @@ class Request < ActiveRecord::Base
       common_skills2 = (skills_interested_in & relevant_skills).join(", ")
       your_interested_in = common_skills2.split(", ")
       interest_count = your_interested_in.size
-    # elsif skills_interested_in.nil?
-    #   "You have not yet filled in skills you are interested in on your profile."
-    # elsif relevant_skills.nil?
-    #   "This request does not have any required skills listed."  
     end
 
   end  

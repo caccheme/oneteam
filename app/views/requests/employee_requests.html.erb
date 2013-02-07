@@ -46,7 +46,10 @@
           <% end %>
         <% end %>  
       <% elsif response.blank? == false  %>
-        <%= link_to "Select Developer", new_response_commission_path(response) %>
+        Interest Rating:<%= request.interest_count(request.relevant_skills, response.employee.skills_interested_in) %>|  
+        Qualified Rating: <%= request.qualified_count(request.relevant_skills, response.employee.current_skills) %>| 
+        <%= link_to "Select Developer", new_response_commission_path(response) %> 
+        
       <% end %>    
 </p>
     <% end %>
