@@ -24,30 +24,29 @@
       Description: <%= request.description %></br></br>
       Required Skills: <%= request.relevant_skills %></br>
 
-      Employee skills: <%= request.employee.current_skills %></br>
-      Employee Desired skills: <%= request.employee.skills_interested_in %></br>
-      Ability score: <%= (request.employee.current_skills && request.relevant_skills).length %></br>
-      
+      Your Interest Rating:<%= request.interest_count(request.relevant_skills, current_employee.skills_interested_in) %></br>
+      Your Qualified Rating: <%= request.qualified_count(request.relevant_skills, current_employee.current_skills) %></br>  
+
       <% commissions = request.get_commissions %>
       <div id="note"><%= request.already_assigned? %></div>
         <% if !request.already_assigned? %>
           <% if author? (request) %>
             <div id="note"><%= "You posted this request." %></div>
           <% else %>
-            <% responses = request.get_responses %>
-            <% responses.each do |response| %>     
-            <% if response.employee_id == current_employee.id %>
-              <%= image_tag "applied_button.jpg" %>
-              <% applied = 1 %>
-            <% end %>
-          <% end %>
           
-          <% if applied == 0 %>
-            <div id="apply-button">
-              <%= link_to image_tag("apply_button.jpg"), new_request_response_path(request) %></br>
-              Training score:<%= (request.employee.skills_interested_in && request.relevant_skills).length %>
-            </div>
-          <% end %>
+            <% responses = request.get_responses %>
+            <% responses.each do |response| %> 
+              <% if response.employee_id == current_employee.id %>
+                <%= image_tag "applied_button.jpg" %>
+                <% applied = 1 %>
+              <% end %>             
+            <% end %>
+          
+            <% if applied == 0 %>
+              <div id="apply-button">
+                <%= link_to image_tag("apply_button.jpg"), new_request_response_path(request) %></br>            
+              </div>
+            <% end %>  
         <% end %>  
       <% end %>
     <% end %>

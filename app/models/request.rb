@@ -66,61 +66,50 @@ class Request < ActiveRecord::Base
     end
   end
 
-  def compare_current_to_relevant_skills(current_skills, relevant_skills)
-    @shared_skills = Array.new
+  def qualified_count(relevant_skills, current_skills)
+    common_skills1 = Array.new
 
+    if !relevant_skills.nil?
+      relevant_skills = relevant_skills.split(", ")
+    end
+    
     if !current_skills.nil?
       current_skills = current_skills.split(", ")
+    end  
+
+    if !relevant_skills.nil? & !current_skills.nil?
+      common_skills1 = (current_skills & relevant_skills).join(", ")
+      your_qualified_for = common_skills1.split(", ")
+      qualified_count = your_qualified_for.size
+    # elsif current_skills.nil?
+    #   "You have not yet filled in your current skills on your profile."
+    # elsif relevant_skills.nil?
+    #   "This request does not have any required skills listed"
     end
+
+  end
+
+  def interest_count(relevant_skills, skills_interested_in) 
+    common_skills2 = Array.new
     
     if !relevant_skills.nil?
       relevant_skills = relevant_skills.split(", ")
     end
-
-    @shared_skills = (current_skills & relevant_skills).join(", ")
-    @ability_matches = @shared_skills.length
-  end
-
-  def compare_desired_to_relevant_skills
-    @shared_skills2 = Array.new
-
+    
     if !skills_interested_in.nil?
       skills_interested_in = skills_interested_in.split(", ")
-    end
-    
-    if !relevant_skills.nil?
-      relevant_skills = relevant_skills.split(", ")  
+    end  
+
+    if !relevant_skills.nil? & !skills_interested_in.nil?
+      common_skills2 = (skills_interested_in & relevant_skills).join(", ")
+      your_interested_in = common_skills2.split(", ")
+      interest_count = your_interested_in.size
+    # elsif skills_interested_in.nil?
+    #   "You have not yet filled in skills you are interested in on your profile."
+    # elsif relevant_skills.nil?
+    #   "This request does not have any required skills listed."  
     end
 
-    @shared_skills2 = skills_interested_in & relevant_skills
-    @training_matches = @shared_skills2.length
-    @shared_skills2 = @shared_skills2.join(", ")
   end  
-
-#   def employee_already_applied?
-#     responses = get_responses
-#     responses.each do |response|
-#       if response.employee_id == helpers.current_employee.id 
-#         true
-#       end
-#     end  
-#   end  
-
-# def helpers
-#   ApplicationController.helpers
-# end
-
-
-  # def cancel_status? 
-  #   if status_text == 'Cancelled'  
-  #     "Cancelled" 
-  #   else 
-  #     commissions =get_commissions
-  #       if commission.blank? 
-  #         "Active"  
-  #         link_to 'Cancel', edit_request_path(request.id) 
-  #       end 
-  #   end
-  # end 
 
 end

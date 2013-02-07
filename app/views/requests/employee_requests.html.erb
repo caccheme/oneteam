@@ -23,7 +23,7 @@
     Description: <%= request.description %></br>
     Required Skills: <%= request.relevant_skills %></br>
  
-  <% if request.status == 'Cancelled' %> 
+    <% if request.status == 'Cancelled' %> 
     <%= "Cancelled" %>
     <% else %>
       <% commissions = request.get_commissions %>
