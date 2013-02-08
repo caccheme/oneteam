@@ -5,6 +5,7 @@ gem "bcrypt-ruby", :require => "bcrypt"
 gem 'kaminari'
 gem "carrierwave"
 gem "simple_form"
+gem 'yaml_db'
 
 group :development do
 	gem 'debugger'

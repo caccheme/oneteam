@@ -26,7 +26,7 @@ class Request < ActiveRecord::Base
 
   def project_status 
     if status == 'Cancelled'
-       "Cancelled"
+      "Cancelled"
     elsif end_date <= Date.today 
       "Closed, Completed"
     elsif end_date <= Date.today 
@@ -61,47 +61,74 @@ class Request < ActiveRecord::Base
   end
 
   def already_assigned?
-    if !commissions.blank?
+    unless commissions.blank?
       "Developer already selected"
     end
   end
 
-  def qualified_count(relevant_skills, current_skills)
-    common_skills1 = Array.new
-
-    if !relevant_skills.nil?
-      relevant_skills = relevant_skills.split(", ")
-    end
-    
-    if !current_skills.nil?
-      current_skills = current_skills.split(", ")
-    end  
-
-    if !relevant_skills.nil? & !current_skills.nil?
-      common_skills1 = (current_skills & relevant_skills).join(", ")
-      your_qualified_for = common_skills1.split(", ")
-      qualified_count = your_qualified_for.size
-    end
-
+  def qualified_count(employee)
+    common_skills1 = list_to_array(relevant_skills) & list_to_array(employee.current_skills)
+    count_common_skills(common_skills1)
   end
 
-  def interest_count(relevant_skills, skills_interested_in) 
-    common_skills2 = Array.new
-    
-    if !relevant_skills.nil?
-      relevant_skills = relevant_skills.split(", ")
-    end
-    
-    if !skills_interested_in.nil?
-      skills_interested_in = skills_interested_in.split(", ")
-    end  
+  def interest_count(employee)
+    common_skills2 = list_to_array(relevant_skills) & list_to_array(employee.skills_interested_in)
+    count_common_skills(common_skills2)
+  end
 
-    if !relevant_skills.nil? & !skills_interested_in.nil?
-      common_skills2 = (skills_interested_in & relevant_skills).join(", ")
-      your_interested_in = common_skills2.split(", ")
-      interest_count = your_interested_in.size
-    end
+  def list_to_array(skills)
+    skills = skills.split(", ") || []  
+  end
 
-  end  
+  def count_common_skills(array)
+    array = array.size || 0
+  end
+
+# popularity = case tweet.retweet_count
+# when 0..9    then nil
+# when 10..99  then "trending"
+# else               "hot"
+# end  #this does a case method setting the popularity to the method output for different conditionals
+
+
+  # option[:status] ||= 'Open' #this sets the option to 'open' if it is nil
+
+  # def qualified_count(relevant_skills, current_skills)
+  #   common_skills1 = Array.new
+
+  #   if !relevant_skills.nil?
+  #     relevant_skills
+  #   end
+    
+  #   if !current_skills.nil?
+  #     current_skills
+  #   end  
+
+  #   if !relevant_skills.nil? & !current_skills.nil?
+  #     common_skills1 = (current_skills & relevant_skills).join(", ")
+  #     your_qualified_for = common_skills1.split(", ")
+  #     qualified_count = your_qualified_for.size
+  #   end
+
+  # end
+
+  # def interest_count(relevant_skills, skills_interested_in) 
+  #   common_skills2 = Array.new
+    
+  #   if !relevant_skills.nil?
+  #     relevant_skills = relevant_skills.split(", ")
+  #   end
+    
+  #   if !skills_interested_in.nil?
+  #     skills_interested_in = skills_interested_in.split(", ")
+  #   end  
+
+  #   if !relevant_skills.nil? & !skills_interested_in.nil?
+  #     common_skills2 = (skills_interested_in & relevant_skills).join(", ")
+  #     your_interested_in = common_skills2.split(", ")
+  #     interest_count = your_interested_in.size
+  #   end
+
+  # end  
 
 end

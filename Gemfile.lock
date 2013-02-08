@@ -121,6 +121,7 @@ GEM
     uglifier (1.2.3)
       execjs (>= 0.3.0)
       multi_json (>= 1.0.2)
+    yaml_db (0.2.3)
 
 PLATFORMS
   x86-mingw32
@@ -139,3 +140,4 @@ DEPENDENCIES
   simple_form
   sqlite3 (= 1.3.5)
   uglifier (= 1.2.3)
+  yaml_db

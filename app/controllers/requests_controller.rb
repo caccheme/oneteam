@@ -84,11 +84,9 @@ class RequestsController < ApplicationController
 
     if params[:cancel_button]
       redirect_to _employee_requests_path
-    elsif @request.update_attributes(params[:request])
+    elsif params[:cancel_request]
+      @request.update_attributes(params[:status]) 
       flash[:success] = "Request cancelled."
-      redirect_to _employee_requests_path
-    elsif @request.update_attributes(params[:request])
-      flash[:success] = "Request updated"
       redirect_to _employee_requests_path
     else
       render 'edit'

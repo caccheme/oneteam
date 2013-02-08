@@ -24,8 +24,8 @@
       Description: <%= request.description %></br></br>
       Required Skills: <%= request.relevant_skills %></br>
 
-      Your Interest Rating:<%= request.interest_count(request.relevant_skills, current_employee.skills_interested_in) %></br>
-      Your Qualified Rating: <%= request.qualified_count(request.relevant_skills, current_employee.current_skills) %></br>  
+      Your Interest Rating:<%= request.interest_count(current_employee) %></br>
+      Your Qualified Rating: <%= request.qualified_count(current_employee) %></br>  
 
       <% commissions = request.get_commissions %>
       <div id="note"><%= request.already_assigned? %></div>

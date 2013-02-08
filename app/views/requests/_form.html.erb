@@ -13,7 +13,7 @@
   </div>
   <div class="actions">
     <div id="cancel-req">
-      <%= f.submit 'Cancel Request' %> 
+      <%= f.submit 'Cancel Request', :name => 'cancel_request' %> 
     
       <div id="req-cancel-cancel">
         <%= f.submit "Don't Cancel Request", :action => 'update', :name => 'cancel_button' %>
