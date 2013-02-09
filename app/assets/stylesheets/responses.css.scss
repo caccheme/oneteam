@@ -4,6 +4,7 @@
 
 .res-cancel-new {
   float:right;
+  margin-right: 550px;
     & input {
       height:23px;
       width: 56px;
@@ -12,6 +13,7 @@
 
 #res-submit {
   & input {
+    margin-top:50px;
     height:23px;
     width:56px;
   }
@@ -19,11 +21,9 @@
 
 .res-comment {
   & label {
-	width:250px;
+	  width:250px;
   }
   & textarea {
-    position: relative;
-    left:-253px;
-    top: -1px;
+    margin-left: -135px;
   }
 }

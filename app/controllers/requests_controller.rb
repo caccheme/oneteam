@@ -3,7 +3,6 @@ class RequestsController < ApplicationController
  before_filter :signed_in_employee
  before_filter :check_for_cancel, :only => [:create, :update]
 
-
   def employee_requests
     @all_requests = Request.find_all_by_employee_id(current_employee)
     @employee_requests = Request.order(:id).page(params[:page]).per(5) 
@@ -11,13 +10,11 @@ class RequestsController < ApplicationController
 
   def index
     @requests = Request.all
-    #Only cancelled requests have a status attribute given by requestor. The other requests pull from model method.
-    # @open_requests = @requests - Request.where("status = ?", 'Cancelled').order(:id)
     @open_requests = Request.where('status IS NOT "Cancelled"').order(:id).page(params[:page]).per(4)
     @commissions = Commission.all
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html 
       format.json { render json: @requests }
     end
   end
@@ -27,7 +24,7 @@ class RequestsController < ApplicationController
     @skills = Skill.all
     relevant_skills = params[:relevant_skills]
 
-    if !params[:relevant_skills].nil?
+    unless params[:relevant_skills].nil?
       relevant_skills = @request.relevant_skills.split(", ")
     end
     
@@ -46,7 +43,7 @@ class RequestsController < ApplicationController
 
     relevant_skills = params[:relevant_skills]
 
-    if !params[:relevant_skills].nil?
+    unless params[:relevant_skills].nil?
       relevant_skills = @request.relevant_skills.split(", ")
     end
 
@@ -55,10 +52,7 @@ class RequestsController < ApplicationController
   def create
     @request = current_employee.requests.build(params[:request])
     @skills = Skill.all 
-
-     @request.relevant_skills = params[:relevant_skills].to_a
-     @request.relevant_skills = @request.relevant_skills.join(", ")
-
+    @request.relevant_skills = params[:relevant_skills].to_a.join(", ")
 
     if params[:cancel_button]
       redirect_to _employee_requests_path
@@ -78,21 +72,17 @@ class RequestsController < ApplicationController
   def update
     @request = Request.find(params[:id])
     @skills = Skill.all
-
-    @request.relevant_skills = params[:relevant_skills].to_a
-    @request.relevant_skills = @request.relevant_skills.join(", ")
-
-    if params[:cancel_button]
-      redirect_to _employee_requests_path
-    elsif params[:cancel_request]
-      @request.update_attributes(params[:status]) 
-      flash[:success] = "Request cancelled."
-      redirect_to _employee_requests_path
-    else
-      render 'edit'
+    @request.relevant_skills = params[:relevant_skills].to_a.join(", ")
+    
+    respond_to do |format|
+      if @request.update_attributes(params[:request])
+        format.html { redirect_to _employee_requests_path }
+        format.json { head :no_content }
+      elsif params[:cancel_button]
+        format.html { redirect_to _employee_requests_path }
+      end
     end
-
-  end 
+  end
 
   def destroy
     @request = Request.find(params[:id])

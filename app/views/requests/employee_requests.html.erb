@@ -24,7 +24,7 @@
     Required Skills: <%= request.relevant_skills %></br>
  
     <% if request.status == 'Cancelled' %> 
-    <%= "Cancelled" %>
+      <div id= "note"><%= "Cancelled" %></div></br>
     <% else %>
       <% commissions = request.get_commissions %>
         <% if commissions.blank? %>

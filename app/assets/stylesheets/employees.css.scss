@@ -9,6 +9,7 @@
   }
   & #emp-cancel-update {
     float:right;
+    margin-right: 500px;
     & input {
       width: 100px;
       height: 23px;
@@ -23,6 +24,7 @@
   }
   & .emp-cancel-new {
   float:right;
+  margin-right:350px;
     & input {
     width:100px;
     height: 35px;
@@ -46,8 +48,6 @@
 #profile ul li {
   list-style: none;
 }
-
-
 
 #profile_pic {
   width: 150px;
@@ -195,14 +195,14 @@
 
 #emp-thirteenth {
   position: relative;
-  top: -315px;
+  top: -300px;
   left: 270px;
   width: 250px;
 }
 
 #emp-fourteenth {
   position: relative;
-  top: -300px;
+  top: -325px;
   left: 10px;
   & .actions input {
     width:100px;
@@ -211,11 +211,12 @@
 }
 
 #emp-form {
-  height: 490px;
+  height: 470px;
 }
 
 .frstnm input {
   width: 250px;
+  margin-top: 10px;
 }
 
 .lnfield {
@@ -228,18 +229,19 @@
   }
 }
 
-.newfirst input {
+.newemail {
+  & input {
   width: 250px;
-}
-
-.newsecond label {
-  margin-top: -5px;
+  margin-top: 10px;
+  }
 }
 
 .passfld input {
   width: 250px;
+  margin-top: 10px;
 }
 
 .newsecond input {
   width: 250px;
+  margin-top:10px;
 }

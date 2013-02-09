@@ -11,13 +11,8 @@
     </div>
   <% end %>
  
-  <div class="field">
     <%= f.hidden_field :employee_id, :value => @session.id %>
-  </div>
-
-  <div class="field">
     <%= f.hidden_field :employee_name, :value => current_employee.first_name + " " + current_employee.last_name %>
-  </div>
    
   <div class="res-comment">
     <%= f.label :comment, "Comment on your application" %><br />

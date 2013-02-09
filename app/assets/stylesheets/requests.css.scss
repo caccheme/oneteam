@@ -168,6 +168,7 @@ input[type='submit'] {
     }
   & #req-cancel-cancel {
     float:right;
+    margin-right:400px;
     & input {
       width: 160px;
       height: 23px;
@@ -190,6 +191,7 @@ input[type='submit'] {
 #req-actions {
   & #req-cancel-new {
     float:right;
+    margin-right:500px;
     & input {
       width: 100px;
       height: 23px;
