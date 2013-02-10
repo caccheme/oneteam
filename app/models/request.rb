@@ -14,7 +14,7 @@ class Request < ActiveRecord::Base
 
   validates_presence_of :title, :start_date, :end_date
   validates :description, :length => { :in => 5..200 }
-  validate :end_date_cannot_be_before_start_date, :start_date_cannot_be_in_the_past
+  validate :end_date_cannot_be_before_start_date
 
   def get_responses
     Response.where(:request_id => id)
@@ -68,12 +68,6 @@ class Request < ActiveRecord::Base
 
   def count_common_skills(array)
     array.length
-  end
-
-  def start_date_cannot_be_in_the_past
-    if !start_date.nil? and start_date < Date.today
-      errors.add(:start_date, "can't be in the past")
-    end
   end
  
   def end_date_cannot_be_before_start_date
