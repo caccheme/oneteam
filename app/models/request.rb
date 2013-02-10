@@ -62,12 +62,14 @@ class Request < ActiveRecord::Base
     count_common_skills(relevant_skills, employee.skills_interested_in)
   end
 
-  def count_common_skills(array1, array2)
-    array1 = array1.split(", ") || []
-    array2 = array2.split(", ") || []
-    (array1 & array2).length
+  def count_common_skills(str1, str2)
+    (split_str(str1) & split_str(str2)).length
   end
- 
+
+  def split_str(str)
+    str.split(", ") || []
+  end
+
   def end_date_cannot_be_before_start_date
     if !end_date.nil? and start_date > end_date
       errors.add(:end_date, "can't be before start date")
