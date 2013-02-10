@@ -54,20 +54,18 @@ class Request < ActiveRecord::Base
     end
   end
 
-  def qualified_count(employee)    
-    count_common_skills(list_to_array(relevant_skills) & list_to_array(employee.current_skills))
+  def qualified_count(employee)  
+    count_common_skills(relevant_skills, employee.current_skills)
   end
 
   def interest_count(employee)
-    count_common_skills(list_to_array(relevant_skills) & list_to_array(employee.skills_interested_in))
+    count_common_skills(relevant_skills, employee.skills_interested_in)
   end
 
-  def list_to_array(skills)
-    skills.split(", ") || []  
-  end
-
-  def count_common_skills(array)
-    array.length
+  def count_common_skills(array1, array2)
+    array1 = array1.split(", ") || []
+    array2 = array2.split(", ") || []
+    (array1 & array2).length
   end
  
   def end_date_cannot_be_before_start_date
