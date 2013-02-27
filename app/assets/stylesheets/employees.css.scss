@@ -187,10 +187,15 @@
 }
 
 #emp-twelfth {
-  position: relative;
-  top: -170px;
-  left: -10px;
-  width: 350px;
+  margin-top:-150px;
+  & label {
+    position:relative;
+    top:-100px;
+    
+  }
+
+  
+
 }
 
 #emp-thirteenth {
@@ -202,7 +207,7 @@
 
 #emp-fourteenth {
   position: relative;
-  top: -300px;
+  top: -350px;
   left: 10px;
   & .actions input {
     width:100px;
@@ -211,7 +216,7 @@
 }
 
 #emp-form {
-  height: 470px;
+  height: 870px;
 }
 
 .frstnm input {
@@ -244,4 +249,31 @@
 .newsecond input {
   width: 250px;
   margin-top:10px;
+}
+
+#dev-skill-field {
+  position:relative;
+  top:-275px;
+}
+
+
+#dev-skill-exp ul {
+  position:relative;
+  top:-170px;
+  left: 330px;
+  display:block;
+  list-style: none;
+}
+
+#des-skill-field {
+  position:relative;
+  top:-375px;
+}
+
+#des-skill-exp ul {
+  position:relative;
+  top:-270px;
+  left: 330px;
+  display:block;
+  list-style: none;
 }

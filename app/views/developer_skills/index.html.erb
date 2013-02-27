@@ -1,0 +1,27 @@
+<h1>Listing developer_skills</h1>
+
+<table>
+  <tr>
+    <th>Skill</th>
+    <th>Employee</th>
+    <th>Proficiency</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @developer_skills.each do |developer_skill| %>
+  <tr>
+    <td><%= developer_skill.skill_id %></td>
+    <td><%= developer_skill.employee_id %></td>
+    <td><%= developer_skill.proficiency %></td>
+    <td><%= link_to 'Show', developer_skill %></td>
+    <td><%= link_to 'Edit', edit_developer_skill_path(developer_skill) %></td>
+    <td><%= link_to 'Destroy', developer_skill, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Developer skill', new_developer_skill_path %>

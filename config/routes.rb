@@ -1,9 +1,10 @@
 OneteamApp::Application.routes.draw do
 
-  resources :skills
+  resources :desired_skills
+  resources :developer_skills
+  resources :request_skills
 
   get "calendars/index"
-
   get "password_resets/new"
 
   resources :feedbacks
@@ -23,6 +24,15 @@ OneteamApp::Application.routes.draw do
       resources :commissions
   end 
 
+  resources :employees do
+    resources :desired_skills
+    resources :developer_skills
+  end
+
+  resources :request do
+    resources :request_skills
+  end
+  
   resources :employees
   resources :sessions
   resources :requests

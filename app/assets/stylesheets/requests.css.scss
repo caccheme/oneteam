@@ -189,6 +189,7 @@ input[type='submit'] {
 }
 
 #req-actions {
+  margin-top:-75px;
   & #req-cancel-new {
     float:right;
     margin-right:500px;
@@ -207,4 +208,29 @@ input[type='submit'] {
       height:35px;
     }
   }
+}
+
+.radio_button_field {
+  display:block;
+  position:relative;
+  top:25px;
+
+}
+
+#req-skill-field {
+  position:relative;
+  top:-90px;
+}
+
+
+#req-skill-exp ul li{
+  position:relative;
+  left: 330px;
+  top:20px;
+  display:block;
+  list-style: none;
+}
+
+#req-form {
+  height:650px;
 }

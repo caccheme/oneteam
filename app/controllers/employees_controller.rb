@@ -32,17 +32,19 @@ before_filter :check_for_cancel, :only => [:create, :update]
   def edit
     @employee = Employee.find(params[:id])
     @skills = Skill.all
+    @developer_skills = DeveloperSkill.all
+    @desired_skills = DesiredSkill.all
     
-    current_skills = params[:current_skills]
+    develoer_skills = params[:developer_skills]
 
-    if !params[:current_skills].nil?
-      current_skills = @employee.current_skills.split(", ")
+    if !params[:developer_skills].nil?
+      developer_skills = @employee.developer_skills.split(", ")
     end
 
-    skills_interested_in = params[:skills_interested_in]
+    desired_skills = params[:desired_skills]
 
-    if !params[:skills_interested_in].nil?
-      skills_interested_in = @employee.skills_interested_in.split(", ")
+    if !params[:desired_skills].nil?
+      desired_skills = @employee.desired_skills.split(", ")
     end
 
   end
@@ -65,11 +67,11 @@ before_filter :check_for_cancel, :only => [:create, :update]
     @employee = Employee.find(params[:id])
     @skills = Skill.all
 
-    @employee.current_skills = params[:current_skills].to_a
-    @employee.current_skills = @employee.current_skills.join(", ")
+    # @employee.developer_skills = params[:developer_skills].to_a
+    # @employee.developer_skills = @employee.developer_skills.join(", ")
 
-    @employee.skills_interested_in = params[:skills_interested_in].to_a
-    @employee.skills_interested_in = @employee.skills_interested_in.join(", ")
+    # @employee.skills_interested_in = params[:skills_interested_in].to_a
+    # @employee.skills_interested_in = @employee.skills_interested_in.join(", ")
 
     if params[:cancel_button]
       redirect_to @employee

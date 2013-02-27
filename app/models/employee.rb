@@ -2,7 +2,7 @@ class Employee < ActiveRecord::Base
   has_secure_password
 
   attr_protected :password_salt, :password_hash 
-  attr_accessible :employee_id, :password, :password_confirmation, :department, :email, :group, :location, :manager, :first_name, :last_name, :description, :position, :current_skills, :skills_interested_in, :years_with_company, :image
+  attr_accessible :employee_id, :password, :password_confirmation, :department, :email, :group, :location, :manager, :first_name, :last_name, :description, :position, :years_with_company, :image, :developer_skills, :desired_skills
 
   before_save :encrypt_password
 
@@ -11,6 +11,12 @@ class Employee < ActiveRecord::Base
 
   has_many :responses, :through => :requests
   has_many :commissions, :through => :responses
+
+  has_many :developer_skills
+  has_many :desired_skills
+
+  accepts_nested_attributes_for :desired_skills
+  accepts_nested_attributes_for :developer_skills
   
   accepts_nested_attributes_for :requests
   accepts_nested_attributes_for :responses
@@ -55,6 +61,19 @@ class Employee < ActiveRecord::Base
   		self.password_salt = BCrypt::Engine.generate_salt
   		self.password_hash = BCrypt::Engine.hash_secret(password, password_salt)
   	end	
+  end
+
+  def dev_skills
+    h = Array.new
+    self.developer_skills.each do |dev_skill|
+      h[dev_skill.skill_id] = dev_skill.proficiency
+    end
+  end
+
+  def dev_skills= hash
+    loop over hash
+      new_dev_skills << DeveloperSkill.new
+      self.developer_skills = new_dev_skills
   end
 
 end

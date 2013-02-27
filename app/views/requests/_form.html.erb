@@ -6,8 +6,6 @@
 <%= form_for(@request) do |f| %>
   <div class = "field">
     <%= f.hidden_field :status, :value => 'Cancelled' %>
-    <%= f.hidden_field :relevant_skills %>
-    <%= f.hidden_field :employee_id, :value => current_employee.id %>
   </div>
   <div class="actions">
     <div id="cancel-req">

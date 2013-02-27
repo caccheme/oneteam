@@ -6,9 +6,13 @@ class Request < ActiveRecord::Base
   has_many :responses, :dependent => :destroy
   accepts_nested_attributes_for :responses, :allow_destroy => true
 
+  has_many :request_skills
+  accepts_nested_attributes_for :request_skills
+
   has_many :commissions, :through => :responses
   belongs_to :commission
 
+#still need this skill association?
   has_and_belongs_to_many :skills
   belongs_to :skills
 
@@ -55,11 +59,11 @@ class Request < ActiveRecord::Base
   end
 
   def qualified_count(employee)  
-    count_common_skills(relevant_skills, employee.current_skills)
+    count_common_skills(relevant_skills, employee.developer_skills)
   end
 
   def interest_count(employee)
-    count_common_skills(relevant_skills, employee.skills_interested_in)
+    count_common_skills(relevant_skills, employee.desired_skills)
   end
 
   def count_common_skills(str1, str2)
@@ -75,6 +79,7 @@ class Request < ActiveRecord::Base
       errors.add(:end_date, "can't be before start date")
     end
   end
+
 
 
 

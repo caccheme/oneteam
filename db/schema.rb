@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130123044505) do
+ActiveRecord::Schema.define(:version => 20130215014318) do
 
   create_table "commissions", :force => true do |t|
     t.integer  "response_id"
@@ -19,6 +19,22 @@ ActiveRecord::Schema.define(:version => 20130123044505) do
     t.string   "comment"
     t.integer  "request_id"
     t.string   "name"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  create_table "desired_skills", :force => true do |t|
+    t.integer  "skill_id"
+    t.integer  "employee_id"
+    t.integer  "interest"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  create_table "developer_skills", :force => true do |t|
+    t.integer  "skill_id"
+    t.integer  "employee_id"
+    t.integer  "proficiency"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
   end
@@ -50,6 +66,13 @@ ActiveRecord::Schema.define(:version => 20130123044505) do
   create_table "feedbacks", :force => true do |t|
     t.string   "comment"
     t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "request_skills", :force => true do |t|
+    t.integer  "skill_id"
+    t.integer  "request_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end

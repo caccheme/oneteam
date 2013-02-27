@@ -33,6 +33,7 @@ class RequestsController < ApplicationController
   def new
     @request = Request.new
     @skills = Skill.all  
+    @desired_skills = DesiredSkill.all
 
     respond_with(@request)
   end

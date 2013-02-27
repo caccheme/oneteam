@@ -1,7 +1,8 @@
 <div id="emp-form">
 
-<%= hidden_field_tag "employee[current_skills][]", "" %>
-<%= hidden_field_tag "employee[skills_interested_in][]", "" %>
+<%= hidden_field_tag "employee[developer_skills][]", "" %>
+<%= hidden_field_tag "employee[desired_skills][]", "" %>
+
 
 <%= form_for(@employee) do |f| %>
   <% if @employee.errors.any? %>
@@ -87,33 +88,74 @@
    <%= f.file_field :image %></br>
 </div>
 
-<div id="emp-twelfth">
-  <div class="field">
-    <%= f.label :current_skills %>
+
+
+
+
+
+
+
+
+
+  
+<div id = "dev-skill-exp"> 
+  <ul>
+    <li><%= "0 = No experience" %></li>
+    <li><%= "1 = Begginner" %></li>
+    <li><%= "2 = Middle Proficiency" %></li>
+    <li><%= "3 = Proficient" %></li>
+    <li><%= "4 = Expert" %></li>
+  </ul>
+</div>
+<div id="dev-skill-field">  
+  <table>
+    <tr>
+      <td><%= f.label :developer_skills  %></td>
+      <td><%= "Ability Level:" %></td>
+    </tr>
+    <tr><td></td></tr>
     <% @skills.each do |skill| %>
-      <div class="inbox">       
-       <%= check_box_tag "current_skills[]", skill.language, @employee.current_skills.include?(skill.language) %>
-        <div class = "language">
-         <%= skill.language %>
-        </div>
-     </div>
+    <tr>
+      <td><%= check_box_tag "developer_skills[]", skill.id %>
+        <%= skill.language %>
+        <% skill.id %></td>
+      <td><% [0, 1, 2, 3, 4].each do |level| %>
+            <%= radio_button_tag skill.language, 'employee.developer_skills.level', @employee.developer_skills.include?(skill.id) %>
+            <%=  level %>
+          <% end %></td>
+    </tr>
     <% end %>
-  </div>
+  </table>
 </div>
 
-<div id="emp-thirteenth">
-   <div class="field">
-     <%= f.label :skills_interested_in, "Desired skills" %>
-      <% @skills.each do |skill| %>
-      <div class="inbox">
-         <%= check_box_tag "skills_interested_in[]", skill.language, @employee.skills_interested_in.include?(skill.language) %>
-       <div class = "language">
-         <%= skill.language %>
-        </div>
-     </div>
+<div id = "des-skill-exp"> 
+  <ul>
+    <li><%= "0 = No interest" %></li>
+    <li><%= "1 = Slight interest" %></li>
+    <li><%= "2 = Moderate interest" %></li>
+    <li><%= "3 = Interested" %></li>
+    <li><%= "4 = Very Interested" %></li>
+  </ul>
+</div>
+<div id="des-skill-field">  
+  <table>
+    <tr>
+      <td><%= f.label :desired_skills %></td>
+      <td><%= "Interest Level:" %></td>
+    </tr>
+    <tr><td></td></tr>
+    <% @skills.each do |skill| %>
+    <tr>
+      <td><%= check_box_tag "desired_skills[]", skill.language, @employee.desired_skills.include?(skill.language) %>
+      <%= skill.language %></td>
+      <td><% [0, 1, 2, 3, 4].each do |level| %>
+            <%= radio_button_tag skill.language, 'employee.desired_skills.level', @employee.desired_skills.include?(skill.id) %>
+            <%=  level %>
+          <% end %></td>
+    </tr>
     <% end %>
-  </div>
-</div>    
+  </table>
+</div>
    
 <div id="emp-fourteenth">
   <div id="emp-update">

@@ -10,6 +10,7 @@
 </div>
 
 <div id="innercontainer">
+<div id="req-form">  
 
   <h1>Create New Request</h1>
 
@@ -72,19 +73,36 @@
     </ul>
   </div>
 
-<div id="req-skills">
-  <div class = "field" >
-    <%= f.label :relevant_skills %>
+<div id = "req-skill-exp"> 
+  <ul>
+    <li><%= "0 = No need" %></li>
+    <li><%= "1 = Slightly Important" %></li>
+    <li><%= "2 = Important" %></li>
+    <li><%= "3 = Very Important" %></li>
+    <li><%= "4 = Critical" %></li>
+  </ul>
+</div>
+<div id="req-skill-field">  
+  <table>
+    <tr>
+      <td><%= f.label :request_skills  %></td>
+      <td><%= "Relavancy Level:" %></td>
+    </tr>
+    <tr><td></td></tr>
     <% @skills.each do |skill| %>
-      <div class = "inbox">
-        <%= check_box_tag "relevant_skills[]", skill.language %>
-          <div class = "language"> 
-            <%= skill.language %>
-          </div>
-      </div>   
+    <tr>
+      <td><%= check_box_tag "desired_skill[]", skill.id %>
+          <%= skill.language %>
+          <% skill.id %></td>
+      <td><% [0, 1, 2, 3, 4].each do |level| %>
+            <%= radio_button_tag skill.language, 'request.request_skills.level' %>
+            <%=  level %>
+          <% end %></td>
+    </tr>
     <% end %>
-  </div>
-</div>  
+  </table>
+</div>
+
   <div class="field">
     <div id="req-actions">
       <%= f.submit %>
@@ -96,3 +114,4 @@
 <% end %>
 </div>
 </div>  
+</div>
