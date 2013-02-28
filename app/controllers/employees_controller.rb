@@ -25,34 +25,31 @@ before_filter :check_for_cancel, :only => [:create, :update]
   def new
     @employee = Employee.new
     @skills = Skill.all
-
+    
     respond_with(@employee)
   end
 
   def edit
-    @employee = Employee.find(params[:id])
     @skills = Skill.all
-    @developer_skills = DeveloperSkill.all
-    @desired_skills = DesiredSkill.all
-    
-    develoer_skills = params[:developer_skills]
+    @employee = Employee.find(params[:id])
+ 
+    # developer_skills = params[:developer_skills]
 
-    if !params[:developer_skills].nil?
-      developer_skills = @employee.developer_skills.split(", ")
-    end
+    # if !params[:developer_skills].nil?
+    #   developer_skills = @employee.developer_skills.split(", ")
+    # end
 
-    desired_skills = params[:desired_skills]
+    # desired_skills = params[:desired_skills]
 
-    if !params[:desired_skills].nil?
-      desired_skills = @employee.desired_skills.split(", ")
-    end
+    # if !params[:desired_skills].nil?
+    #   desired_skills = @employee.desired_skills.split(", ")
+    # end
 
   end
 
   def create
     @employee = Employee.new(params[:employee])
-    @skills = Skill.all
-     
+
     if params[:cancel_button]
       redirect_to root_url
     elsif @employee.save
@@ -65,14 +62,7 @@ before_filter :check_for_cancel, :only => [:create, :update]
 
   def update
     @employee = Employee.find(params[:id])
-    @skills = Skill.all
-
-    # @employee.developer_skills = params[:developer_skills].to_a
-    # @employee.developer_skills = @employee.developer_skills.join(", ")
-
-    # @employee.skills_interested_in = params[:skills_interested_in].to_a
-    # @employee.skills_interested_in = @employee.skills_interested_in.join(", ")
-
+  
     if params[:cancel_button]
       redirect_to @employee
     elsif @employee.update_attributes(params[:employee])
@@ -80,11 +70,11 @@ before_filter :check_for_cancel, :only => [:create, :update]
         format.html { redirect_to @employee, notice: 'Employee profile was successfully updated.' }
         format.json { head :no_content }
       end  
-    elsif !@employee.update_attributes(params[:employee])
-      respond_to do |format|
-        format.html { render action: "edit" }
-        format.json { render json: @employee.errors, status: :unprocessable_entity }
-      end
+    # elsif !@employee.update_attributes(params[:employee])
+    #   respond_to do |format|
+    #     format.html { render action: "edit" }
+    #     format.json { render json: @employee.errors, status: :unprocessable_entity }
+    #   end
     end
   end
 

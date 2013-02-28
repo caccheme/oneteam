@@ -14,7 +14,7 @@
 
   <h1>Create New Request</h1>
 
-<%= hidden_field_tag "request[relevant_skills][]", "" %>
+<%= hidden_field_tag "request[request_skills][]", "" %>
 
 <%= form_for(@request) do |f| %>
   <% if @request.errors.any? %>
@@ -86,17 +86,17 @@
   <table>
     <tr>
       <td><%= f.label :request_skills  %></td>
-      <td><%= "Relavancy Level:" %></td>
+      <td><%= "Relevancy Level:" %></td>
     </tr>
     <tr><td></td></tr>
-    <% @skills.each do |skill| %>
+    <% @request_skills.each do |req_skill| %>
     <tr>
-      <td><%= check_box_tag "desired_skill[]", skill.id %>
-          <%= skill.language %>
-          <% skill.id %></td>
-      <td><% [0, 1, 2, 3, 4].each do |level| %>
-            <%= radio_button_tag skill.language, 'request.request_skills.level' %>
-            <%=  level %>
+      <td><%= check_box_tag "request_skills[]", req_skill.id %>
+          <%= req_skill.language %>
+      </td>
+      <td><% (0..4).each do |n| %>
+            <%= radio_button_tag "request[req_skills][#{req_skill.id}]", "#{n}", request.has_skill_level?(n) %>
+            <%=  n %>
           <% end %></td>
     </tr>
     <% end %>

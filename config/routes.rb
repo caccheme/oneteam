@@ -1,5 +1,6 @@
 OneteamApp::Application.routes.draw do
 
+  resources :skills
   resources :desired_skills
   resources :developer_skills
   resources :request_skills

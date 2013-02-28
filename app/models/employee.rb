@@ -2,7 +2,7 @@ class Employee < ActiveRecord::Base
   has_secure_password
 
   attr_protected :password_salt, :password_hash 
-  attr_accessible :employee_id, :password, :password_confirmation, :department, :email, :group, :location, :manager, :first_name, :last_name, :description, :position, :years_with_company, :image, :developer_skills, :desired_skills
+  attr_accessible :employee_id, :password, :password_confirmation, :department, :email, :group, :location, :manager, :first_name, :last_name, :description, :position, :years_with_company, :image, :developer_skills, :desired_skills, :dev_skills, :des_skills, :skills
 
   before_save :encrypt_password
 
@@ -12,12 +12,6 @@ class Employee < ActiveRecord::Base
   has_many :responses, :through => :requests
   has_many :commissions, :through => :responses
 
-  has_many :developer_skills
-  has_many :desired_skills
-
-  accepts_nested_attributes_for :desired_skills
-  accepts_nested_attributes_for :developer_skills
-  
   accepts_nested_attributes_for :requests
   accepts_nested_attributes_for :responses
 
@@ -63,17 +57,50 @@ class Employee < ActiveRecord::Base
   	end	
   end
 
+  has_many :developer_skills
+  has_many :desired_skills
+
+  accepts_nested_attributes_for :desired_skills
+  accepts_nested_attributes_for :developer_skills
+  
+  #virtual attributes for new skill resources
   def dev_skills
-    h = Array.new
+    h = {}
     self.developer_skills.each do |dev_skill|
       h[dev_skill.skill_id] = dev_skill.proficiency
     end
   end
 
-  def dev_skills= hash
-    loop over hash
-      new_dev_skills << DeveloperSkill.new
-      self.developer_skills = new_dev_skills
+  def dev_skills= h
+    new_dev_skills = []
+    h.each do |skill_id, proficiency| 
+      new_dev_skills << DeveloperSkill.new(skill_id: skill_id, proficiency: proficiency) 
+    end
+    self.developer_skills = new_dev_skills 
   end
+
+  def des_skills
+    h = {}
+    self.desired_skills.each do |des_skill|
+      h[des_skill.skill_id] = des_skill.interest
+    end
+  end
+
+  def des_skills= h
+    new_des_skills = []
+    h.each do |skill_id, interest| 
+      new_des_skills << DesiredSkill.new(skill_id: skill_id, interest: interest) 
+    end
+    self.desired_skills = new_des_skills
+  end
+
+  def has_skill_level? (skill, n)
+# loop through dev_skill check for dev skill that == skill && n
+
+    dev_skills.include?(Skill.find(n))
+  end
+
+  # def wants_skill_level? (n)
+  #   if des_skills
 
 end

@@ -3,7 +3,8 @@ class DesiredSkillsController < ApplicationController
   # GET /desired_skills.json
   def index
     @employee = Employee.find_by_id(params[:employee_id])
-    @desired_skills = @employee.desired_skills.all
+    # @desired_skills = @employee.desired_skills.all
+    @desired_skills = DesiredSkill.all
 
     respond_to do |format|
       format.html # index.html.erb
@@ -27,7 +28,8 @@ class DesiredSkillsController < ApplicationController
   # GET /desired_skills/new.json
   def new
     @employee = Employee.find_by_id(params[:employee_id])
-    @desired_skill = @employee.desired_skill.new
+    # @desired_skill = @employee.desired_skill.new
+    @desired_skill = DesiredSkill.new 
 
     respond_to do |format|
       format.html # new.html.erb
@@ -45,7 +47,8 @@ class DesiredSkillsController < ApplicationController
   # POST /desired_skills.json
   def create
     @employee = Employee.find_by_id(params[:employee_id])
-    @desired_skill = @employee.desired_skill.new(params[:desired_skill])
+    # @desired_skill = @employee.desired_skill.new(params[:desired_skill])
+    @desired_skill = DesiredSkill.new(params[:desired_skill]) 
 
     respond_to do |format|
       if @desired_skill.save

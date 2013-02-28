@@ -33,7 +33,7 @@ class RequestsController < ApplicationController
   def new
     @request = Request.new
     @skills = Skill.all  
-    @desired_skills = DesiredSkill.all
+    @request_skills = RequestSkill.all
 
     respond_with(@request)
   end
@@ -53,7 +53,9 @@ class RequestsController < ApplicationController
   def create
     @request = current_employee.requests.build(params[:request])
     @skills = Skill.all 
-    @request.relevant_skills = params[:relevant_skills].to_a.join(", ")
+    @request_skills = RequestSkill.all? 
+
+    # @request.relevant_skills = params[:relevant_skills].to_a.join(", ")
 
     if params[:cancel_button]
       redirect_to _employee_requests_path

@@ -3,7 +3,8 @@ class RequestSkillsController < ApplicationController
   # GET /request_skills.json
   def index
     @request = Request.find_by_id(params[:request_id])
-    @request_skills = @request.request_skills.all
+    # @request_skills = @request.request_skills.all
+    @request_skills = RequestSkill.all 
 
     respond_to do |format|
       format.html # index.html.erb
@@ -15,7 +16,9 @@ class RequestSkillsController < ApplicationController
   # GET /request_skills/1.json
   def show
     @request = Request.find_by_id(params[:request_id])
-    @request_skill = @request.request_skill.find(params[:id])
+    # @request_skill = @request.request_skill.find(params[:id])
+    @request_skill = RequestSkill.find(params[:id]) 
+
 
     respond_to do |format|
       format.html # show.html.erb
@@ -27,7 +30,9 @@ class RequestSkillsController < ApplicationController
   # GET /request_skills/new.json
   def new
     @request = Request.find_by_id(params[:request_id])
-    @request_skill = @request.request_skill.new
+    # @request_skill = @request.request_skill.new
+    @request_skill = RequestSkill.new 
+
 
     respond_to do |format|
       format.html # new.html.erb
@@ -38,14 +43,17 @@ class RequestSkillsController < ApplicationController
   # GET /request_skills/1/edit
   def edit
     @request = Request.find_by_id(params[:request_id])
-    @request_skill = @request.request_skill.find(params[:id])
+    # @request_skill = @request.request_skill.find(params[:id])
+    @request_skill = RequestSkill.find(params[:id]) 
+
   end
 
   # POST /request_skills
   # POST /request_skills.json
   def create
     @request = Request.find_by_id(params[:request_id])
-    @request_skill = @request.request_skill.new(params[:request_skill])
+    # @request_skill = @request.request_skill.new(params[:request_skill])
+    @request_skill = RequestSkill.new(params[:request_skill]) 
 
     respond_to do |format|
       if @request_skill.save
@@ -62,7 +70,8 @@ class RequestSkillsController < ApplicationController
   # PUT /request_skills/1.json
   def update
     @request = Request.find_by_id(params[:request_id])
-    @request_skill = @request.request_skill.find(params[:id])
+    # @request_skill = @request.request_skill.find(params[:id])
+    @request_skill = RequestSkill.find(params[:id]) 
 
     respond_to do |format|
       if @request_skill.update_attributes(params[:request_skill])
@@ -79,7 +88,9 @@ class RequestSkillsController < ApplicationController
   # DELETE /request_skills/1.json
   def destroy
     @request = Request.find_by_id(params[:request_id])
-    @request_skill = @request.request_skill.find(params[:id])
+    # @request_skill = @request.request_skill.find(params[:id])
+    @request_skill = RequestSkill.find(params[:id]) 
+
     @request_skill.destroy
 
     respond_to do |format|
