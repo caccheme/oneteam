@@ -121,22 +121,26 @@ class Employee < ActiveRecord::Base
 
   def has_skill_level? (skill, n)
     dev_skills.each do |s|
-      if s.id == skill && s.proficiency == n
-        return s.id && s.proficiency
+      if (s.skill_id == skill.id) && (s.proficiency == n)
+        true
+        return s.proficiency 
       else
         false
       end
     end
-    return []
+    return
   end
 
   def wants_skill_level? (skill, n)
     des_skills.each do |s|
-      if s.id == skill && s.interest == n
+      if (s.skill_id == skill.id) && (s.interest == n)
+        true
+        return s.interest
       else
         false
       end
     end
+    return
   end
 
 end

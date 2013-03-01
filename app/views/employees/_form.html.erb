@@ -1,7 +1,5 @@
 <div id="emp-form">
 
-<%= hidden_field_tag "employee[skills][]", "" %>
-
 <%= form_for(@employee) do |f| %>
   <% if @employee.errors.any? %>
     <div id="error_explanation">
