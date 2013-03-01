@@ -94,13 +94,49 @@ class Employee < ActiveRecord::Base
     self.desired_skills = new_des_skills
   end
 
-  def has_skill_level? (skill, n)
-# loop through dev_skill check for dev skill that == skill && n
 
-    dev_skills.include?(Skill.find(n))
+
+  # def has_skill_level? (skill, n)
+  #   dev_skills.map do |s|
+  #     if s.id == skill && s.proficiency == n
+  #       true
+  #     else
+  #      false
+  #     end
+  #   end
+  # end
+
+#   def has_skill_level? (skill, n)
+# # loop through dev_skill check for dev skill that == skill && n
+
+#     dev_skills.include?(n)
+#   end
+
+  # def has_skill_level? (skill, n)
+  #   DeveloperSkill.find(skill)
+  #     if dev_skills.include?(skill) 
+  #       proficiency = n
+  #     end
+  # end
+
+  def has_skill_level? (skill, n)
+    dev_skills.each do |s|
+      if s.id == skill && s.proficiency == n
+        return s.id && s.proficiency
+      else
+        false
+      end
+    end
+    return []
   end
 
-  # def wants_skill_level? (n)
-  #   if des_skills
+  def wants_skill_level? (skill, n)
+    des_skills.each do |s|
+      if s.id == skill && s.interest == n
+      else
+        false
+      end
+    end
+  end
 
 end

@@ -106,7 +106,7 @@
     <tr>
       <td><%= skill.language %></td>
       <td><% (0..4).each do |n| %>
-            <%= radio_button_tag "employee[dev_skills][#{dev_skill.id}]", "#{n}", @employee.has_skill_level?(skill, n) %>
+            <%= radio_button_tag "employee[dev_skills][#{skill.id}]", "#{n}", @employee.has_skill_level?(skill, n) %>
             <%=  n %>
           <% end %></td>
     </tr>
@@ -130,11 +130,11 @@
       <td><%= "Interest Level:" %></td>
     </tr>
     <tr><td></td></tr>
-    <% @skills.each do |des_skill| %>
+    <% @skills.each do |skill| %>
     <tr>
-      <td><%= des_skill.language %></td>
+      <td><%= skill.language %></td>
       <td><% (0..4).each do |n| %>
-            <%= radio_button_tag "employee[des_skills][#{des_skill.id}]", "#{n}", @employee.has_skill_level?(n) %>
+            <%= radio_button_tag "employee[des_skills][#{skill.id}]", "#{n}", @employee.wants_skill_level?(skill, n) %>
             <%=  n %>
           <% end %></td>
     </tr>

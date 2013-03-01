@@ -14,7 +14,7 @@
 
   <h1>Create New Request</h1>
 
-<%= hidden_field_tag "request[request_skills][]", "" %>
+<%= hidden_field_tag "request[relevant_skills][]", "" %>
 
 <%= form_for(@request) do |f| %>
   <% if @request.errors.any? %>
@@ -72,36 +72,19 @@
       <li><%= f.select :location, ['New York', 'Chicago', 'Los Angeles', 'Atlanta', 'Detroit', 'Boston', 'Mumbai', 'Houston'] %></li>
     </ul>
   </div>
-
-<div id = "req-skill-exp"> 
-  <ul>
-    <li><%= "0 = No need" %></li>
-    <li><%= "1 = Slightly Important" %></li>
-    <li><%= "2 = Important" %></li>
-    <li><%= "3 = Very Important" %></li>
-    <li><%= "4 = Critical" %></li>
-  </ul>
-</div>
-<div id="req-skill-field">  
-  <table>
-    <tr>
-      <td><%= f.label :request_skills  %></td>
-      <td><%= "Relevancy Level:" %></td>
-    </tr>
-    <tr><td></td></tr>
-    <% @request_skills.each do |req_skill| %>
-    <tr>
-      <td><%= check_box_tag "request_skills[]", req_skill.id %>
-          <%= req_skill.language %>
-      </td>
-      <td><% (0..4).each do |n| %>
-            <%= radio_button_tag "request[req_skills][#{req_skill.id}]", "#{n}", request.has_skill_level?(n) %>
-            <%=  n %>
-          <% end %></td>
-    </tr>
+<div id="req-skills">
+  <div class = "field" >
+    <%= f.label :relevant_skills %>
+    <% @skills.each do |skill| %>
+      <div class = "inbox">
+        <%= check_box_tag "relevant_skills[]", skill.language %>
+          <div class = "language">
+            <%= skill.language %>
+          </div>
+      </div>
     <% end %>
-  </table>
-</div>
+  </div>
+</div> 
 
   <div class="field">
     <div id="req-actions">

@@ -1,5 +1,5 @@
 class Request < ActiveRecord::Base
-  attr_accessible :description, :status, :start_date, :end_date, :employee_id, :title, :relevant_skills, :location, :group
+  attr_accessible :description, :status, :start_date, :end_date, :employee_id, :title, :relevant_skills, :location, :group, :request_skills
   belongs_to :employee
   default_scope order("created_at DESC")  
 
@@ -8,7 +8,7 @@ class Request < ActiveRecord::Base
 
   has_many :request_skills
   accepts_nested_attributes_for :request_skills
-
+  
   has_many :commissions, :through => :responses
   belongs_to :commission
 
@@ -59,16 +59,20 @@ class Request < ActiveRecord::Base
   end
 
   def qualified_count(employee)  
-    count_common_skills(relevant_skills, employee.developer_skills)
+    count_common_skills(request_skills, employee.dev_skills)
   end
 
   def interest_count(employee)
-    count_common_skills(relevant_skills, employee.desired_skills)
+    count_common_skills(request_skills, employee.des_skills)
   end
 
-  def count_common_skills(str1, str2)
+  # def new_count_of_skills(str, hsh)
+  #   (split_str(str) & hsh.map)
+  # end
+
+ def count_common_skills(str1, str2)
     (split_str(str1) & split_str(str2)).length
-  end
+ end
 
   def split_str(str)
     str.split(", ") || []
@@ -79,16 +83,5 @@ class Request < ActiveRecord::Base
       errors.add(:end_date, "can't be before start date")
     end
   end
-
-
-
-
-# popularity = case tweet.retweet_count
-# when 0..9    then nil
-# when 10..99  then "trending"
-# else               "hot"
-# end  #this does a case method setting the popularity to the method output for different conditionals, perhaps use later on ratings?
-
-# option[:status] ||= 'Open' #this sets the option to 'open' if it is nil
 
 end

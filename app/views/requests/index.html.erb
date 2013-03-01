@@ -22,7 +22,7 @@
       <p><b><%= request.title %>:</b> <%= request.start_date %> to <%= request.end_date %> (Status: <%= request.status_text %>)</br>
       Posted by: <%= request.employee.first_name %> <%= request.employee.last_name %> in <%= request.employee.location %> Office (Group: <%= request.employee.group %>) </br>
       Description: <%= request.description %></br></br>
-      Required Skills: <%= request.request_skills %></br>
+      Required Skills: <%= request.relevant_skills %></br>
 
       Your Interest Rating:<%= request.interest_count(current_employee) %></br>
       Your Qualified Rating: <%= request.qualified_count(current_employee) %></br>  
