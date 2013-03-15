@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130215014318) do
+ActiveRecord::Schema.define(:version => 20130315121919) do
 
   create_table "commissions", :force => true do |t|
     t.integer  "response_id"
@@ -26,17 +26,17 @@ ActiveRecord::Schema.define(:version => 20130215014318) do
   create_table "desired_skills", :force => true do |t|
     t.integer  "skill_id"
     t.integer  "employee_id"
-    t.integer  "interest"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
+    t.integer  "level",       :default => 3
   end
 
   create_table "developer_skills", :force => true do |t|
     t.integer  "skill_id"
     t.integer  "employee_id"
-    t.integer  "proficiency"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
+    t.integer  "level",       :default => 3
   end
 
   create_table "employees", :force => true do |t|
@@ -52,8 +52,6 @@ ActiveRecord::Schema.define(:version => 20130215014318) do
     t.string   "department"
     t.string   "group"
     t.string   "location"
-    t.string   "current_skills"
-    t.string   "skills_interested_in"
     t.string   "auth_token"
     t.datetime "password_reset_sent_at"
     t.string   "password_reset_token"
@@ -80,15 +78,15 @@ ActiveRecord::Schema.define(:version => 20130215014318) do
   create_table "requests", :force => true do |t|
     t.string   "description"
     t.string   "status"
-    t.string   "relevant_skills"
     t.string   "title"
     t.string   "group"
     t.string   "location"
     t.integer  "employee_id"
     t.date     "start_date"
     t.date     "end_date"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+    t.string   "relevant_skill"
   end
 
   create_table "responses", :force => true do |t|

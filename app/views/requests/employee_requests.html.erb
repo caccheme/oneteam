@@ -21,7 +21,7 @@
   <p><h3><%= request.title %></h3> <%= request.start_date %> to <%= request.end_date %> (Status: <%= request.status_text %>)</br>    
    Posted by: <%= request.employee.first_name %> <%= request.employee.last_name %> in <%= request.employee.location %> (Group: <%= request.employee.group %>)</br>
     Description: <%= request.description %></br>
-    Required Skills: <%= request.relevant_skills %></br>
+    Required Skills: <%= request.relevant_skill %></br>
  
     <% if request.status == 'Cancelled' %> 
       <div id= "note"><%= "Cancelled" %></div></br>
@@ -46,12 +46,9 @@
           <% end %>
         <% end %>  
       <% elsif response.blank? == false  %>
-
-      Interest Rating:<%= request.interest_count(response.employee) %> |
-      Your Qualified Rating: <%= request.qualified_count(response.employee) %> |  
-
-        <%= link_to "Select Developer", new_response_commission_path(response) %> 
-        
+        Qualified: <%= request.match_skills(response.employee) %><%= @skill_score %> |
+        Interest: <%= request.match_desired_skills(response.employee) %><%= @skill_score %> |
+      <%= link_to "Select Developer", new_response_commission_path(response) %>        
       <% end %>    
 </p>
     <% end %>

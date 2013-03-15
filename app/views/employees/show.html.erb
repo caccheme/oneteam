@@ -34,15 +34,22 @@
         <li>Years with Company: <%= @employee.years_with_company %></li>
       </ul>
       <ul>
-        <li>Current Skills:</br> <% @employee.dev_skills.each do |dev_skill| %>
-            <%= dev_skill.skill.language %> (Level:<%= dev_skill.proficiency %>)</br>
-            <% end %></br>
-        </li>
-        <li>Desired Skills:</br> <% @employee.des_skills.each do |des_skill| %>
-            <%= des_skill.skill.language %> (Level:<%= des_skill.interest %>)</br>
-            <% end %></li>
+        <li>Current Skills:</li>
+        <li><% @skillname = [] %>
+            <% @employee.developer_skills.each do |dev_skill| %>
+              <% show_skill_and_level(dev_skill) %>
+            <% end %>
+            <%= @skillname.join(", ") %></li>
       </ul>
       <ul>
+        <li>Skills Interest In:</li>
+        <li><% @skillname = [] %>
+            <% @employee.desired_skills.each do |des_skill| %>
+              <% show_skill_and_level(des_skill) %>
+            <% end %>
+            <%= @skillname.join(", ") %></li>
+      </ul>
+      <ul>  
         <li>Short Description about <%= @employee.first_name %>: <%= @employee.description %></li>
       </ul> 
       <ul>

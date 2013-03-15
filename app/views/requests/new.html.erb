@@ -14,7 +14,7 @@
 
   <h1>Create New Request</h1>
 
-<%= hidden_field_tag "request[relevant_skills][]", "" %>
+<%= hidden_field_tag "request[relevant_skill][]", "" %>
 
 <%= form_for(@request) do |f| %>
   <% if @request.errors.any? %>
@@ -77,7 +77,7 @@
     <%= f.label :relevant_skills %>
     <% @skills.each do |skill| %>
       <div class = "inbox">
-        <%= check_box_tag "relevant_skills[]", skill.language %>
+        <%= check_box_tag "relevant_skill[]", skill.language %>
           <div class = "language">
             <%= skill.language %>
           </div>

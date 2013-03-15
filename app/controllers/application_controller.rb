@@ -5,6 +5,8 @@ class ApplicationController < ActionController::Base
   helper_method :owner?
   helper_method :assigner?
   helper_method :check_for_cancel, :current_date
+  include SessionsHelper
+  helper :all
 
 private
  

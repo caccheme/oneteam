@@ -1,4 +1,6 @@
 <div id="emp-form">
+<%= hidden_field_tag "employee[current_skills][]", "" %>
+<%= hidden_field_tag "employee[skills_interested_in][]", "" %>
 
 <%= form_for(@employee) do |f| %>
   <% if @employee.errors.any? %>
@@ -87,29 +89,29 @@
 <div id = "dev-skill-exp"> 
   <ul>
     <li><%= "0 = No experience" %></li>
-    <li><%= "1 = Begginner" %></li>
+    <li><%= "1 = Beginner" %></li>
     <li><%= "2 = Middle Proficiency" %></li>
     <li><%= "3 = Proficient" %></li>
     <li><%= "4 = Expert" %></li>
   </ul>
 </div>
-<div id="dev-skill-field">  
-  <table>
-    <tr>
-      <td><%= f.label :developer_skills  %></td>
-      <td><%= "Ability Level:" %></td>
-    </tr>
-    <tr><td></td></tr>
-    <% @skills.each do |skill| %>
-    <tr>
-      <td><%= skill.language %></td>
-      <td><% (0..4).each do |n| %>
-            <%= radio_button_tag "employee[dev_skills][#{skill.id}]", "#{n}", @employee.has_skill_level?(skill, n) %>
-            <%=  n %>
-          <% end %></td>
-    </tr>
-    <% end %>
-  </table>
+
+<div id="dev-skill-field">
+  <div class="field">
+    <%= f.label :current_skills %>
+    <table>
+      <% @skills.each do |skill| %>
+      <div class="inbox">
+       <tr>
+        <td><%= skill.language %></td>
+        <td><% (0..4).each do |level| %>
+          <%= radio_button_tag "employee[current_skills][#{skill.id}]", "#{level}", @employee.has_skill_level(skill.id, level) %>
+          <%= level %>
+        <% end %></td></tr>
+      </div>
+      <% end %>
+    </table>
+  </div>
 </div>
 
 <div id = "des-skill-exp"> 
@@ -121,23 +123,25 @@
     <li><%= "4 = Very Interested" %></li>
   </ul>
 </div>
-<div id="des-skill-field">  
-  <table>
-    <tr>
-      <td><%= f.label :desired_skills %></td>
-      <td><%= "Interest Level:" %></td>
-    </tr>
-    <tr><td></td></tr>
-    <% @skills.each do |skill| %>
-    <tr>
-      <td><%= skill.language %></td>
-      <td><% (0..4).each do |n| %>
-            <%= radio_button_tag "employee[des_skills][#{skill.id}]", "#{n}", @employee.wants_skill_level?(skill, n) %>
-            <%=  n %>
-          <% end %></td>
-    </tr>
-    <% end %>
-  </table>
+
+<div id="des-skill-field">
+  <div class="field">
+    <%= f.label :desired_skills %>
+    <table>
+      <% @skills.each do |skill| %>
+      <div class="inbox">
+      <tr>
+        <td><%= skill.language %></td>
+        <td><% (0..4).each do |level| %>
+            <%= radio_button_tag "employee[skills_interested_in][#{skill.id}]", "#{level}", @employee.wants_skill_level(skill.id, level) %>
+            <%= level %>
+            <% end %>
+        </td>
+      </tr>
+      </div>
+      <% end %>
+    </table>
+  </div>
 </div>
    
 <div id="emp-fourteenth">

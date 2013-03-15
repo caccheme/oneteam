@@ -13,6 +13,12 @@ class RequestsController < ApplicationController
     @open_requests = Request.where('status IS NOT "Cancelled"').order(:id).page(params[:page]).per(4)
     @commissions = Commission.all
 
+    @employees = Employee.all
+    @responses = Response.find(:all, :conditions => :request_id == :id)
+
+    @developer_skills = DeveloperSkill.find_all_by_employee_id(current_employee.id)
+    @desired_skills = DesiredSkill.find_all_by_employee_id(current_employee.id)
+
     respond_to do |format|
       format.html 
       format.json { render json: @requests }
@@ -21,12 +27,12 @@ class RequestsController < ApplicationController
 
   def show
     @request = Request.find_by_employee_id(current_employee)
-    @skills = Skill.all
-    relevant_skills = params[:relevant_skills]
+    # @skills = Skill.all
+    # relevant_skills = params[:relevant_skills]
 
-    unless params[:relevant_skills].nil?
-      relevant_skills = @request.relevant_skills.split(", ")
-    end
+    # unless params[:relevant_skills].nil?
+    #   relevant_skills = @request.relevant_skills.split(", ")
+    # end
     
   end
 
@@ -34,7 +40,6 @@ class RequestsController < ApplicationController
     @request = Request.new
     @skills = Skill.all  
     
-
     respond_with(@request)
   end
 
@@ -42,19 +47,20 @@ class RequestsController < ApplicationController
     @request = Request.find(params[:id])
     @skills = Skill.all
 
-    relevant_skills = params[:relevant_skills]
+    relevant_skill = params[:relevant_skill]
 
-    unless params[:relevant_skills].nil?
-      relevant_skills = @request.relevant_skills.split(", ")
+    unless params[:relevant_skill].nil?
+      relevant_skill = @request.relevant_skill.split(", ")
     end
 
   end
 
   def create
     @request = current_employee.requests.build(params[:request])
-    @skills = Skill.all  
 
-    @request.relevant_skills = params[:relevant_skills].to_a.join(", ")
+    @request.relevant_skill = params[:relevant_skill].to_a 
+    @request.relevant_skill = @request.relevant_skill.join(", ") 
+    @skills = Skill.all  
 
     if params[:cancel_button]
       redirect_to _employee_requests_path
@@ -73,8 +79,9 @@ class RequestsController < ApplicationController
 
   def update
     @request = Request.find(params[:id])
-    @skills = Skill.all
-    @request.relevant_skills = params[:relevant_skills].to_a.join(", ")
+    
+    @request.relevant_skill = params[:relevant_skill].to_a
+    @request.relevant_skill = @request.relevant_skill.join(", ")
     
     respond_to do |format|
       if @request.update_attributes(params[:request])
