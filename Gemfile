@@ -8,7 +8,6 @@ gem "simple_form"
 gem 'yaml_db'
 
 group :development do
-	gem 'debugger'
 	gem 'sqlite3', '1.3.5'
 end
 

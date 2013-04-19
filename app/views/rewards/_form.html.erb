@@ -1,0 +1,65 @@
+
+<div id="tabs">
+  <ul>
+    <li id="selected"><%= link_to 'New Reward' %></li>
+    <li><%= link_to "Requests I've Posted", 'employee_requests' %></li>
+    <li><%= link_to 'My Profile', employee_path(current_employee) %></li>
+  </ul>
+</div>
+
+<div id="innercontainer">
+
+<%= form_for ([@commission, @reward]) do |f| %>
+  <% if @reward.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@reward.errors.count, "error") %> prohibited this reward from being saved:</h2>
+      <ul>
+      <% @reward.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+
+  </br>
+  <%= f.label :reward_date %><br />
+  <%= f.date_select(:reward_date, :order => [:month, :day, :year], :default => Date.today) %>  
+   
+  <p> Employee Name:
+    <%= @reward.commission.response.employee.first_name %>  <%= @reward.commission.response.employee.last_name %></p>
+  <p> Request Title: <%= @reward.commission.response.request.title.capitalize %> </p>  
+  <p> <%= @commission.employee.first_name %> <%= @commission.employee.last_name %> worked on this project for 
+      <%= @reward.commission.response.request.duration_in_days %> days</p>
+  
+  <table>
+    <tr><th>Skill</th>
+        <th>Experience Level</th>
+    </tr>
+    <% @developer_skills.each do |developer_skill| %>
+    <% if developer_skill.employee_id == @reward.commission.employee_id %>  
+    <tr>
+      <% @skills.each do |skill| %>
+        <% if developer_skill.skill_id == skill.id %>
+          <td> <%= skill.language %></td>
+        <% end %>
+      <% end %>
+        <td><%= developer_skill.level %></td>
+
+        <%= f.fields_for :evaluations do |builder| %>
+          <td><%= builder.label :eval_number, "Experience Points" %>
+              <%= builder.select(:eval_number, (0..@reward.commission.response.request.duration_in_days)) %> </td> 
+          <td><%= builder.label :level, "Skill Level" %>
+          <td><%= builder.number_field :level, :value => developer_skill.level %></td>
+          <%= builder.hidden_field :skill_id, :value => developer_skill.skill_id %>
+        <% end %>
+      <% end %> 
+    </tr>
+    <% end %>
+  </table>
+
+  <%= f.submit %>
+  </div>
+<% end %>
+</div>

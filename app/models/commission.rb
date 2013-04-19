@@ -3,9 +3,8 @@ class Commission < ActiveRecord::Base
   default_scope order("created_at DESC")  
 
   belongs_to :response
-  has_many :requests, :through => :responses
-  has_many :employees, :through => :responses
-
-  accepts_nested_attributes_for :requests, :allow_destroy => true
-
+  
+  has_one :employee, :through => :response
+  has_one :reward
+  
 end

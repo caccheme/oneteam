@@ -1,16 +1,16 @@
 OneteamApp::Application.routes.draw do
 
+  resources :evaluations
   resources :skills
   resources :desired_skills
   resources :developer_skills
-  resources :request_skills
+  resources :feedbacks
+  resources :employees
+  resources :sessions
+  resources :password_resets
 
   get "calendars/index"
   get "password_resets/new"
-
-  resources :feedbacks
-  resources :commissions
-
   get "log_out" => "sessions#destroy", :as => "log_out"
   get "log_in" => "sessions#new", :as => "log_in"
   get "sign_up" => "employees#new", :as => "sign_up"
@@ -25,19 +25,16 @@ OneteamApp::Application.routes.draw do
       resources :commissions
   end 
 
-  resources :employees do
-    resources :desired_skills
-    resources :developer_skills
-  end
-
-  resources :request do
-    resources :request_skills
-  end
+  resources :commissions do
+     resources :rewards
+   end 
   
-  resources :employees
-  resources :sessions
-  resources :requests
-  resources :responses
-  resources :password_resets
+  resources :rewards do
+    resources :evaluations
+  end 
+
+  resources :employees do
+    resources :rewards
+  end
 
 end

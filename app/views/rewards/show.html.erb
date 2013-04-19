@@ -1,0 +1,39 @@
+
+<div id="tabs">
+  <ul>
+    <li id="selected"><%= link_to 'Reward Record', requests_path %></li>
+    <li ><%= link_to 'Requests', requests_path %></li>
+
+    <li><%= link_to 'My Profile', employee_path(current_employee) %></li>
+  </ul>
+</div>
+<div id="innercontainer">
+
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Reward date:</b>
+  <%= @reward.reward_date %>
+</p>
+
+<p>
+  <b>Request:</b>
+  <%= @reward.commission.response.request.title.capitalize %>
+</p>
+
+<p>
+  <b>Commission:</b>
+  <%= @reward.commission_id %>
+</p>
+
+<table>
+  <tr>Skill Proficiency Levels</tr>
+  <% @reward.evaluations.each do |skill_eval| %>
+    <tr><td><%= Skill.find(skill_eval.skill_id).id %></td></tr>
+    <td>Skill level:<%= skill_eval.level %></td>
+    <td>Skill experience: <%= skill_eval.eval_number %></td>
+  </tr>
+  <% end %>
+</table>
+</br>
+</div>

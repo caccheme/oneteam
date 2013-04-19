@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130315121919) do
+ActiveRecord::Schema.define(:version => 20130408095259) do
 
   create_table "commissions", :force => true do |t|
     t.integer  "response_id"
@@ -61,6 +61,16 @@ ActiveRecord::Schema.define(:version => 20130315121919) do
     t.datetime "updated_at",             :null => false
   end
 
+  create_table "evaluations", :force => true do |t|
+    t.integer  "eval_number"
+    t.integer  "level"
+    t.integer  "reward_id"
+    t.integer  "skill_id"
+    t.integer  "employee_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
   create_table "feedbacks", :force => true do |t|
     t.string   "comment"
     t.string   "name"
@@ -94,6 +104,14 @@ ActiveRecord::Schema.define(:version => 20130315121919) do
     t.integer  "employee_id"
     t.string   "comment"
     t.string   "employee_name"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  create_table "rewards", :force => true do |t|
+    t.date     "reward_date"
+    t.integer  "request_id"
+    t.integer  "commission_id"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
   end

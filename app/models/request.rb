@@ -12,6 +12,12 @@ class Request < ActiveRecord::Base
   has_and_belongs_to_many :skills
   belongs_to :skills
 
+  has_one :commission
+  has_many :rewards
+  has_many :evaluations
+  accepts_nested_attributes_for :evaluations
+
+
   validates_presence_of :title, :start_date, :end_date
   validates :description, :length => { :in => 5..200 }
   validate :end_date_cannot_be_before_start_date
@@ -59,111 +65,6 @@ class Request < ActiveRecord::Base
       errors.add(:end_date, "can't be before start date")
     end
   end
-
-#want to sum up all of the levels that have matching relevant skill only (not all the levels in the array like
-# I did first) to get the rating
-
-  # def ability_rating(employee)
-  #   array = ability_levels(employee)
-  #   array.inject{|sum,x| sum + x }
-  # end
-
-  # def interest_rating(employee)
-  #   array = interest_levels(employee)
-  #   array.inject{|sum,x| sum + x }
-  # end
-
-  # def qualified_count(employee)
-  #   count_common_skills(relevant_skills, ability_levels(employee))
-  # end
-
-  # def interest_count(employee)
-  #   count_common_skills(relevant_skills, interest_levels(employee))
-  # end
-
-  # def count_common_skills(str1, str2)
-  #   common_array = (split_str(str1) & split_str(str2))
-  #   common_array.inject{|sum,x| sum + x }
-  # end
-
-# these make an array of the ability levels and interest levels of the employee
-  # def ability_levels(employee)  
-  #   skill_list = skill_list_to_array_of_ids(relevant_skills)
-  #   employee.dev_skills.each do |dev_skill, prof|
-  #     skill_list.each do |match_skill, level|
-  #       if (dev_skill == match_skill) 
-  #       return level  
-  #       end  
-  #     end
-  #   end  
-  #   return
-  # end
-
-  # def interest_levels(employee)  
-  #   req_skills = skill_list_to_array_of_ids(relevant_skills)
-  #   employee.des_skills.each do |skill, prof|
-  #     req_skills.each do |match_skill, level|
-  #       if (skill == match_skill) 
-  #       return level  
-  #       end  
-  #     end
-  #   end  
-  #   return
-  # end
-
-#placement of the skills that match to do rating...
-  # def skill_list_to_array_of_ids(str) 
-  #   array = []
-  #   skills = split_str(str)
-  #   skills.map do |s|
-  #     array = Skill.find_by_language(s).id
-  #   end
-  #   array
-  # end
-
-
-#need to make the below rating methods find the matching skill in the dev and des skill arrays, pull those levels only, and then 
-#add them up to get the ratings
-  #  def ability_rating(employee)
-  #   array = ability_levels(employee)
-  #   array.inject{|sum,x| sum + x }
-  # end
-
-  # def interest_rating(employee)
-  #   array = interest_levels(employee)
-  #   array.inject{|sum,x| sum + x }
-  # end
-
-# these make an array of the ability levels and interest levels of the employee
-  # def ability_levels(employee) 
-  #   ability_rating_array = []
-  #   skill_match = list_matching_skills(employee.developer_skills, relevant_skills)
-  #   employee.developer_skills.map do |skill, proficiency|
-  #     skill_match.each do |s|
-  #       if (s == skill.id) 
-  #         return proficiency
-  #       end    
-  #     end  
-  #   end
-  #   ability_rating_array
-  # end
-
-#   def interest_levels(employee)
-#     skill_match = list_matching_skills(employee.desired_skills, relevant_skills)
-#   end
-
-#   def list_matching_skills(hsh, str)
-#     (hash_to_array_of_skills(hsh) & "str".split(",").each { |s| s.to_i })
-#   end
-
-# #array of skills to compare to relevant skills
-#   def hash_to_array_of_skills (h)
-#     h.map { |key, value| key } 
-#   end
-  
-  # def string_to_array_of_skills(str)
-  #   "str".split(",").each { |s| s.to_i }
-  # end
 
   def match_skills(employee)
     skill_score = []
@@ -219,5 +120,9 @@ class Request < ActiveRecord::Base
   def split_str(str)
     str.split(", ") || []
   end
+
+  def duration_in_days
+    (end_date.to_date - start_date.to_date).to_i
+  end 
 
 end

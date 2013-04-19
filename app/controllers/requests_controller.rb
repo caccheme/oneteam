@@ -6,6 +6,9 @@ class RequestsController < ApplicationController
   def employee_requests
     @all_requests = Request.find_all_by_employee_id(current_employee)
     @employee_requests = Request.order(:id).page(params[:page]).per(5) 
+    @rewards = Reward.all 
+    @evaluations = Evaluation.all 
+
   end
 
   def index
@@ -27,6 +30,7 @@ class RequestsController < ApplicationController
 
   def show
     @request = Request.find_by_employee_id(current_employee)
+    
     # @skills = Skill.all
     # relevant_skills = params[:relevant_skills]
 

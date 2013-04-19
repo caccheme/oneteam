@@ -1,0 +1,11 @@
+<h1>Editing reward</h1>
+
+  <%= f.hidden_field :employee_id, :value => @employee_id %>
+  <%= f.hidden_field :request_id, :value => @request.id %>
+  <%= f.hidden_field :skill_id, :value => @skill.id %>
+  <%= f.hidden_field :level_change, :value => @level %>
+  <%= f.select :reward_points, days_array(@days) %>
+
+<div class="actions">
+    <%= f.submit "Submit" %>
+</div>

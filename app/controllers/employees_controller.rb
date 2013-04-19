@@ -5,16 +5,15 @@ class EmployeesController < ApplicationController
   before_filter :current_employee
   before_filter :check_for_cancel, :only => [:create, :update]
 
-  # def show_profile
-  #    @employee = Employee.find(params[:id])
-  #    @requests = Request.all
-  #    @commissions = Commission.all
-   
-  #   @skills = Skill.all
-  # end
+  def employee_requests
+      @requests = Request.find_all_by_employee_id(current_employee)
+      @responses = Response.find_all_by_request_id(@requests)
+      @commissions = Commission.find_all_by_request_id(@requests)
+      @current_date = DateTime.now
+  end
 
   def index
-    @employees = Employee.order(:id).page(params[:page]).per(10)
+    @employees = Employee.all 
 
     respond_with(@employees)
   end
@@ -25,7 +24,7 @@ class EmployeesController < ApplicationController
     @commissions = Commission.all
     @my_commissions = Commission.order(:id).page(params[:page]).per(5)
     @skills = Skill.all 
-
+    
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @employee }
@@ -40,8 +39,8 @@ class EmployeesController < ApplicationController
   end
 
   def edit
-    @skills = Skill.all
     @employee = Employee.find(params[:id])
+    @skills = Skill.all
   end
 
   def create
@@ -51,9 +50,8 @@ class EmployeesController < ApplicationController
     if params[:cancel_button]
       redirect_to root_url
     elsif @employee.save
-      # sign_in @employee
-         @employee.to_developer_skills(@employee.current_skills) 
-         @employee.to_desired_skills(@employee.skills_interested_in)
+      @employee.to_developer_skills(@employee.current_skills) 
+      @employee.to_desired_skills(@employee.skills_interested_in)
       flash[:notice] = "Successfully created account profile."
       redirect_to root_url, :notice => "Your account was created. Sign in!"
     elsif !@employee.save
@@ -68,19 +66,14 @@ class EmployeesController < ApplicationController
     if params[:cancel_button]
       redirect_to @employee
     elsif @employee.update_attributes(params[:employee])
-      # sign_in @employee
       @employee.to_developer_skills(@employee.current_skills)
       @employee.to_desired_skills(@employee.skills_interested_in)
-      redirect_to @employee
-      # respond_to do |format|
-      #   format.html { redirect_to @employee, notice: 'Employee profile was successfully updated.' }
-      #   format.json { head :no_content }
-      # end  
-    # elsif !@employee.update_attributes(params[:employee])
-    #   respond_to do |format|
-    #     format.html { render action: "edit" }
-    #     format.json { render json: @employee.errors, status: :unprocessable_entity }
-    #   end
+      redirect_to @employee  
+    elsif !@employee.update_attributes(params[:employee])
+      respond_to do |format|
+        format.html { render action: "edit" }
+        format.json { render json: @employee.errors, status: :unprocessable_entity }
+      end
     end
   end
 

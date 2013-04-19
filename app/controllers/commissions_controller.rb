@@ -2,7 +2,8 @@ class CommissionsController < ApplicationController
   before_filter :signed_in_employee
   
   def index
-    @commissions = Commission.order(:request_id).page(params[:page]).per(5)
+    @response = Response.find(params[:response_id])
+    @commissions = @response.comissions
 
     respond_to do |format|
       format.html # index.html.erb
@@ -12,7 +13,7 @@ class CommissionsController < ApplicationController
 
   def show
     @response = Response.find(params[:response_id])
-    @commission = @response.commission.find(params[:id])
+    @commission = Commission.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -22,7 +23,7 @@ class CommissionsController < ApplicationController
 
   def new
     @response = Response.find(params[:response_id])
-    @commission = @response.commissions.build
+    @commission = @response.build_commission
 
     respond_to do |format|
       format.html # new.html.erb
@@ -32,18 +33,19 @@ class CommissionsController < ApplicationController
 
   def edit
     @response = Response.find(params[:response_id])
-    @commission = @response.commissions.find(params[:id])
+    @commission = Commission.find(params[:id])
   end
 
   def create
     @response = Response.find(params[:response_id])   
-    @commission = @response.commissions.build(params[:commission])
+    @commission = @response.create_commission(params[:commission])
 
     if params[:cancel_button]
       redirect_to _employee_requests_path
     elsif @commission.save
       respond_to do |format|
         format.html { redirect_to _employee_requests_path, :notice => 'Successfully assigned developer.' }
+        format.json: { render json: @commission, status: :created, location: @commission }
       end
     elsif !@commission.save
       respond_to do |format|
@@ -55,7 +57,7 @@ class CommissionsController < ApplicationController
 
   def update
     @response = Response.find(params[:response_id])
-    @commission = @response.commissions.find(params[:id])
+    @commission = Commission.find(params[:id])
 
     respond_to do |format|
       if @commission.update_attributes(params[:commission])
@@ -69,6 +71,7 @@ class CommissionsController < ApplicationController
   end
 
   def destroy    
+    @response = Response.find(params[:response_id])
     @commission = Commission.find(params[:id])
     @commission.destroy
 

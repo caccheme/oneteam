@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  reward_date: 2013-03-22
+  request_id: 1
+  skill_id: 1
+  employee_id: 1
+  commission_id: 1
+
+two:
+  reward_date: 2013-03-22
+  request_id: 1
+  skill_id: 1
+  employee_id: 1
+  commission_id: 1

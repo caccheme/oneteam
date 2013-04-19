@@ -42,8 +42,10 @@
       <% if commissions.blank? == false %>
         <% commissions.each do |commission| %>  
           <% if response.employee_id == commission.employee_id %>
-            <%= "Selected" %> 
+            <%= "Selected" %> |
+            <%= link_to 'Award Points', new_commission_reward_path(commission.id) %> 
           <% end %>
+<!-- find way to show awarded points if they have already been awarded here -->
         <% end %>  
       <% elsif response.blank? == false  %>
         Qualified: <%= request.match_skills(response.employee) %><%= @skill_score %> |

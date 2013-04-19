@@ -4,10 +4,11 @@ class Employee < ActiveRecord::Base
   attr_accessible :employee_id, :password, :password_confirmation, :department, :email, :group, :location, :manager, :first_name, :last_name, :description, :position, :years_with_company, :image, :current_skills, :developer_skills, :desired_skills, :dev_skills, :des_skills, :skills, :skills_interested_in
 
   before_save :encrypt_password
+  before_save { |employee| employee.email = email.downcase }
 
   has_many :requests, dependent: :destroy
   belongs_to :request
-  has_many :responses, :through => :requests
+  has_many :responses, :through => :request
   has_many :commissions, :through => :responses
   accepts_nested_attributes_for :requests
   accepts_nested_attributes_for :responses
@@ -17,10 +18,15 @@ class Employee < ActiveRecord::Base
   attr_accessor :skills_interested_in
   has_many :developer_skills
   has_many :desired_skills
-  belongs_to :skills
+  has_many :rewards, :through => :commission
+  has_many :evaluations
+
+  belongs_to :skill
+  belongs_to :commission
   accepts_nested_attributes_for :skills
   accepts_nested_attributes_for :desired_skills
   accepts_nested_attributes_for :developer_skills
+  accepts_nested_attributes_for :rewards
 
   mount_uploader :image, ImageUploader
   
@@ -29,6 +35,11 @@ class Employee < ActiveRecord::Base
   validates :password, :length => { :in => 5..20 }, :on => :create
   validates_presence_of :email, :first_name, :last_name  
   validates_uniqueness_of :email, :first_name and :last_name
+  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+
+  validates :email, presence: true,
+            format: { with: VALID_EMAIL_REGEX } ,
+            uniqueness: { case_sensitive: false }
 
   before_create { generate_token(:auth_token) }
 
@@ -61,22 +72,12 @@ class Employee < ActiveRecord::Base
   	end	
   end
 
-
   def has_skill_level(skill_id, level)
     developer_skills.each do |dev_id|
       return true if dev_id.skill_id == skill_id && dev_id.level == level
     end 
     level == 0
   end
-
-  # def has_skill_level? (skill, level) my original method
-  #   dev_skills.each do |s, p|
-  #     if (s == skill.id) && (p == level)
-  #       return level    
-  #     end  
-  #   end
-  #   nil
-  # end
 
   def wants_skill_level(skill_id, level)
     desired_skills.each do |dev_id|
@@ -85,18 +86,60 @@ class Employee < ActiveRecord::Base
     level == 0
   end
 
-  # def wants_skill_level? (skill, level) my original method
-  #   des_skills.each do |s, i|
-  #     if (s == skill.id) && (i == level)
-  #       return level 
-  #     end
-  #   end
-  #   nil
-  # end
+# still need thiss new skill level??
 
   def new_skill_level(skill_id, level)
     level == 3
   end 
+
+  def average_eval(skill)
+    average_evaluation = 0
+    eval_counter = 0
+    commissions.each do |commission|
+      if !commission.reward.evaluations.nil?
+        commision.reward.evaluations.each do |evaluation|
+          if evaluation.skill_id == skill.id && evaluation.eval_number != 0
+            average_evaluation += evaluation.eval_number
+            eval_counter += 1
+          end
+        end
+      end
+    end
+    average_evaluation/eval_counter
+  end
+
+  def award_skills(response)
+  reward_skill = []
+  response.commission.reward.evaluations.each do |evaluation|
+    if evaluation.eval_number != 0
+      language = evaluation.skill.language
+      reward_skill.push(language)
+      reward_skill.push(evaluation.eval_number)
+    end
+  end
+    if !reward_skill.nil?
+       reward_skill.join(", ")
+    end
+  end
+
+  def view_rewards(commission)
+    reward_skill = []
+    commission.reward.evaluations.each do |evaluation|
+      if evaluation.eval_number != 0
+        language = Skill.find(evaluation.skill_id).language
+        reward_skill.push(language)
+        reward_skill.push(evaluation.eval_number)
+      end
+    end
+    reward_skill.join(", ")
+  end
+
+  def desired_skill_level(skill_id, level)
+      desired_skills.each do |dev_id|
+        return true if dev_id.skill_id == skill_id && dev_id.level == level
+      end
+      level == 0
+  end
 
   def to_developer_skills(current_skills)
     if !current_skills.nil?
@@ -124,6 +167,20 @@ class Employee < ActiveRecord::Base
     end
   end
 
+  def total_evaluations(skill)
+    total_evaluation = 0
+      commissions.each do |commission|
+        if !commission.reward.evaluations.nil?
+          commission.reward.evaluations.each do |evaluation|
+            if evaluation.skill_id == skill.id
+              total_evaluation += evaluation.eval_number
+            end
+          end
+        end
+      end
+      total_evaluation
+  end
+
   def current_skills=(current_skills)
     self.developer_skills = to_developer_skills current_skills
   end
@@ -132,37 +189,10 @@ class Employee < ActiveRecord::Base
     self.desired_skills = to_desired_skills skills_interested_in
   end
 
-  #virtual attributes for new skill resources
-  # def dev_skills
-  #   h = {}
-  #   self.developer_skills.each do |dev_skill|
-  #     h[dev_skill.skill_id] = dev_skill.proficiency
-  #   end
-  #   h
-  # end
-
-  # def dev_skills= h
-  #   new_dev_skills = []
-  #   h.each do |skill_id, proficiency| 
-  #     new_dev_skills << DeveloperSkill.new(skill_id: skill_id, proficiency: proficiency) 
-  #   end
-  #   self.developer_skills = new_dev_skills 
-  # end
-
-  # def des_skills
-  #   h = {}
-  #   self.desired_skills.each do |des_skill|
-  #     h[des_skill.skill_id] = des_skill.interest
-  #   end
-  #   h
-  # end
-
-  # def des_skills= h
-  #   new_des_skills = []
-  #   h.each do |skill_id, interest| 
-  #     new_des_skills << DesiredSkill.new(skill_id: skill_id, interest: interest) 
-  #   end
-  #   self.desired_skills = new_des_skills
-  # end
+  def evaluation_check
+    commissions.each do |commission|
+      return true if !commission.reward.evaluations.nil?
+    end
+  end
 
 end
