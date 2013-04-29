@@ -87,8 +87,8 @@
 
 #emp-fourth {
   position: relative;
-  top: -61px;
-  left: 205px;
+  top: -108px;
+  left: 525px;
   width: 250px;
     & label {
       text-align: right;
@@ -99,7 +99,7 @@
 #emp-fifth {
   position: relative;
   top: -91px;
-  left: 430px;
+  left: 275px;
   width: 200px;
     & label {
       width: 80px;
@@ -110,7 +110,7 @@
 #emp-sixth {
   position: relative;
   top: -121px;
-  left: 565px;
+  left: 500px;
   width: 350px;
     & label {
       width: 50px;
@@ -216,7 +216,7 @@
 }
 
 #emp-form {
-  height: 870px;
+  height: 820px;
 }
 
 .frstnm input {
@@ -276,4 +276,12 @@
   left: 400px;
   display:block;
   list-style: none;
+}
+
+.emp-small-indent {
+  margin-left:42px;
+}
+
+.emp-centered {
+  text-align:center;
 }

@@ -1,5 +1,5 @@
 class Request < ActiveRecord::Base
-  attr_accessible :description, :status, :start_date, :end_date, :employee_id, :title, :relevant_skill, :location, :group
+  attr_accessible :description, :status, :start_date, :end_date, :employee_id, :title, :relevant_skill, :location_id, :group_id
   belongs_to :employee
   default_scope order("created_at DESC")  
 

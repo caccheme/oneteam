@@ -1,8 +1,10 @@
 class Reward < ActiveRecord::Base
-  attr_accessible :commission_id, :request_id, :reward_date, :evaluations_attributes
+  attr_accessible :commission_id, :reward_date, :evaluations_attributes
   
   has_many :evaluations
+  
   belongs_to :commission
+  belongs_to :response
 
   accepts_nested_attributes_for :evaluations, :allow_destroy => true
 

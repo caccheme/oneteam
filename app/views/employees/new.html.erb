@@ -25,6 +25,11 @@
         <%= f.password_field :password_confirmation %>
 </div>
 
+    <%= f.hidden_field :location_id, :value => 1 %>
+    <%= f.hidden_field :position_id, :value => 1 %>
+    <%= f.hidden_field :department_id, :value => 1 %>
+    <%= f.hidden_field :group_id, :value => 1 %>
+
 <div class="actions">
   <%= f.submit "Create my account", class: "btn btn-large btn-primary" %>
   <div class="emp-cancel-new">

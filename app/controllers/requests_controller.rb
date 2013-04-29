@@ -42,6 +42,8 @@ class RequestsController < ApplicationController
 
   def new
     @request = Request.new
+    @locations = Location.all
+    @groups = Group.all
     @skills = Skill.all  
     
     respond_with(@request)

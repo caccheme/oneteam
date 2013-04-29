@@ -33,31 +33,31 @@
     <%= f.text_field :email %>
   </div>
 </div>
+
 <div id="emp-fourth">  
   <div class="field">
-    <%= f.label :office %>
-    <%= f.select :location, ['New York', 'Chicago', 'Los Angeles', 'Atlanta', 'Detroit', 'Boston', 'Mumbai', 'Houston'] %>
-  </div>
+    <%= f.label :location, 'Office' %>
+    <%= collection_select(:employee, :location_id, @locations, :id, :name, :prompt => true, :selected => 1) %>
+    </div>
 </div>
 
 <div id="emp-fifth">  
   <div class="field">
     <%= f.label :department %>
-    <%= f.select :department, ['IT', 'HR', 'R&D'] %>
+    <%= collection_select(:employee, :department_id, @departments, :id, :name, :prompt => true, :selected => 1) %>
   </div>
 </div>
 
 <div id="emp-sixth">
   <div class="field">
     <%= f.label :group %>
-    <%= f.select :group, ['Development', 'Design', 'QA'] %>
+    <%= collection_select(:employee, :group_id, @groups, :id, :name, :prompt => true, :selected => 1) %> </div>
   </div>
-</div>
 
 <div id="emp-seventh">
  <div class="field">
-    <%= f.label :job_title %>
-    <%= f.select :position, ['Engineer', 'Analyst', 'Supervisor'] %>
+    <%= f.label :position, 'Job Title' %>
+    <%= collection_select(:employee, :position_id, @positions, :id, :name, :prompt => true, :selected => 1) %>
   </div>
 </div>
 <div id="emp-eighth">  

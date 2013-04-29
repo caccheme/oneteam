@@ -2,7 +2,7 @@
 <div id="tabs">
   <ul>
     <li id="selected"><%= link_to 'New Reward' %></li>
-    <li><%= link_to "Requests I've Posted", 'employee_requests' %></li>
+    <li><%= link_to "Requests I've Posted", _employee_requests_path %></li>
     <li><%= link_to 'My Profile', employee_path(current_employee) %></li>
   </ul>
 </div>
@@ -23,16 +23,15 @@
 
   <div class="field">
 
-  </br>
-  <%= f.label :reward_date %><br />
+  <p> Give experience points based on the number of days worked and select</br>
+    the skill level demonstrated by <%= @commission.employee.first_name %> <%= @commission.employee.last_name %> during the project, '<%= @reward.commission.response.request.title.capitalize %>'. </p>
+  <%= f.label :reward_date %>
   <%= f.date_select(:reward_date, :order => [:month, :day, :year], :default => Date.today) %>  
-   
-  <p> Employee Name:
-    <%= @reward.commission.response.employee.first_name %>  <%= @reward.commission.response.employee.last_name %></p>
-  <p> Request Title: <%= @reward.commission.response.request.title.capitalize %> </p>  
-  <p> <%= @commission.employee.first_name %> <%= @commission.employee.last_name %> worked on this project for 
-      <%= @reward.commission.response.request.duration_in_days %> days</p>
   
+  <p>
+     Possible Experience Points: 0 to <%= @reward.commission.response.request.duration_in_days %></br>
+     Possible Skill Levels: 0 = No experience, 1 = Beginner, 2 = Middle Proficiency, 3 = Proficient, 4 = Expert</p> 
+
   <table>
     <tr><th>Skill</th>
         <th>Experience Level</th>

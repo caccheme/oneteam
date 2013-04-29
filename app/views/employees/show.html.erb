@@ -4,7 +4,11 @@
   <ul>
     <li><%= link_to 'All Requests', requests_path%></li>
     <li><%= link_to "Requests I've Posted",  _employee_requests_path %></li>
-    <li id="selected"><%= link_to 'Profile', employee_path(current_employee) %></li>
+    <% if current_employee.id == @employee.id %>
+      <li id="selected"><%= link_to 'My Profile', employee_path(current_employee) %></li>     
+    <% else %>
+      <li id="selected"><%= link_to 'Profile', employee_path(@employee.id) %></li>
+    <% end %> 
   </ul>
 </div>
 
@@ -26,68 +30,68 @@
         <li>First Name: <%= @employee.first_name %></li>
         <li>Last Name: <%= @employee.last_name %></li>
         <li>Email: <%= @employee.email %></li>
-        <li>Office: <%= @employee.location %></li>
-        <li>Department: <%= @employee.department %></li>
-        <li>Group: <%= @employee.group %></li>
-        <li>Job Title: <%= @employee.position %></li>
+        <li>Office: <%= @employee.location.name %></li>
+        <li>Department: <%= @employee.department.name %></li>
+        <li>Group: <%= @employee.group.name %></li>
+        <li>Job Title: <%= @employee.position.name %></li>
         <li>Immediate Supervisor: <%= @employee.manager %></li>
         <li>Years with Company: <%= @employee.years_with_company %></li>
-        <li>Description: <%= @employee.description %></li>
-        </ul>
-      <ul>
-        <li>Current Skills:</li>
-        <li><% @skillname = [] %>
-            <% @employee.developer_skills.each do |dev_skill| %>
-              <% show_skill_and_level(dev_skill) %>
-            <% end %>
-            <%= @skillname.join(", ") %></li>
       </ul>
       <ul>
-        <li>Skills Interest In:</li>
-        <li><% @skillname = [] %>
-            <% @employee.desired_skills.each do |des_skill| %>
-              <% show_skill_and_level(des_skill) %>
-            <% end %>
-            <%= @skillname.join(", ") %></li>
+        <li>Description: <%= @employee.description %></li>
       </ul>
 
-      <% if @employee.evaluation_check == true %>
-        <table>
+      <% if @employee.id == current_employee.id %>
+        <ul>
+          <li>Current Skills:</li>
+          <li><%= @employee.show_dev_skill_and_level %></li>
+        </ul>
+        <ul>
+          <li>Skills Interest In:</li>
+          <li><%= @employee.show_des_skill_and_level %></li>
+        </ul>
+      <% end %>
+
+        <% if !@employee.evaluations.nil? %>
+        <table class = "emp-small-indent">
           <tr>
             <th>Skill</th>
-            <th>Experience Points</th>
+            <th>Total Experience Points</th>
             <% if @employee.id == current_employee.id %>
-              <th>Average Evaluation </th>
+              <th>Average Skill Level Evaluation </th>
             <% end %>
           </tr>
-    
         <% @skills.each do |skill| %> 
-          <% if @employee.total_evaluations(skill) != 0 %>
             <tr>
-              <td><%= skill.language %> </td>
-              <td><%= @employee.id == current_employee.id %></td>
+              <td class = "emp-centered"><%= skill.language %> </td>
+              <td class = "emp-centered"><%= @employee.total_evaluations(skill) %></td>
               <% if @employee.id == current_employee.id %>
-                <td><%= @employee.average_eval(skill) %></td>
+                <td class = "emp-centered"><%= @employee.average_skill_level(skill) %></td>
               <% end %>
             </tr>
-          <% end %>  
+        <% end %>           
         </table>
-        <% end %>
       <% end %>  
 
     <ul>
-      <li>Projects <%= @employee.first_name %> <%= @employee.last_name %> has worked on:</li>
+      <li>Projects 
+        <% if @employee.id == current_employee.id %>
+          you have
+        <% else %>
+          <%= @employee.first_name %> <%= @employee.last_name %> has
+        <% end %>
+          worked on:
+      </li>
+
       <%= image_tag "divider-line-2.jpg" %>
-      <%= paginate @my_commissions %>
         <% @commissions.each do |commission| %>
-          <% if commission.employee_id == @employee.id %>
-            <li><%= commission.response.request.title %>: <%= commission.response.request.start_date %> to <%= commission.response.request.end_date %> (<%= commission.response.request.project_status %>)</br></li>
+            <li><b><%= commission.response.request.title.capitalize %></b>: <%= commission.response.request.start_date %> to <%= commission.response.request.end_date %> (<%= commission.response.request.project_status %>)</br></li>
+          <% if !commission.reward.nil? %>
+              <b>Experience Points for this Project:</b></br> <%= commission.employee.view_rewards(commission) %>
+
           <% end %>
-          <% if commission.employee_id == current_employee.id %>
-            <% if !commission.reward.nil? %>
-              Evaluation for this Project: <%= commission.employee.view_rewards(commission) %>
-            <% end %>
-          <% end %>
+              <%= image_tag "divider-line-2.jpg" %>
+
         <% end %>
     </ul>
 

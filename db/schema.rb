@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130408095259) do
+ActiveRecord::Schema.define(:version => 20130425183202) do
 
   create_table "commissions", :force => true do |t|
     t.integer  "response_id"
@@ -21,6 +21,12 @@ ActiveRecord::Schema.define(:version => 20130408095259) do
     t.string   "name"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+  end
+
+  create_table "departments", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "desired_skills", :force => true do |t|
@@ -48,10 +54,6 @@ ActiveRecord::Schema.define(:version => 20130408095259) do
     t.string   "password_salt"
     t.integer  "years_with_company"
     t.string   "manager"
-    t.string   "position"
-    t.string   "department"
-    t.string   "group"
-    t.string   "location"
     t.string   "auth_token"
     t.datetime "password_reset_sent_at"
     t.string   "password_reset_token"
@@ -59,6 +61,10 @@ ActiveRecord::Schema.define(:version => 20130408095259) do
     t.string   "image"
     t.datetime "created_at",             :null => false
     t.datetime "updated_at",             :null => false
+    t.integer  "location_id"
+    t.integer  "group_id"
+    t.integer  "department_id"
+    t.integer  "position_id"
   end
 
   create_table "evaluations", :force => true do |t|
@@ -66,13 +72,30 @@ ActiveRecord::Schema.define(:version => 20130408095259) do
     t.integer  "level"
     t.integer  "reward_id"
     t.integer  "skill_id"
-    t.integer  "employee_id"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
   end
 
   create_table "feedbacks", :force => true do |t|
     t.string   "comment"
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "groups", :force => true do |t|
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.string   "name"
+  end
+
+  create_table "locations", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "positions", :force => true do |t|
     t.string   "name"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
@@ -89,14 +112,14 @@ ActiveRecord::Schema.define(:version => 20130408095259) do
     t.string   "description"
     t.string   "status"
     t.string   "title"
-    t.string   "group"
-    t.string   "location"
     t.integer  "employee_id"
     t.date     "start_date"
     t.date     "end_date"
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
     t.string   "relevant_skill"
+    t.integer  "location_id"
+    t.integer  "group_id"
   end
 
   create_table "responses", :force => true do |t|
@@ -110,7 +133,6 @@ ActiveRecord::Schema.define(:version => 20130408095259) do
 
   create_table "rewards", :force => true do |t|
     t.date     "reward_date"
-    t.integer  "request_id"
     t.integer  "commission_id"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false

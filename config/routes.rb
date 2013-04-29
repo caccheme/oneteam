@@ -1,5 +1,11 @@
 OneteamApp::Application.routes.draw do
 
+
+  resources :positions
+  resources :groups
+  resources :departments
+  resources :locations
+  resources :offices
   resources :evaluations
   resources :skills
   resources :desired_skills

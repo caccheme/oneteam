@@ -21,7 +21,7 @@ class EmployeesController < ApplicationController
   def show
     @employee = Employee.find(params[:id])
     @requests = Request.all
-    @commissions = Commission.all
+    @commissions = Commission.where('employee_id' => params[:id])
     @my_commissions = Commission.order(:id).page(params[:page]).per(5)
     @skills = Skill.all 
     
@@ -40,6 +40,10 @@ class EmployeesController < ApplicationController
 
   def edit
     @employee = Employee.find(params[:id])
+    @locations = Location.all
+    @departments = Department.all
+    @groups = Group.all
+    @positions = Position.all
     @skills = Skill.all
   end
 

@@ -61,15 +61,14 @@
     <div class="field" id="left-column">
       <ul>
         <li><%= f.label :group %></li>
-        <li><%= f.select :group, ['Development', 'Strategy'] %></li>
+        <li><%= collection_select(:employee, :group_id, @groups, :id, :name, :prompt => true, :selected => 1) %></li>
       </ul>
     </div>
     
-  
   <div class="field" id="right-column" >
     <ul> 
-      <li><%= f.label :location, "Office" %></li>
-      <li><%= f.select :location, ['New York', 'Chicago', 'Los Angeles', 'Atlanta', 'Detroit', 'Boston', 'Mumbai', 'Houston'] %></li>
+      <li><%= f.label :location, 'Office' %></li>
+      <li><%= collection_select(:employee, :location_id, @locations, :id, :name, :prompt => true, :selected => 1) %></li>
     </ul>
   </div>
 <div id="req-skills">

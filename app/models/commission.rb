@@ -4,7 +4,9 @@ class Commission < ActiveRecord::Base
 
   belongs_to :response
   
+  has_many :requests, :through => :responses
+  
   has_one :employee, :through => :response
   has_one :reward
-  
+  accepts_nested_attributes_for :reward  
 end

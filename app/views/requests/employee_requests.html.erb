@@ -19,7 +19,7 @@
 
   <%= image_tag "divider-line.jpg" %>
   <p><h3><%= request.title %></h3> <%= request.start_date %> to <%= request.end_date %> (Status: <%= request.status_text %>)</br>    
-   Posted by: <%= request.employee.first_name %> <%= request.employee.last_name %> in <%= request.employee.location %> (Group: <%= request.employee.group %>)</br>
+   Posted by: <%= request.employee.first_name %> <%= request.employee.last_name %> in <%= request.employee.location.name %> (Group: <%= request.employee.group.name %>)</br>
     Description: <%= request.description %></br>
     Required Skills: <%= request.relevant_skill %></br>
  
@@ -45,7 +45,6 @@
             <%= "Selected" %> |
             <%= link_to 'Award Points', new_commission_reward_path(commission.id) %> 
           <% end %>
-<!-- find way to show awarded points if they have already been awarded here -->
         <% end %>  
       <% elsif response.blank? == false  %>
         Qualified: <%= request.match_skills(response.employee) %><%= @skill_score %> |

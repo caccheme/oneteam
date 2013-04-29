@@ -45,7 +45,7 @@ class CommissionsController < ApplicationController
     elsif @commission.save
       respond_to do |format|
         format.html { redirect_to _employee_requests_path, :notice => 'Successfully assigned developer.' }
-        format.json: { render json: @commission, status: :created, location: @commission }
+        format.json { render json: @commission, status: :created, location: @commission }
       end
     elsif !@commission.save
       respond_to do |format|
