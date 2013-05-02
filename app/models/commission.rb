@@ -1,5 +1,5 @@
 class Commission < ActiveRecord::Base
-  attr_accessible :comment, :employee_id, :request_id, :response_id, :name
+  attr_accessible :comment, :employee_id, :request_id, :response_id, :name, :created_at
   default_scope order("created_at DESC")  
 
   belongs_to :response

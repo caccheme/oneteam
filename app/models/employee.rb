@@ -43,12 +43,12 @@ class Employee < ActiveRecord::Base
   validates_presence_of :password, :on => :create
   validates :password, :length => { :in => 5..20 }, :on => :create
   validates_presence_of :email, :first_name, :last_name  
-  validates_uniqueness_of :email, :first_name and :last_name
-  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+  # validates_uniqueness_of :email, :first_name and :last_name
+  # VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 
-  validates :email, presence: true,
-            format: { with: VALID_EMAIL_REGEX } ,
-            uniqueness: { case_sensitive: false }
+  validates :email, presence: true
+            # format: { with: VALID_EMAIL_REGEX } ,
+            # uniqueness: { case_sensitive: false }
 
   before_create { generate_token(:auth_token) }
 
