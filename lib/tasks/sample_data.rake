@@ -20,8 +20,7 @@ namespace :db do
       new_res = Response.create!(:request_id => req_id,
                                  :comment => Faker::Lorem.words(num = 4),
                                  :employee_id => emp_id,
-                                 :created_at => created_at 
-                                 )
+                                 :created_at => created_at)
       new_res
     end
 
@@ -31,8 +30,7 @@ namespace :db do
       res_id = Response.find_by_request_id(req_id).id
       new_comm = Commission.create!(:response_id => res_id,
                                     :comment => Faker::Lorem.words(num = 4),
-                                    :created_at => created_at 
-                                    )
+                                    :created_at => created_at)
       new_comm
     end
 
@@ -55,9 +53,11 @@ namespace :db do
     one_each_ids = []
     mt_ten_each_ids = []    
     all_reqs_ids = []
+    counter = 0  
 
     locs_and_devs_hash.each do |loc_id, num_devs|
       num_devs.times do |n|
+      counter += 1  
       Employee.create!(first_name: Faker::Name.first_name, 
                        last_name: Faker::Name.last_name, 
                        email: "employee-#{n+1}@aits.com", 
@@ -72,7 +72,7 @@ namespace :db do
                        password_confirmation: "foobar") 
         #no requests for Houston (location_id:3), I'm going to filter by emp_id so will choose employee id's from 1 to 45
         #create three requests: three developers with one request each
-        emp_id = Employee.last.id
+        emp_id = counter
         if emp_id == 1 && one_each_ids.size < 1 || emp_id == 2 && one_each_ids.size < 2 || emp_id == 3 && one_each_ids.size < 3  
           req = create_req(loc_id, emp_id)
           one_each_ids << req.id
