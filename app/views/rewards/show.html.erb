@@ -1,9 +1,9 @@
 
 <div id="tabs">
   <ul>
-    <li id="selected"><%= link_to 'Reward Record', requests_path %></li>
+    <li id="selected"><%= link_to 'Reward Record' %></li>
     <li ><%= link_to 'Requests', requests_path %></li>
-
+    <li><%= link_to "Requests I've Posted", _employee_requests_path %></li>
     <li><%= link_to 'My Profile', employee_path(current_employee) %></li>
   </ul>
 </div>
@@ -29,9 +29,11 @@
 <table>
   <tr>Skill Proficiency Levels</tr>
   <% @reward.evaluations.each do |skill_eval| %>
-    <tr><td><%= Skill.find(skill_eval.skill_id).id %></td></tr>
-    <td>Skill level:<%= skill_eval.level %></td>
-    <td>Skill experience: <%= skill_eval.eval_number %></td>
+    <% if skill_eval.eval_number != 0 %>
+      <tr><td><%= Skill.find(skill_eval.skill_id).language %></td></tr>
+      <td>Skill points: <%= skill_eval.eval_number %></td>
+      <td>Skill level:<%= skill_eval.level %></td>
+    <% end %>  
   </tr>
   <% end %>
 </table>

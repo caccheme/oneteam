@@ -5,6 +5,7 @@ class RewardsController < ApplicationController
     @rewards = Reward.all
     @skills = Skill.all
     @developer_skills = DeveloperSkill.all
+    @request_skills = RequestSkill.all
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @rewards }
@@ -27,6 +28,7 @@ class RewardsController < ApplicationController
     @reward = @commission.build_reward(params[:reward])
     @skills = Skill.all
     @developer_skills = DeveloperSkill.all
+    @request_skills = RequestSkill.all
     evaluation = @reward.evaluations.build
 
     respond_to do |format|
@@ -46,6 +48,7 @@ class RewardsController < ApplicationController
     @commission = Commission.find(params[:commission_id])
     @reward = @commission.build_reward(params[:reward])
     @developer_skills = DeveloperSkill.find_by_employee_id(:employee_id)
+    @request_skills = RequestSkill.find_by_request_id(:request_id)
     @skills = Skill.all
 
     respond_to do |format|
@@ -85,4 +88,5 @@ class RewardsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
 end

@@ -35,6 +35,8 @@
   <table>
     <tr><th>Skill</th>
         <th>Experience Level</th>
+        <th>Select Points</th>
+        <th>Select Experience Level</th>
     </tr>
     <% @developer_skills.each do |developer_skill| %>
     <% if developer_skill.employee_id == @reward.commission.employee_id %>  
@@ -50,7 +52,7 @@
           <td><%= builder.label :eval_number, "Experience Points" %>
               <%= builder.select(:eval_number, (0..@reward.commission.response.request.duration_in_days)) %> </td> 
           <td><%= builder.label :level, "Skill Level" %>
-          <td><%= builder.number_field :level, :value => developer_skill.level %></td>
+          <td><%= builder.select :level, [0, 1, 2, 3, 4], :selected => developer_skill.level %></td>
           <%= builder.hidden_field :skill_id, :value => developer_skill.skill_id %>
         <% end %>
       <% end %> 
