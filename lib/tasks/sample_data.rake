@@ -2,18 +2,6 @@ namespace :db do
   desc "Fill database with sample data"
   task populate: :environment do
 
-    def create_req(loc_id, emp_id)
-      start_date = rand(6.months).ago
-      new_req = Request.create!(employee_id: emp_id,
-                                description: Faker::Lorem.sentence(word_count = 5),
-                                title: Faker::Lorem.sentence(word_count = 1),
-                                start_date: start_date,
-                                end_date: start_date + 6.months,
-                                location_id: loc_id,
-                                group_id: rand(5-1) + 1)
-      new_req
-    end
-
     def create_res(req_id, emp_id)
       num_days = [1.days, 2.days, 4.days, 8.days]
       created_at = Request.find(req_id).created_at + num_days.sample
@@ -66,17 +54,13 @@ namespace :db do
                          group_id: rand(5-1) + 1, 
                          location_id: loc_id, 
                          password: "foobar", 
-                         password_confirmation: "foobar") 
-        7.times do
-          DeveloperSkill.create!(:employee_id => n,
-                                 :skill_id => rand(1..7),
-                                 :level => rand(0..4))
-        end
-        7.times do
-          DesiredSkill.create!(:employee_id => n,
+                         password_confirmation: "foobar")
+        DeveloperSkill.create!(:employee_id => n,
                                :skill_id => rand(1..7),
                                :level => rand(0..4))
-        end
+        DesiredSkill.create!(:employee_id => n,
+                             :skill_id => rand(1..7),
+                             :level => rand(0..4))
         employee_counter += 1
       end
     end
@@ -110,14 +94,25 @@ namespace :db do
  
       array = req_hash[:requests]
       array.each do |num_reqs|
-        num_reqs.times do |n|
-          create_req(loc_id, req_emp_ids.sample)
+        num_reqs.times do |m|
+          x = rand(skills.length)
+          relevant_skill = skills.slice(x, skills.length - x)
+          start_date = rand(6.months).ago
+          new_req = Request.create!(employee_id: emp_ids.sample,
+                                    description: Faker::Lorem.sentence(word_count = 5),
+                                    title: Faker::Lorem.sentence(word_count = 1),
+                                    start_date: start_date,
+                                    end_date: start_date + 6.months,
+                                    relevant_skill: relevant_skill.join(", "),
+                                    location_id: loc_id,
+                                    group_id: rand(5-1) + 1)
           request_counter += 1
         end
       end    
     end
 
-    reqs, req_ids, req_loc_ids, req_emp_ids = Request.all, reqs.map{|req| req.id }, reqs.map{|req| req.location_id }, reqs.map{|req| req.employee_id }
+    reqs = Request.all 
+    req_ids, req_loc_ids, req_emp_ids = reqs.map{|req| req.id }, reqs.map{|req| req.location_id }, reqs.map{|req| req.employee_id }
     req_info = req_ids.zip req_emp_ids, req_loc_ids #array with 120 elements (1 for each request) [[req_id, req_emp_id, req_loc_id]...]
 
     three_resp_ids, two_resp_ids, nine_resp_ids, all_resp_ids = [], [], [], []

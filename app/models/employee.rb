@@ -97,11 +97,13 @@ class Employee < ActiveRecord::Base
     sum = 0
     if !self.responses.nil?
       self.responses.each do |response|
-        if !response.commission.reward.evaluations.nil?
-          response.commission.reward.evaluations.each do |eval| 
-            if eval.skill_id == skill.id
-              sum += eval.eval_number
-            end  
+        if !response.commission.nil?
+          if !response.commission.reward.evaluations.nil?
+            response.commission.reward.evaluations.each do |eval| 
+              if eval.skill_id == skill.id
+                sum += eval.eval_number
+              end
+            end    
           end        
         end
       end
@@ -114,12 +116,14 @@ class Employee < ActiveRecord::Base
     sum = 0
     if !self.responses.nil?
       self.responses.each do |response|
-        if !response.commission.reward.evaluations.nil?
-          response.commission.reward.evaluations.each do |eval| 
-            if eval.skill_id == skill.id && eval.eval_number != 0
-              sum += eval.level
-              eval_counter += 1         
-            end    
+        if !response.commission.nil?
+          if !response.commission.reward.evaluations.nil?
+            response.commission.reward.evaluations.each do |eval| 
+              if eval.skill_id == skill.id && eval.eval_number != 0
+                sum += eval.level
+                eval_counter += 1         
+              end
+            end      
           end        
         end
       end
@@ -207,10 +211,10 @@ class Employee < ActiveRecord::Base
     skillname = []
       developer_skills.each do |dev_skill|
         if dev_skill.level != 0 
-        language = dev_skill.skill.language 
-        level = dev_skill.level
-        skillname.push(language)
-        skillname.push(level)
+          language = dev_skill.skill.language 
+          level = dev_skill.level
+          skillname.push(language)
+          skillname.push(level)
         end
       end
     skillname.join(", ")
@@ -220,10 +224,10 @@ class Employee < ActiveRecord::Base
     skillname = []
       desired_skills.each do |des_skill|
         if des_skill.level != 0 
-        language = des_skill.skill.language
-        level = des_skill.level
-        skillname.push(language)
-        skillname.push(level)
+          language = des_skill.skill.language
+          level = des_skill.level
+          skillname.push(language)
+          skillname.push(level)
         end
       end
     skillname.join(", ")
