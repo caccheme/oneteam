@@ -105,7 +105,8 @@ namespace :db do
                                     end_date: start_date + 6.months,
                                     relevant_skill: relevant_skill.join(", "),
                                     location_id: loc_id,
-                                    group_id: rand(5-1) + 1)
+                                    group_id: rand(5-1) + 1,
+                                    created_at: (rand*15).days.ago )
           request_counter += 1
         end
       end    
@@ -115,7 +116,7 @@ namespace :db do
     req_ids, req_loc_ids, req_emp_ids = reqs.map{|req| req.id }, reqs.map{|req| req.location_id }, reqs.map{|req| req.employee_id }
     req_info = req_ids.zip req_emp_ids, req_loc_ids #array with 120 elements (1 for each request) [[req_id, req_emp_id, req_loc_id]...]
 
-    three_resp_ids, two_resp_ids, nine_resp_ids, all_resp_ids = [], [], [], []
+    three_resp_ids, two_resp_ids, nine_resp_ids, all_resp_ids, rest_resp_ids = [], [], [], [], []
     one_comm_ids, seven_comm_ids, rand_comm_ids = [], [], []
 
     req_info.each do |req_id, req_emp_id, req_loc_id| #this will go through each of the 120 requests
@@ -157,9 +158,9 @@ namespace :db do
         end
       end
       # need leftover responses to get to 70
-      if req_loc_id == 1 && all_resp_ids.size < 70
+      if rest_resp_ids.size < 11
         res = create_res(req_id, emp_ids.sample)
-        all_resp_ids << res.id
+        rest_resp_ids << res.id
       end
     end 
 
