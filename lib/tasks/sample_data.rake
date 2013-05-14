@@ -61,7 +61,9 @@ namespace :db do
                       end_date: start_date + rand(1..90).days,
                       group_id: rand(5-1) + 1,
                       employee_id: employee_id = n+4,
-                      location_id: Employee.find_by_id(employee_id).location_id)
+                      location_id: Employee.find_by_id(employee_id).location_id,
+                      created_at: start_date 
+                      )
     end
 
     #Employee #1 over 10 requests
@@ -72,10 +74,12 @@ namespace :db do
                       end_date: start_date + rand(1..90).days,
                       group_id: rand(5-1) + 1,
                       employee_id: "7",
-                      location_id: Employee.find_by_id("5").location_id)
+                      location_id: Employee.find_by_id("5").location_id,
+                      created_at: start_date
+                      ) 
     end
 
-    #UEmployee #2 over 10 requests
+    #Employee #2 over 10 requests
     20.times do
       Request.create!(title: Faker::Lorem.words(2).join(" ").to_s.capitalize,
                       description: Faker::Lorem.sentences(2).join(" "),
@@ -83,7 +87,9 @@ namespace :db do
                       end_date: start_date + rand(1..90).days,
                       group_id: rand(5-1) + 1,
                       employee_id: "8",
-                      location_id: Employee.find_by_id("6").location_id)
+                      location_id: Employee.find_by_id("6").location_id,
+                      created_at: start_date
+                      ) 
     end
 
     #Remaining Requests
@@ -96,7 +102,9 @@ namespace :db do
                         end_date: start_date + rand(1..90).days,
                         group_id: rand(5-1) + 1,
                         employee_id: employee_id = n,
-                        location_id: Employee.find_by_id(employee_id).location_id)
+                        location_id: Employee.find_by_id(employee_id).location_id,
+                        created_at: start_date 
+                        )
       end
     end 
 
