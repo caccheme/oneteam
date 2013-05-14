@@ -1,168 +1,212 @@
 namespace :db do
   desc "Fill database with sample data"
   task populate: :environment do
+    require 'faker'
 
-    def create_res(req_id, emp_id)
-      num_days = [1.days, 2.days, 4.days, 8.days]
-      created_at = Request.find(req_id).created_at + num_days.sample
-      new_res = Response.create!(:request_id => req_id,
-                                 :comment => Faker::Lorem.words(num = 4),
-                                 :employee_id => emp_id,
-                                 :created_at => created_at)
-      new_res
+    def create_employee(loc_id)
+      new_employee = Employee.create!(first_name: Faker::Name.first_name,
+                                      last_name: Faker::Name.last_name,
+                                      email: Faker::Internet.email,
+                                      password: "password",
+                                      password_confirmation: "password",
+                                      years_with_company: rand(1..20),
+                                      manager: Faker::Name.name,
+                                      position_id: rand(5-1) + 1,
+                                      department_id: rand(1-1) + 1,
+                                      group_id: rand(5-1) + 1,
+                                      location_id: loc_id)
+      new_employee
     end
 
-    def create_comm(req_id)
-      num_days = [0.days, 1.days, 3.days, 5.days]
-      created_at = Response.find_by_request_id(req_id).created_at + num_days.sample
-      res_id = Response.find_by_request_id(req_id).id
-      new_comm = Commission.create!(:response_id => res_id,
-                                    :comment => Faker::Lorem.words(num = 4),
-                                    :created_at => created_at)
-      new_comm
+    def create_request(n)
+      new_request = Request.create!(title: Faker::Lorem.words(2).join(" ").to_s.capitalize,
+                                    description: Faker::Lorem.sentences(2).join(" "),
+                                    start_date: start_date = get_random_start_date,
+                                    end_date: start_date + rand(1..90).days,
+                                    group_id: rand(1-1) + 1, 
+                                    employee_id: employee_id = n+4,
+                                    location_id: Employee.find_by_id(employee_id).location_id
+                                    )
+      new_request
     end
 
-    employee_tables_hash = {Department=>["IT"],
-                            Group=>["Development","Interface Design","QA", "Infrastructure"], 
-                            Location=>["Chicago", "Mumbai", "Houston","San Francisco", "Boston", "London"],
-                            Position=>["Engineer", "Analyst","Project Lead", "UI Specialist", "QA Specialist"]}
-    employee_tables_hash.each do |table, names|
-      names.each do |name|
-        table.create!(name: name)
+
+    #Employee Breakdown: 45 in Chicago, 20 in Boston, 32 in Houston, 14 in San Francisco, 12 in London, 5 in Mumbai
+    #locations: 1=Chicago, 2=Mumbai, 3=Houston, 4 = San Francisco, 5=Boston, 6=London
+
+    puts "Generating Sample Employees"
+   
+    locs_num_devs_hash = {1=>45, 2=>5, 3=>32, 4=>14, 5=>20, 6=>12} # {location=># of devs}
+    locs_num_devs_hash.each do |loc_id, num_devs|
+      num_devs.times do 
+        create_employee(loc_id)
       end
     end  
+    
 
-    skills = ["PHP", "MySQL", "C#", "Apache", "Ruby on Rails", "SQL Server", "Linux"]
-    skills.each do |name|
-      Skill.create!(language: name)
+  # Request Breakdown: 120 project reqs posts over 6 months from 20 of the developers, such that:
+  # 3 developers posted once, 2 posted more than 10 requests, rest were in between, no posts from London
+
+  def get_random_start_date
+    Array((Date.today - 3.months)..(Date.today + 3.months)).sample
+  end
+
+    puts 'Generating Sample Requests'
+    
+    #3 Employees posted once
+    3.times do |n|
+      Request.create!(title: Faker::Lorem.words(2).join(" ").to_s.capitalize,
+                      description: Faker::Lorem.sentences(2).join(" "),
+                      start_date: start_date = get_random_start_date,
+                      end_date: start_date + rand(1..90).days,
+                      group_id: rand(5-1) + 1,
+                      employee_id: employee_id = n+4,
+                      location_id: Employee.find_by_id(employee_id).location_id)
     end
 
-
-    locs_num_devs_hash = {1=>45, 2=>5, 3=>32, 4=>14, 5=>20, 6=>12}   # {location=># of devs}    
-    employee_counter = 0 
-
-    locs_num_devs_hash.each do |loc_id, num_devs|
-      num_devs.times do |n|       
-        Employee.create!(first_name: Faker::Name.first_name, 
-                         last_name: Faker::Name.last_name, 
-                         email: "employee-#{n+1}@aits.com", 
-                         manager: Faker::Name.name, 
-                         description: Faker::Lorem.paragraph(sentence_count = 2), 
-                         years_with_company: rand(10-1) + 1, 
-                         position_id: rand(5-1) + 1, 
-                         department_id: rand(1-1) + 1, 
-                         group_id: rand(5-1) + 1, 
-                         location_id: loc_id, 
-                         password: "foobar", 
-                         password_confirmation: "foobar")
-        DeveloperSkill.create!(:employee_id => n,
-                               :skill_id => rand(1..7),
-                               :level => rand(0..4))
-        DesiredSkill.create!(:employee_id => n,
-                             :skill_id => rand(1..7),
-                             :level => rand(0..4))
-        employee_counter += 1
-      end
+    #Employee #1 over 10 requests
+    17.times do
+      Request.create!(title: Faker::Lorem.words(2).join(" ").to_s.capitalize,
+                      description: Faker::Lorem.sentences(2).join(" "),
+                      start_date: start_date = get_random_start_date,
+                      end_date: start_date + rand(1..90).days,
+                      group_id: rand(5-1) + 1,
+                      employee_id: "7",
+                      location_id: Employee.find_by_id("5").location_id)
     end
 
-    #no reqs from loc 3 (id's 51..82)
-    # loc_emp_ids = {1=>[1..45], 2=>[46..50], 3=>[51..82], 4=>[83..96], 5=>[97..116], 6=>[117..128]}
-
-    employees = Employee.all
-    emp_ids = employees.map{|emp| emp.id }      
-
-    loc_num_req_hash = {1=> { :requests => [1, 1, 1, 11, 11] },
-                        2=> { :requests =>  [7, 7, 7, 7, 7, 7] },
-                        4=> { :requests => [7, 7, 7] },
-                        5=> { :requests => [8, 8]},
-                        6=> { :requests => [4, 4, 4, 4] } 
-                      }
-    request_counter = 0
-
-    loc_num_req_hash.each do |loc_id, req_hash|
-      if loc_id == 1
-        req_emp_ids = (1..45).to_a 
-      elsif loc_id == 2
-        req_emp_ids = (46..50).to_a 
-      elsif loc_id == 4
-        req_emp_ids = (83..96).to_a
-      elsif loc_id == 5
-        req_emp_ids = (97..116).to_a
-      elsif loc_id == 6
-        req_emp_ids = (117..128).to_a 
-      end
- 
-      array = req_hash[:requests]
-      array.each do |num_reqs|
-        num_reqs.times do |m|
-          x = rand(skills.length)
-          relevant_skill = skills.slice(x, skills.length - x)
-          start_date = rand(6.months).ago
-          new_req = Request.create!(employee_id: emp_ids.sample,
-                                    description: Faker::Lorem.sentence(word_count = 5),
-                                    title: Faker::Lorem.sentence(word_count = 1),
-                                    start_date: start_date,
-                                    end_date: start_date + 6.months,
-                                    relevant_skill: relevant_skill.join(", "),
-                                    location_id: loc_id,
-                                    group_id: rand(5-1) + 1,
-                                    created_at: (rand*15).days.ago )
-          request_counter += 1
-        end
-      end    
+    #UEmployee #2 over 10 requests
+    20.times do
+      Request.create!(title: Faker::Lorem.words(2).join(" ").to_s.capitalize,
+                      description: Faker::Lorem.sentences(2).join(" "),
+                      start_date: start_date = get_random_start_date,
+                      end_date: start_date + rand(1..90).days,
+                      group_id: rand(5-1) + 1,
+                      employee_id: "8",
+                      location_id: Employee.find_by_id("6").location_id)
     end
 
-    reqs = Request.all 
-    req_ids, req_loc_ids, req_emp_ids = reqs.map{|req| req.id }, reqs.map{|req| req.location_id }, reqs.map{|req| req.employee_id }
-    req_info = req_ids.zip req_emp_ids, req_loc_ids #array with 120 elements (1 for each request) [[req_id, req_emp_id, req_loc_id]...]
-
-    three_resp_ids, two_resp_ids, nine_resp_ids, all_resp_ids, rest_resp_ids = [], [], [], [], []
-    one_comm_ids, seven_comm_ids, rand_comm_ids = [], [], []
-
-    req_info.each do |req_id, req_emp_id, req_loc_id| #this will go through each of the 120 requests
-      #each London req has 3 responses
-      if req_loc_id == 6 && three_resp_ids.size < 48
-        3.times do
-          res = create_res(req_id, emp_ids.sample)
-          three_resp_ids << res.id
-          all_resp_ids << res.id
-          # 42 selections random
-          if rand_comm_ids.size < 42
-            comm = create_comm(req_id)
-            rand_comm_ids << comm.id
-          end
-        end
-      end
-      #two responses personal (response.employee_id == request.employee_id)
-      if two_resp_ids.size < 2 && req_loc_id == 4
-        resp_emp_id = req_emp_id
-        res = create_res(req_id, resp_emp_id)
-        two_resp_ids << res.id
-        all_resp_ids << res.id
-          #1 personal responses selected
-          if one_comm_ids.size < 1
-            comm = create_comm(req_id)
-            one_comm_ids << comm.id
-          end
-      end
-      #nine responses local (response.location == request.location)
-      e = emp_ids.sample
-      if Employee.find_by_id(e).location_id == req_loc_id && e != req_emp_id && nine_resp_ids.size < 9
-        res = create_res(req_id, e)
-        nine_resp_ids << res.id
-        all_resp_ids << res.id
-        #7 local responses selected
-        if seven_comm_ids.size < 7
-          comm = create_comm(req_id)
-          seven_comm_ids << comm.id
-        end
-      end
-      # need leftover responses to get to 70
-      if rest_resp_ids.size < 11
-        res = create_res(req_id, emp_ids.sample)
-        rest_resp_ids << res.id
+    #Remaining Requests
+    20.times do
+    n = rand(9..Employee.all.length)
+      4.times do
+        Request.create!(title: Faker::Lorem.words(2).join(" ").to_s.capitalize,
+                        description: Faker::Lorem.sentences(2).join(" "),
+                        start_date: start_date = get_random_start_date,
+                        end_date: start_date + rand(1..90).days,
+                        group_id: rand(5-1) + 1,
+                        employee_id: employee_id = n,
+                        location_id: Employee.find_by_id(employee_id).location_id)
       end
     end 
+
+    #Relevant Skills
+    puts 'Generating Sample Relevant Skills'
+    120.times do |n|
+      RequestSkill.create!(
+        skill_id: rand(1..7),
+        request_id: n)
+    end
+  
+    #Request Response Details: 70 responses:
+    # 9 local, 2 personal, 0 to Mumbai Requests
+    # All requests from London received at least 3 responses
+    # Some responses occurred a day after the request, some 2 days after, some 4, and some 8
+
+    puts 'Generating Sample Responses'
+    #locations: 1=Chicago, 3=Houston, 4=San Francisco, 5=Boston, 6=London   
+    @response_locations = [1, 3, 4, 5]
+   
+    def get_random_response_datetime(request_date)
+      [(request_date + 1.day), (request_date + 2.days), (request_date + 4.days), (request_date + 8.days)].sample
+    end
+
+    def find_response_employee_with_request(employee_location)
+      employee_id = Employee.find_all_by_location_id(employee_location).map(&:id).sample
+      request_id = Request.find_all_by_employee_id(employee_id).map(&:id).sample
+      request_id == nil ? find_response_employee_with_request(employee_location) : employee_id
+    end
+
+    def find_unique_location(employee_location)
+      unique_location = @response_locations.sample
+      unique_location == employee_location ? find_unique_location(employee_location) : unique_location
+    end
+
+    #Local responses
+    9.times do
+      employee_location = @response_locations.sample
+      employee_id = Employee.find_all_by_location_id(employee_location).map(&:id).sample
+      request_id = Request.find_all_by_location_id(employee_location).map(&:id).sample
+      
+      Response.create!(comment: Faker::Lorem.sentences(2).join(" "),
+                       request_id: request_id,
+                       employee_id: employee_id,
+                       created_at: get_random_response_datetime(Request.find_by_id(request_id).start_date))
+    end
+    #Personal responses
+    2.times do
+      employee_location = @response_locations.sample
+      employee_id = find_response_employee_with_request(employee_location)
+      request_id = Request.find_all_by_employee_id(employee_id).map(&:id).sample
+
+      Response.create!(comment: Faker::Lorem.sentences(2).join(" "),
+                       request_id: request_id,
+                       employee_id: employee_id,
+                       created_at: get_random_response_datetime(Request.find_by_id(request_id).start_date))
+    end
+    #Remaining responses w/ no Mumbai and not local
+    59.times do
+      employee_location = @response_locations.sample
+      other_location = find_unique_location(employee_location)
+      employee_id = Employee.find_all_by_location_id(employee_location).map(&:id).sample
+      request_id = Request.find_all_by_location_id(other_location).map(&:id).sample
+
+      Response.create!(comment: Faker::Lorem.sentences(2).join(" "),
+                       request_id: request_id,
+                       employee_id: employee_id,
+                       created_at: get_random_response_datetime(Request.find_by_id(request_id).start_date))
+    end
+
+    # Commission Details:
+    # 50 commissions: 7 of the 9 local responses selected, 1 of the 2 personal responses selected
+    # Some responses are selected on the same day as a response, some a day later, some 3 days later, and some 5
+
+    def get_random_commission_datetime(response_date)
+      [ (response_date), (response_date + 1.day), (response_date + 3.days), (response_date + 5.days)].sample
+    end
+
+    puts 'Generating Sample Commissions'
+    #local 
+    7.times do |n|
+      response_id = n+2
+      employee_id = Response.find_by_id(response_id).employee_id
+      request_id = Response.find_by_id(response_id).request_id
+
+      Commission.create!(comment: Faker::Lorem.sentences(2).join(" "),
+                         response_id: response_id,
+                         employee_id: employee_id,
+                         created_at: get_random_commission_datetime(Response.find_by_id(response_id).created_at)
+                         )
+    end
+
+    #personal 
+      Commission.create!(comment: Faker::Lorem.sentences(2).join(" "),
+                         response_id: 10,
+                         employee_id: Response.find_by_id(10).employee_id,
+                         created_at: get_random_commission_datetime(Response.find_by_id(10).created_at)
+                        )
+
+    #Remaining commisions
+    42.times do |n|
+      response_id = n+11
+      employee_id = Response.find_by_id(response_id).employee_id
+      request_id = Response.find_by_id(response_id).request_id
+
+      Commission.create!(comment: Faker::Lorem.sentences(2).join(" "),
+                         response_id: response_id,
+                         employee_id: employee_id,
+                         created_at: get_random_commission_datetime(Response.find_by_id(response_id).created_at))
+    end
 
   end
 end
