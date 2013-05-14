@@ -38,7 +38,8 @@ namespace :db do
     locs_num_devs_hash = {1=>45, 2=>5, 3=>32, 4=>14, 5=>20, 6=>12} # {location=># of devs}
     locs_num_devs_hash.each do |loc_id, num_devs|
       num_devs.times do |n| 
-      Employee.create!(first_name: Faker::Name.first_name,
+      Employee.create!(id: n,
+                       first_name: Faker::Name.first_name,
                        last_name: Faker::Name.last_name,
                        email: Faker::Internet.email,
                        password: "password",
@@ -49,15 +50,24 @@ namespace :db do
                        department_id: rand(1-1) + 1,
                        group_id: rand(5-1) + 1,
                        location_id: loc_id)
-      DeveloperSkill.create!(:employee_id => n,
-                             :skill_id => rand(1..7),
-                             :level => rand(0..4))
-      DesiredSkill.create!(:employee_id => n,
-                           :skill_id => rand(1..7),
-                           :level => rand(0..4))
       end
-    end  
+    end
 
+# generate employee skills
+    puts "Generating Sample Employee Skills with levels"
+      130.times do |n|
+        7.times do |s|
+          DeveloperSkill.create!(skill_id: s+1,
+                                 employee_id: n+1,
+                                 level: rand(0..4)
+                                )
+          DesiredSkill.create!(skill_id: s+1,
+                               employee_id: n+1,
+                               level: rand(0..4)
+                               )
+      end
+    end
+     
   # Request Breakdown: 120 project reqs posts over 6 months from 20 of the developers, such that:
   # 3 developers posted once, 2 posted more than 10 requests, rest were in between, no posts from London
 
