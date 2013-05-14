@@ -3,21 +3,6 @@ namespace :db do
   task populate: :environment do
     require 'faker'
 
-    def create_employee(loc_id)
-      new_employee = Employee.create!(first_name: Faker::Name.first_name,
-                                      last_name: Faker::Name.last_name,
-                                      email: Faker::Internet.email,
-                                      password: "password",
-                                      password_confirmation: "password",
-                                      years_with_company: rand(1..20),
-                                      manager: Faker::Name.name,
-                                      position_id: rand(5-1) + 1,
-                                      department_id: rand(1-1) + 1,
-                                      group_id: rand(5-1) + 1,
-                                      location_id: loc_id)
-      new_employee
-    end
-
     def create_request(n)
       new_request = Request.create!(title: Faker::Lorem.words(2).join(" ").to_s.capitalize,
                                     description: Faker::Lorem.sentences(2).join(" "),
@@ -30,6 +15,20 @@ namespace :db do
       new_request
     end
 
+    employee_tables_hash = {Department=>["IT"],
+                            Group=>["Development","Interface Design","QA", "Infrastructure"],
+                            Location=>["Chicago", "Mumbai", "Houston","San Francisco", "Boston", "London"],
+                            Position=>["Engineer", "Analyst","Project Lead", "UI Specialist", "QA Specialist"]}
+    employee_tables_hash.each do |table, names|
+      names.each do |name|
+        table.create!(name: name)
+      end
+    end
+
+    skills = ["PHP", "MySQL", "C#", "Apache", "Ruby on Rails", "SQL Server", "Linux"]
+    skills.each do |name|
+      Skill.create!(language: name)
+    end
 
     #Employee Breakdown: 45 in Chicago, 20 in Boston, 32 in Houston, 14 in San Francisco, 12 in London, 5 in Mumbai
     #locations: 1=Chicago, 2=Mumbai, 3=Houston, 4 = San Francisco, 5=Boston, 6=London
@@ -38,11 +37,26 @@ namespace :db do
    
     locs_num_devs_hash = {1=>45, 2=>5, 3=>32, 4=>14, 5=>20, 6=>12} # {location=># of devs}
     locs_num_devs_hash.each do |loc_id, num_devs|
-      num_devs.times do 
-        create_employee(loc_id)
+      num_devs.times do |n| 
+      Employee.create!(first_name: Faker::Name.first_name,
+                       last_name: Faker::Name.last_name,
+                       email: Faker::Internet.email,
+                       password: "password",
+                       password_confirmation: "password",
+                       years_with_company: rand(1..20),
+                       manager: Faker::Name.name,
+                       position_id: rand(5-1) + 1,
+                       department_id: rand(1-1) + 1,
+                       group_id: rand(5-1) + 1,
+                       location_id: loc_id)
+      DeveloperSkill.create!(:employee_id => n,
+                             :skill_id => rand(1..7),
+                             :level => rand(0..4))
+      DesiredSkill.create!(:employee_id => n,
+                           :skill_id => rand(1..7),
+                           :level => rand(0..4))
       end
     end  
-    
 
   # Request Breakdown: 120 project reqs posts over 6 months from 20 of the developers, such that:
   # 3 developers posted once, 2 posted more than 10 requests, rest were in between, no posts from London
