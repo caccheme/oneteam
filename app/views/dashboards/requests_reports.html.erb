@@ -1,0 +1,83 @@
+<p id="notice"><%= notice %></p>
+
+<div id="tabs"> 
+  <ul>
+    <li><%= link_to 'All Requests', requests_path%></li>
+    <li><%= link_to "Requests I've Posted",  _employee_requests_path %></li>
+    <li><%= link_to 'My Profile', employee_path(current_employee) %></li>     
+<!-- do check to see if admin to show dashboard tab on home tab position views -->
+    <li id = 'selected'><%= link_to 'Dashboard Reports', dashboards_path%></li>
+  </ul>
+</div>
+<div id="inner_innercontainer">
+
+<div id="tabs"> 
+  <ul>
+    <li><%= link_to 'All Requests Table', dashboards_path %></li>
+    <li id="selected"><%= link_to 'Requests Summary', 'requests_reports' %></li>
+    <li><%= link_to "Skills Summary", 'skills_reports'  %></li>
+    <li><%= link_to 'OneTeam Impact', 'impact_reports'  %></li>     
+  </ul>
+</div>
+
+<div id="innercontainer">
+
+<h3>Request information over the last 6 months</h3>
+<table>
+  <tr>
+    <th>Month<th>
+    <th>Requests<th>
+    <th>w/ Responses</th>
+    <th>w/ Commissions</th>
+    <th>Cancelled</th>
+  </tr>
+<% @dashboard.request_summary.each do |summary| %>
+  <tr>
+    <td><%= summary["month"] %></td>
+    <td></td>
+    <td><%= summary["num_reqs"] %></td>
+    <td></td>
+    <td><%= summary["num_w_resps"] %></td>
+    <td><%= summary["num_w_coms"] %></td>
+    <td><%= summary["num_cancelled"] %></td>
+
+
+
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<h3>Requests Commissioned in:</h3>
+<table>
+  <tr>
+    <th>1 day or less <th>
+    <th>Between 1 and 3 days<th>
+    <th>Between 3 and 6 days</th>
+    <th>More than 6 days</th>
+  </tr>
+
+<% @dashboard.requests_filled.each do |num_reqs| %>
+  <tr>
+    <td><%= num_reqs["one"] %></td>
+    <td></td>
+    <td><%= num_reqs["one_to_three"] %></td>
+    <td></td>
+    <td><%= num_reqs["three_to_six"] %></td>
+    <td><%= num_reqs["six"] %></td>
+
+
+
+
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+
+
+
+</div>
+</div>

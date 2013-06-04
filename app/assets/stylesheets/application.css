@@ -9,6 +9,8 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *= require jquery.ui.datepicker
  *= require_self
+ *= require dataTables/jquery.dataTables
+ *= require jquery-tablesorter/theme.default
  *= require_tree .
  */
 /*
@@ -50,6 +52,16 @@ body {
 	margin: 0px 0 10px 0;
 }
 
+.oneColFixCtrHdr #inner_innercontainer {
+	padding: 0 20px; /* remember that padding is the space inside the div box and margin is the space outside the div box */
+	background: #FfffFF;
+	border:1px solid;
+	border-radius: 10px;
+	box-shadow: gray 3px 3px 2px;
+	margin: 0px 0 10px 0;
+}
+
+
 .oneColFixCtrHdr #mainContent a{
 	color:#2790b0;
 }
@@ -90,7 +102,6 @@ th {
 table, td {
 	padding: 5px 5px;
 	background-color: #ccddff;
-
 }
 
 .button {

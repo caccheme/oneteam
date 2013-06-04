@@ -98,11 +98,13 @@ class Employee < ActiveRecord::Base
     if !self.responses.nil?
       self.responses.each do |response|
         if !response.commission.nil?
-          if !response.commission.reward.evaluations.nil?
-            response.commission.reward.evaluations.each do |eval| 
-              if eval.skill_id == skill.id
-                sum += eval.eval_number
-              end
+          if !response.commission.reward.nil?
+            if !response.commission.reward.evaluations.nil?
+              response.commission.reward.evaluations.each do |eval| 
+                if eval.skill_id == skill.id
+                  sum += eval.eval_number
+                end
+              end  
             end    
           end        
         end
@@ -117,12 +119,14 @@ class Employee < ActiveRecord::Base
     if !self.responses.nil?
       self.responses.each do |response|
         if !response.commission.nil?
-          if !response.commission.reward.evaluations.nil?
-            response.commission.reward.evaluations.each do |eval| 
-              if eval.skill_id == skill.id && eval.eval_number != 0
-                sum += eval.level
-                eval_counter += 1         
-              end
+          if !response.commission.reward.nil?
+            if !response.commission.reward.evaluations.nil?
+              response.commission.reward.evaluations.each do |eval| 
+                if eval.skill_id == skill.id && eval.eval_number != 0
+                  sum += eval.level
+                  eval_counter += 1         
+                end
+              end 
             end      
           end        
         end

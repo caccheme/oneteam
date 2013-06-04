@@ -23,7 +23,7 @@ class EmployeesController < ApplicationController
     @requests = Request.all
     @commissions = Commission.where('employee_id' => params[:id])
     @my_commissions = Commission.order(:id).page(params[:page]).per(5)
-    @skills = Skill.all 
+    @skills = Skill.all
     
     respond_to do |format|
       format.html # show.html.erb

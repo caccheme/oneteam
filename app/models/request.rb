@@ -12,6 +12,8 @@ class Request < ActiveRecord::Base
   has_and_belongs_to_many :skills
   belongs_to :skills
 
+  has_many :request_skills
+
   has_one :commission
   has_many :rewards
   has_many :evaluations

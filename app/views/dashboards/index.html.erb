@@ -1,0 +1,55 @@
+<p id="notice"><%= notice %></p>
+
+<div id="tabs"> 
+  <ul>
+    <li><%= link_to 'All Requests', requests_path%></li>
+    <li><%= link_to "Requests I've Posted",  _employee_requests_path %></li>
+    <li><%= link_to 'My Profile', employee_path(current_employee) %></li>     
+<!-- add check to see if admin to show dashboard tab on home tab position views -->
+    <li id = 'selected'><%= link_to 'Dashboard Reports', dashboards_path%></li>
+  </ul>
+</div>
+
+<div id="inner_innercontainer">
+
+<div id="tabs"> 
+  <ul>
+    <li id="selected"><%= link_to 'All Requests', dashboards_path %></li>
+    <li><%= link_to 'Requests Summary', 'requests_reports' %></li>
+    <li><%= link_to "Skills Summary", 'skills_reports'  %></li>
+    <li><%= link_to 'OneTeam Impact', 'impact_reports'  %></li>     
+  </ul>
+</div>
+
+<div id="innercontainer">
+</br>
+
+<table id="requests_list" class="tablesorter">
+  <thead>  
+    <tr>
+      <th>Request Created at</th>
+      <th>Request Title</th>
+      <th>Request Office</th>
+      <th>Developer Selected</th>
+      <th>Developer Office</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @dashboard.request_report.each do |request| %>
+    <tr>
+      <td><%= request["date"] %></td>
+      <td><%= request["title"] %></td>
+      <td><%= Location.find_by_id(request["req_location"]).name %></td>
+      <td><%= request["first_name"]%> <%= request["last_name"] %></td>
+      <% if !request["emp_location"].nil? %>
+        <td><%= Location.find_by_id(request["emp_location"]).name %></td> 
+      <% end %>
+    <% end %>
+    </tr>
+  </tbody>
+</table>
+
+<br />
+
+</div>
+</div>

@@ -1,6 +1,6 @@
 OneteamApp::Application.routes.draw do
 
-
+  resources :dashboards
   resources :positions
   resources :groups
   resources :departments
@@ -15,6 +15,9 @@ OneteamApp::Application.routes.draw do
   resources :sessions
   resources :password_resets
 
+  get "impact_reports" => "dashboards#impact_reports"
+  get "skills_reports" => "dashboards#skills_reports", :as => "_skills_reports"
+  get "requests_reports" => "dashboards#requests_reports", :as => "requests_reports"
   get "calendars/index"
   get "password_resets/new"
   get "log_out" => "sessions#destroy", :as => "log_out"

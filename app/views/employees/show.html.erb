@@ -9,6 +9,7 @@
     <% else %>
       <li id="selected"><%= link_to 'Profile', employee_path(@employee.id) %></li>
     <% end %> 
+      <li><%= link_to 'Dashboard Reports', dashboards_path%></li>
   </ul>
 </div>
 
@@ -33,7 +34,7 @@
         <li>Office: <%= @employee.location.name %></li>
         <li>Department: <%= @employee.department.name %></li>
         <li>Group: <%= @employee.group.name %></li>
-        <li>Job Title: <%= @employee.position.name %></li>
+        <li>Job Title: <%= Position.find(@employee.position_id).name %></li>
         <li>Immediate Supervisor: <%= @employee.manager %></li>
         <li>Years with Company: <%= @employee.years_with_company %></li>
       </ul>

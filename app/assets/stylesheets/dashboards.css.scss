@@ -1,0 +1,11 @@
+// Place all the styles related to the Dashboards controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+table .number {
+	box-shadow: gray 5px 5px 3px;
+	border: 1px solid gray;
+	text-align: right;
+	border-collapse: separate;
+	border-radius: 15px; 
+}

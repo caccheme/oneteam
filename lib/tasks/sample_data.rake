@@ -3,19 +3,25 @@ namespace :db do
   task populate: :environment do
     require 'faker'
 
-    Employee.create!(first_name: "Chris",
-                 last_name: 'R',
-                 email: "chris@sample.com",
-                 password: "abc123",
-                 password_confirmation: "abc123",
-                 location_id: 1)
+    Employee.create!(first_name: "Generic",
+                 last_name: 'Employee',
+                 email: "generic@sample.com",
+                 password: "password",
+                 password_confirmation: "password",
+                 location_id: 1,
+                 department_id: 1,
+                 group_id: 1,
+                 position_id: 1)
 
     Employee.create!(first_name: "Charity",
-                 last_name: "H",
+                 last_name: "Howell",
                  email: "charity@sample.com",
-                 password: "abc123",
-                 password_confirmation: "abc123",
-                 location_id: 2)
+                 password: "password",
+                 password_confirmation: "password",
+                 location_id: 2,
+                 department_id: 1,
+                 group_id: 1,
+                 position_id: 1)
 
     employee_tables_hash = {Department=>["IT"],
                             Group=>["Development","Interface Design","QA", "Infrastructure"],
@@ -49,8 +55,7 @@ namespace :db do
       end
     end
      
-    #employee Breakdown: 45 in Chicago, 20 in Boston, 32 in Houston, 14 in San Francisco, 12 in London, 5 in Mumbai
-
+    #employee Breakdown: 45 in Chicago(1), 20 in Boston(5), 32 in Houston(3), 14 in San Francisco(4), 12 in London(6), 5 in Mumbai(2)
     puts "Generating Sample employees" 
 
     locs_num_devs_hash = {1=>45, 2=>5, 3=>32, 4=>14, 5=>20} # {location=># of devs}
@@ -65,7 +70,7 @@ namespace :db do
                        years_with_company: rand(1..20),
                        manager: Faker::Name.name,
                        position_id: rand(5-1) + 1,
-                       department_id: rand(1-1) + 1,
+                       department_id: 1,
                        group_id: rand(5-1) + 1,
                        location_id: loc_id)
       end
@@ -75,7 +80,7 @@ namespace :db do
   # 3 developers posted once, 2 posted more than 10 requests, The rest were in between, No posts from London
 
   def get_random_start_date
-    Array((Date.today - 3.months)..(Date.today + 3.months)).sample
+    Array((Date.today - 6.months)..(Date.today)).sample
   end
 
     puts 'Generating Sample Requests'
@@ -145,15 +150,15 @@ namespace :db do
 
     #London employees created after to prevent them from posting requests
     12.times do
-      Employee.create!(first_name: Faker::Name.name,
-                   last_name: Faker::Name.name,
+      Employee.create!(first_name: Faker::Name.first_name,
+                   last_name: Faker::Name.last_name,
                    email: Faker::Internet.email,
                    password: "password",
                    password_confirmation: "password",
                    years_with_company: rand(1..20),
                    manager: "John",
                    position_id: rand(5-1) + 1,
-                   department_id: rand(1-1) + 1,
+                   department_id: 1,
                    group_id: rand(5-1) + 1,
                    location_id: 6) 
     end
@@ -207,8 +212,7 @@ namespace :db do
         created_at: get_random_response_datetime(Request.find_by_id(request_id).start_date))
     end
     #Remaining responses w/ no Mumbai and not local 
-
-    59.times do
+    79.times do
       employee_location = @response_locations.sample
       other_location = find_unique_location(employee_location)
       employee_id = Employee.find_all_by_location_id(employee_location).map(&:id).sample

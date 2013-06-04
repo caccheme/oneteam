@@ -18,7 +18,7 @@ class RequestsController < ApplicationController
 
     @employees = Employee.all
     @responses = Response.find(:all, :conditions => :request_id == :id)
-
+    @request_skills = RequestSkill.find(:all, :conditions => :request_id == :id)
     @developer_skills = DeveloperSkill.find_all_by_employee_id(current_employee.id)
     @desired_skills = DesiredSkill.find_all_by_employee_id(current_employee.id)
 

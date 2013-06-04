@@ -1,0 +1,77 @@
+<p id="notice"><%= notice %></p>
+
+<div id="tabs"> 
+  <ul>
+    <li><%= link_to 'All Requests', requests_path%></li>
+    <li><%= link_to "Requests I've Posted",  _employee_requests_path %></li>
+    <li><%= link_to 'My Profile', employee_path(current_employee) %></li>     
+<!-- do check to see if admin to show dashboard tab on home tab position views -->
+    <li id = 'selected'><%= link_to 'Dashboard Reports', dashboards_path%></li>
+  </ul>
+</div>
+
+<div id="inner_innercontainer">
+
+<div id="tabs"> 
+  <ul>
+    <li><%= link_to 'All Requests Table', dashboards_path %></li>
+    <li><%= link_to 'Requests Summary', 'requests_reports' %></li>
+    <li id="selected"><%= link_to "Skills Summary", 'skills_reports'  %></li>
+    <li><%= link_to 'OneTeam Impact', 'impact_reports'  %></li>     
+  </ul>
+</div>
+
+<div id="innercontainer">
+<h3>How many developers are interested in each skill?</h3>
+<table>
+  <tr>
+    <th>Skill</th>
+    <th>Chicago</th>
+    <th>Mumbai</th>
+    <th>Houston</th>
+    <th>Boston</th>
+    <th>San Francisco</th>
+    <th>London</th>
+  </tr>
+<% @dashboard.developer_interests.each do |dev| %>
+  <tr>
+    <td><%= dev["skillname"] %></td>
+    <td><%= dev["chicago"] %></td>
+    <td><%= dev["mumbai"] %></td>
+    <td><%= dev["houston"] %></td>
+    <td><%= dev["boston"] %></td>
+    <td><%= dev["sanfrancisco"] %></td>
+    <td><%= dev["london"] %></td>
+<% end %>
+  </tr>
+
+</table>
+
+<h3>What are developers' average skill levels?</h3>
+<table>
+  <tr>
+    <th>Skill</th>
+    <th>Chicago</th>
+    <th>Mumbai</th>
+    <th>Houston</th>
+    <th>Boston</th>
+    <th>San Francisco</th>
+    <th>London</th>
+  </tr>
+<% @dashboard.avg_skills.each do |avg| %>
+  <tr>
+    <td><%= avg["skillname"] %></td>
+    <td><%= avg["chicago"] %></td>
+    <td><%= avg["mumbai"] %></td>
+    <td><%= avg["houston"] %></td>
+    <td><%= avg["boston"] %></td>
+    <td><%= avg["sanfrancisco"] %></td>
+    <td><%= avg["london"] %></td>
+<% end %>
+  </tr>
+
+</table>
+<br/>
+</div>
+
+</div>

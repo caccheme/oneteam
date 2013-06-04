@@ -5,6 +5,7 @@
     <li id="selected"><%= link_to 'All Requests', requests_path%></li>
     <li><%= link_to "Requests I've Posted", 'employee_requests' %></li>
     <li><%= link_to 'My Profile', employee_path(current_employee) %></li>
+    <li><%= link_to 'Dashboard Reports', dashboards_path%></li>
   </ul>
 </div>
 
@@ -19,21 +20,23 @@
       <% applied = 0 %>
       <%= image_tag "divider-line.jpg" %>
       <p><b><%= request.title %>:</b> <%= request.start_date %> to <%= request.end_date %> (Status: <%= request.status_text %>)</br>
-      Posted by: <%= request.employee.first_name %> <%= request.employee.last_name %> in <%= request.employee.location.name %> Office (Group: <%= request.employee.group.name %>) </br>
+      Posted by: <%= request.employee.first_name %> <%= request.employee.last_name %> in <%= Location.find(request.employee.location_id).name %> Office (Group: <%= Group.find(request.employee.group_id).name %>) </br>
       Description: <%= request.description %></br>
-      Required Skills: <%= request.relevant_skill %></br></br>
+      Required Skills: <% request.request_skills.each do |s| %>
+                         <%= Skill.find(s.skill_id).language %>
+                       <% end %></br></br>
       Your Ability Score is 
         <% @emp_skills = [] %>
         <% @skill_score = [] %>
-        <% request.relevant_skill.split(", ").each do |rel_skill| %>
-          <% current_skill_score(rel_skill) %>
+        <% request.request_skills.each do |dev_skill| %>
+          <% current_skill_score(Skill.find(dev_skill.skill_id).language) %>
         <% end %>
         <%= @skill_score.sum %>:</br> (<%= @emp_skills.join(", ") %>)</br></br>
       Your Interests Score is 
         <% @emp_skills = [] %>
         <% @skill_score = [] %>
-        <% request.relevant_skill.split(", ").each do |rel_skill| %>
-          <% interested_skill_score(rel_skill) %>
+        <% request.request_skills.each do |des_skill| %>
+          <% interested_skill_score(Skill.find(des_skill.skill_id).language) %>
         <% end %>
         <%= @skill_score.sum %>:</br> (<%= @emp_skills.join(", ") %>)
 
