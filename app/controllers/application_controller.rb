@@ -23,7 +23,6 @@ private
 
   def current_employee
     @current_employee ||= Employee.find_by_auth_token!(cookies[:auth_token]) if cookies[:auth_token]
-    else Employee.find(1)
   end
 
   def signed_in_employee
