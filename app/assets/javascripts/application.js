@@ -13,6 +13,5 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery.ui.datepicker
-//= require dataTables/jquery.dataTables 
 //= require jquery-tablesorter
 //= require_tree .
