@@ -84,7 +84,7 @@
           worked on:
       </li>
 
-      <%= image_tag "divider-line-2.jpg" %>
+      
         <% @commissions.each do |commission| %>
             <li><b><%= commission.response.request.title.capitalize %></b>: <%= commission.response.request.start_date %> to <%= commission.response.request.end_date %> (<%= commission.response.request.project_status %>)</br></li>
           <% if !commission.reward.nil? %>
