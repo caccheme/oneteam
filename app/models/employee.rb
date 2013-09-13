@@ -13,6 +13,7 @@ class Employee < ActiveRecord::Base
   
   has_many :responses
   has_many :commissions, :through => :responses
+  has_many :rewards, :through => :commissions
   accepts_nested_attributes_for :requests
   accepts_nested_attributes_for :responses
 
@@ -236,5 +237,40 @@ class Employee < ActiveRecord::Base
       end
     skillname.join(", ")
   end
+
+#new methods ....do the same as above??
+  # def build_employee_overall_skill_table(current_employee)
+  #   table_array = []
+
+  #   Skill.all.each do |skill|
+  #     rewards = self.rewards.where(skill_id: skill.id)
+  #     total_xp = rewards.map(&:evaluations).sum
+  #     if id == current_employee
+  #       avg_lvl = rewards.map(&:level).sum / (rewards.count.nonzero? || 1)
+  #       table_array.push([skill.name, total_xp, avg_lvl])
+  #     else
+  #       table_array.push([skill.name, total_xp])
+  #     end
+  #   end
+  #   table_array
+  # end
+
+  # def build_user_project_skill_evaluation_table(current_user)
+  #   reward_skill_ids = self.rewards.map(&:skill_id).compact
+  #   matching_skills = Skill.where(id: reward_skill_ids)       
+  #   table_array = []
+
+  #   matching_skills.each do |skill|
+  #     rewards = self.rewards.where(skill_id: skill.id)
+  #     xp = rewards.map(&:evaluations).sum
+  #     if id == current_user
+  #       lvl = rewards.map(&:level).sum
+  #       table_array.push([skill.name, xp, lvl])
+  #     else
+  #       table_array.push([skill.name, xp])
+  #     end
+  #   end
+  #   table_array
+  # end 
 
 end

@@ -127,4 +127,23 @@ class Request < ActiveRecord::Base
     (end_date.to_date - start_date.to_date).to_i
   end 
 
+def distance_from_location(latlong1, latlong2)
+  dtor = 3.141592653589793 / 180
+  r = 3956
+  
+  rlat1 = latlong1[0] * dtor
+  rlong1 = latlong1[1] * dtor
+  rlat2 = latlong2[0] * dtor
+  rlong2 = latlong2[1] *dtor
+
+  dlon = rlong1 - rlong2
+  dlat = rlat1 - rlat2
+ 
+  a = (Math.sin(dlat/2))**2 + Math.cos(rlat1) * Math.cos(rlat2) * (Math.sin(dlon/2))**2
+  c = 2 * Math::atan2(Math::sqrt(a), Math::sqrt(1-a))
+  d = r * c
+ 
+  return d
+end 
+
 end

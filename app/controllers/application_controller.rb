@@ -8,6 +8,10 @@ class ApplicationController < ActionController::Base
   include SessionsHelper
   helper :all
 
+  def action
+    @lat_lng = cookies[:lat_lng].split("|")
+  end
+
 private
  
   def current_date

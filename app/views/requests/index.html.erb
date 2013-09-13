@@ -9,61 +9,84 @@
   </ul>
 </div>
 
+<script type="text/javascript">
+  if (navigator.geolocation)
+    {navigator.geolocation.getCurrentPosition(showPosition);}
+  else {document.write("Geolocation is not supported by this browser.")}
+</script> 
+
+<script type="text/javascript">
+  function toggle_visibility(classname)
+    { $(".request-text").toggle(); }           
+</script>
+
+<script type="text/javascript">
+  if('localStorage' in window && window['localStorage'] !== null){
+  var title_show = window.localStorage;}
+</script> 
+
 <div id="innercontainer">
 
 <p><%= link_to 'Create New Request', new_request_path %></p>
+
 <h1>All Requests</h1>
+  <form>
+    <input type="checkBox" onclick="toggle_visibility('request-text')"> Title Only/All Data
+  </form>
+
 <div id="requests">
 <%= paginate @open_requests %>
+    <% @open_requests.each do |request| %>
+      <% if request.distance_from_location(@lat_lng, get_request_location(request.location_id)) <= 50 %>
 
-  <% @open_requests.each do |request| %>
-      <% applied = 0 %>
-      <%= image_tag "divider-line.jpg" %>
-      <p><b><%= request.title %>:</b> <%= request.start_date %> to <%= request.end_date %> (Status: <%= request.status_text %>)</br>
-      Posted by: <%= request.employee.first_name %> <%= request.employee.last_name %> in <%= Location.find(request.employee.location_id).name %> Office (Group: <%= Group.find(request.employee.group_id).name %>) </br>
-      Description: <%= request.description %></br>
-      Required Skills: <% request.request_skills.each do |s| %>
-                         <%= Skill.find(s.skill_id).language %>
-                       <% end %></br></br>
-      Your Ability Score is 
-        <% @emp_skills = [] %>
-        <% @skill_score = [] %>
-        <% request.request_skills.each do |dev_skill| %>
-          <% current_skill_score(Skill.find(dev_skill.skill_id).language) %>
-        <% end %>
-        <%= @skill_score.sum %>:</br> (<%= @emp_skills.join(", ") %>)</br></br>
-      Your Interests Score is 
-        <% @emp_skills = [] %>
-        <% @skill_score = [] %>
-        <% request.request_skills.each do |des_skill| %>
-          <% interested_skill_score(Skill.find(des_skill.skill_id).language) %>
-        <% end %>
-        <%= @skill_score.sum %>:</br> (<%= @emp_skills.join(", ") %>)
-
-      <% commissions = request.get_commissions %>
-      <div id="note"><%= request.already_assigned? %></div>
-        <% if !request.already_assigned? %>
-          <% if author? (request) %>
-            <div id="note"><%= "You posted this request." %></div>
-          <% else %>
-          
-            <% responses = request.get_responses %>
-            <% responses.each do |response| %> 
-              <% if response.employee_id == current_employee.id %>
-                <%= image_tag "applied_button.jpg" %>
-                <% applied = 1 %>
-              <% end %>             
+        <% applied = 0 %>
+        <hr/>
+        <p><b><%= request.title %>:</b> <%= request.start_date %> to <%= request.end_date %> (Status: <%= request.status_text %>)</br>
+        <div class='request-text'> Posted by: <%= request.employee.first_name %> <%= request.employee.last_name %> in <%= Location.find(request.employee.location_id).name %> Office (Group: <%= Group.find(request.employee.group_id).name %>) </br>
+          Description: <%= request.description %></br>
+          Required Skills: <% request.request_skills.each do |s| %>
+                             <%= Skill.find(s.skill_id).language %>
+                           <% end %></br></br>
+          Your Ability Score is 
+            <% @emp_skills = [] %>
+            <% @skill_score = [] %>
+            <% request.request_skills.each do |dev_skill| %>
+              <% current_skill_score(Skill.find(dev_skill.skill_id).language) %>
             <% end %>
-          
-            <% if applied == 0 %>
-              <div id="apply-button">
-                <%= link_to image_tag("apply_button.jpg"), new_request_response_path(request) %></br>            
-              </div>
-            <% end %>  
-        <% end %>  
-      <% end %>
-    <% end %>
+            <%= @skill_score.sum %>:</br> (<%= @emp_skills.join(", ") %>)</br></br>
+          Your Interests Score is 
+            <% @emp_skills = [] %>
+            <% @skill_score = [] %>
+            <% request.request_skills.each do |des_skill| %>
+              <% interested_skill_score(Skill.find(des_skill.skill_id).language) %>
+            <% end %>
+            <%= @skill_score.sum %>:</br> (<%= @emp_skills.join(", ") %>)
 
+          <% commissions = request.get_commissions %>
+          <div id="note"><%= request.already_assigned? %></div>
+            <% if !request.already_assigned? %>
+              <% if author? (request) %>
+                <div id="note"><%= "You posted this request." %></div>
+              <% else %>
+              
+                <% responses = request.get_responses %>
+                <% responses.each do |response| %> 
+                  <% if response.employee_id == current_employee.id %>
+                    <%= image_tag "applied_button.jpg" %>
+                    <% applied = 1 %>
+                  <% end %>             
+                <% end %>
+              
+                <% if applied == 0 %>
+                  <div id="apply-button">
+                    <%= link_to image_tag("apply_button.jpg"), new_request_response_path(request) %></br>            
+                  </div>
+                <% end %>  
+            </div>
+          <% end %>  
+        <% end %>    
+      <% end %>
+  <% end %>
 </br>
 <%= paginate @open_requests %>
 

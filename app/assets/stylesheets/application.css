@@ -219,3 +219,8 @@ table, td {
 	font-style: italic;
 	color:red;
 }
+
+#location {
+   font-size: small;
+   float: right;
+} 

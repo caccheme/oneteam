@@ -13,8 +13,16 @@
   </ul>
 </div>
 
+<script type="text/javascript">
+  if (navigator.geolocation)
+    {navigator.geolocation.getCurrentPosition(showPosition);
+    }
+  else{x.innerHTML="Geolocation is not supported by this browser.";}
+</script>
+
 <div id="innercontainer">
   <div id="emp-left-column">
+    <div id="location"> </div>
     <div id="profile_pic">
       <% if current_employee.id == @employee.id %>
         <%= link_to 'Update Profile', edit_employee_path(current_employee) %> </br>

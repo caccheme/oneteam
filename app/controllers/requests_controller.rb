@@ -21,7 +21,8 @@ class RequestsController < ApplicationController
     @request_skills = RequestSkill.find(:all, :conditions => :request_id == :id)
     @developer_skills = DeveloperSkill.find_all_by_employee_id(current_employee.id)
     @desired_skills = DesiredSkill.find_all_by_employee_id(current_employee.id)
-
+    @lat_lng = cookies[:lat_lng].split("|").map(&:to_f) 
+    
     respond_to do |format|
       format.html 
       format.json { render json: @requests }

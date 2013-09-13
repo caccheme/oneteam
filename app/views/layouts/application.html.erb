@@ -1,9 +1,21 @@
 <!DOCTYPE html>
 <html>
   <head>  
-    <title>OneteamApp</title>  
+    <title>OneteamApp</title>
+      <script type="text/javascript">
+        function showPosition(event) {
+          var elt = document.getElementById("location")
+          var date = new Date();
+          date.setTime(date.getTime() + (1*24*60*60*1000));
+          var expires = "; expires="+date.toGMTString();
+          var cookie_val = event.coords.latitude + "|" + event.coords.longitude;
+          elt.textContent= "Your Current location is: Latitude: " + Math.round(event.coords.latitude * 1000) / 1000 + " Longitude: " + Math.round(event.coords.longitude * 1000) / 1000 ; 
+         document.cookie = "lat_lng=" + escape(cookie_val);
+        }
+      </script>
     <%= stylesheet_link_tag    "application", :media => "all" %>  
-    <%= javascript_include_tag "application" %>  
+    <%= javascript_include_tag "raphael-min" %>
+    <%= javascript_include_tag "application" %>
     <%= csrf_meta_tags %>
   </head>
 <body class="oneColFixCtrHdr">
@@ -19,6 +31,8 @@
       <% if current_employee %>
          Logged in as <%= current_employee.first_name %> <%= current_employee.last_name %>. Not <%= current_employee.first_name %>? 
          <%= link_to "Log out", log_out_path %>
+         <div id="location"> </div>
+
        <% else %>
          
       <% end %>

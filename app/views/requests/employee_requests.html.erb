@@ -1,3 +1,14 @@
+<script>
+  function getGeoLocation() {
+    navigator.geolocation.getCurrentPosition(setGeoCookie);
+  }
+
+  function setGeoCookie(position) {
+    var cookie_val = position.coords.latitude + "|" + position.coords.longitude;
+    document.cookie = "lat_lng=" + escape(cookie_val);
+  }
+</script>
+
 <p id="notice"><%= notice %></p>
 
 <div id="tabs"> 
@@ -18,12 +29,12 @@
 <div id="requests">
 <% @all_requests.each do |request| %>
 
-  <%= image_tag "divider-line.jpg" %>
+  <hr/>
   <p><h3><%= request.title %></h3> <%= request.start_date %> to <%= request.end_date %> (Status: <%= request.status_text %>)</br>    
    Posted by: <%= request.employee.first_name %> <%= request.employee.last_name %> in <%= request.employee.location.name %> (Group: <%= request.employee.group.name %>)</br>
     Description: <%= request.description %></br>
     Required Skills: <%= request.relevant_skill %></br>
- 
+
     <% if request.status == 'Cancelled' %> 
       <div id= "note"><%= "Cancelled" %></div></br>
     <% else %>
