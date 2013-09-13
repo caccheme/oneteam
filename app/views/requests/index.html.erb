@@ -16,7 +16,7 @@
 </script> 
 
 <script type="text/javascript">
-  function toggle_visibility(classname)
+  function toggle_visibility()
     { $(".request-text").toggle(); }           
 </script>
 
@@ -37,7 +37,7 @@
 <div id="requests">
 <%= paginate @open_requests %>
     <% @open_requests.each do |request| %>
-      <% if request.distance_from_location(@lat_lng, get_request_location(request.location_id)) <= 50 %>
+      <% if request.calculate_distance_between_locations(@your_location, get_request_location(request.location_id)) <= 50 %>
 
         <% applied = 0 %>
         <hr/>
